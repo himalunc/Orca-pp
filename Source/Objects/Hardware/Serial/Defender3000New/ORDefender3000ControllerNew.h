@@ -74,7 +74,6 @@
 - (IBAction) printIntervalAction:(id)sender;
 - (IBAction) tareAction:(id)sender;
 - (IBAction) unitsAction:(id)sender;
-- (IBAction) commandAction:(id)sender;
 - (IBAction) sendAllAction:(id)sender;
 
 - (int)      numberPointsInPlot:(id)aPlotter;

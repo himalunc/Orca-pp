@@ -491,6 +491,8 @@ NSString* ORDefender3000NewLock                   = @"ORDefender3000NewLock";
 
 - (void) sendCommand
 {
+    [self addCmdToQueue:@"P"];
+    /*
     //format the command
     switch(command){
         case 0: [self addCmdToQueue:@"P"]; break;
@@ -512,16 +514,16 @@ NSString* ORDefender3000NewLock                   = @"ORDefender3000NewLock";
             [self addCmdToQueue:[NSString stringWithFormat:@"%cR",0x1B]];
         break;
     }
+     */
 }
 - (NSString*)  getUnitString
 {
     switch(unitData){
-        case 0: return @"kg";
         case 1: return @"g";
         case 2: return @"kg";
         case 3: return @"lb";
         case 4: return @"oz";
-        case 5: return @"lb";
+        case 5: return @"lb:oz";
         default:return @"kg";
     }
 }
@@ -661,7 +663,7 @@ NSString* ORDefender3000NewLock                   = @"ORDefender3000NewLock";
         }
         else if([components count]==2){
             [self setWeight:[[components objectAtIndex:0]floatValue]];
-	    [self sendDefender3000ToInflux:[[components objectAtIndex:0]doubleValue]];
+            [self sendDefender3000ToInflux:[[components objectAtIndex:0]doubleValue]];
             [self setUnitData: [components objectAtIndex:1]];
             
             if([[components objectAtIndex:0] isEqualToString:@"UNIT"]){

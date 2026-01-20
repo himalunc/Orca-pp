@@ -166,7 +166,7 @@
 	[self updateTimePlot:nil];
     [self miscAttributesChanged:nil];
     [self printIntervalChanged:nil];
-    [self unitsChanged:nil];
+    //[self unitsChanged:nil];
     [self commandChanged:nil];
     [self tareChanged:nil];
     [self unitsChanged:nil];
@@ -366,12 +366,6 @@
     [model sendCommand];
 }
 
-- (IBAction) sendAllAction:(id)sender
-{
-    [self endEditing];
-    [model sendAllCommands];
-}
-
 - (void) shipWeightAction:(id)sender
 {
 	[model setShipWeight:[sender intValue]];	
@@ -399,11 +393,6 @@
 - (IBAction) unitsAction:(id)sender
 {
     [model setUnits:(int)[[sender selectedItem] tag]];
-}
-- (IBAction) commandAction:(id)sender
-{
-    [self endEditing];
-    [model setCommand:(int)[[sender selectedItem] tag]];
 }
 
 #pragma mark •••Data Source

@@ -8,7 +8,6 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ORDefender3000Controller">
             <connections>
-                <outlet property="commandPopup" destination="vLQ-ku-pYE" id="VlT-aO-3Ab"/>
                 <outlet property="lockButton" destination="844" id="1287"/>
                 <outlet property="openPortButton" destination="888" id="1285"/>
                 <outlet property="plotter0" destination="1308" id="1314"/>
@@ -136,7 +135,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
-                            <action selector="tareAction:" target="-2" id="vh5-bh-8VO"/>
+                            <action selector="tareAction:" target="-2" id="cfq-Fg-DPb"/>
                         </connections>
                     </textField>
                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dJe-1c-sm9">
@@ -158,8 +157,9 @@
                                 <items>
                                     <menuItem title="g" state="on" id="qBU-OZ-pEz"/>
                                     <menuItem title="kg" tag="1" id="faE-1K-OSk"/>
-                                    <menuItem title="lbs" tag="2" id="jxO-P9-sew"/>
+                                    <menuItem title="lbs" tag="2" id="jxO-P9-sew" userLabel="lb"/>
                                     <menuItem title="oz" tag="3" id="Lz8-UU-JFR"/>
+                                    <menuItem title="oz" tag="3" id="izx-3M-YHj" userLabel="lb:oz"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
@@ -222,41 +222,6 @@
                                             <rect key="frame" x="7" y="179" width="339" height="5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </box>
-                                        <popUpButton imageHugsTitle="YES" verticalHuggingPriority="750" id="vLQ-ku-pYE">
-                                            <rect key="frame" x="196" y="89" width="150" height="22"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <popUpButtonCell key="cell" type="push" title="Displayed Wt" bezelStyle="rounded" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="2Et-fb-MmO" id="Irn-U4-Rh8">
-                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="smallSystem"/>
-                                                <menu key="menu" title="OtherViews" id="JWt-jz-RjY">
-                                                    <items>
-                                                        <menuItem title="Displayed Wt" state="on" id="2Et-fb-MmO"/>
-                                                        <menuItem title="Interval Print" tag="1" id="eSk-bt-B88"/>
-                                                        <menuItem title="Zero" tag="2" id="WLm-c7-3MF"/>
-                                                        <menuItem title="Tare" tag="3" id="RDG-vi-qXj"/>
-                                                        <menuItem title="Get Tare Value" tag="4" id="fH1-Xn-3a9"/>
-                                                        <menuItem title="Get Unit" tag="5" id="4Tx-ir-ocz"/>
-                                                        <menuItem title="Set Unit" tag="6" id="xkZ-KE-eOR"/>
-                                                        <menuItem title="Get Version" tag="7" id="cAI-Pv-6CQ"/>
-                                                        <menuItem title="Full Reset" tag="8" id="WdL-M2-Fvl"/>
-                                                    </items>
-                                                </menu>
-                                            </popUpButtonCell>
-                                            <connections>
-                                                <action selector="commandAction:" target="-2" id="j7l-ms-Brh"/>
-                                            </connections>
-                                        </popUpButton>
-                                        <button imageHugsTitle="YES" id="1193">
-                                            <rect key="frame" x="7" y="93" width="85" height="18"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <buttonCell key="cell" type="check" title="Ship Weight" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="1306">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="smallSystem"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="shipWeightAction:" target="-2" id="gSq-gE-INN"/>
-                                            </connections>
-                                        </button>
                                         <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="49" id="1278">
                                             <rect key="frame" x="14" y="135" width="44" height="14"/>
                                             <autoresizingMask key="autoresizingMask"/>
@@ -305,7 +270,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <button imageHugsTitle="YES" verticalHuggingPriority="750" id="1110">
-                                            <rect key="frame" x="104" y="38" width="164" height="28"/>
+                                            <rect key="frame" x="188" y="80" width="164" height="28"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <buttonCell key="cell" type="push" title="Read Now" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" inset="2" id="1300">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -313,6 +278,17 @@
                                             </buttonCell>
                                             <connections>
                                                 <action selector="sendCommandAction:" target="-2" id="26a-ka-Jpf"/>
+                                            </connections>
+                                        </button>
+                                        <button imageHugsTitle="YES" id="1193">
+                                            <rect key="frame" x="7" y="87" width="85" height="18"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <buttonCell key="cell" type="check" title="Ship Weight" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="1306">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="shipWeightAction:" target="-2" id="gSq-gE-INN"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -379,6 +355,7 @@
         <view id="1167">
             <rect key="frame" x="0.0" y="0.0" width="125" height="1"/>
             <autoresizingMask key="autoresizingMask"/>
+            <point key="canvasLocation" x="32" y="-174"/>
         </view>
         <view id="1169">
             <rect key="frame" x="0.0" y="0.0" width="1" height="111"/>
