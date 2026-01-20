@@ -295,7 +295,6 @@
     [printIntervalField setEnabled:!locked && portOpen];
     [tareField          setEnabled:!locked && portOpen];
     [shipWeightButton   setEnabled:!locked && portOpen];
-    [sendAllButton      setEnabled:!locked && portOpen];
     [pollTimePopup      setEnabled:!locked && portOpen];
     [sendCmdButton      setEnabled:!locked && portOpen];
 }
