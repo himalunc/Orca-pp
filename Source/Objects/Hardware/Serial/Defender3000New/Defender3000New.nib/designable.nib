@@ -84,15 +84,6 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="57" id="892">
-                        <rect key="frame" x="259" y="313" width="61" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="---" id="1296">
-                            <font key="font" metaFont="label"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <imageView id="1112">
                         <rect key="frame" x="20" y="279" width="93" height="75"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -135,6 +126,18 @@
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                    </textField>
+                    <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yYe-L6-DiA">
+                        <rect key="frame" x="286" y="237" width="89" height="19"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1" drawsBackground="YES" id="7jw-yF-uLR">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <action selector="tareAction:" target="-2" id="vh5-bh-8VO"/>
+                        </connections>
                     </textField>
                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dJe-1c-sm9">
                         <rect key="frame" x="18" y="239" width="35" height="14"/>
@@ -317,11 +320,18 @@
                             </tabViewItem>
                             <tabViewItem label="Charts" identifier="" id="1198">
                                 <view key="view" id="1200">
-                                    <rect key="frame" x="10" y="25" width="371" height="187"/>
+                                    <rect key="frame" x="10" y="25" width="372" height="176"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
+                                        <customView id="1308" customClass="ORCompositeTimeLineView">
+                                            <rect key="frame" x="-3" y="-3" width="378" height="152"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <connections>
+                                                <outlet property="delegate" destination="-2" id="1311"/>
+                                            </connections>
+                                        </customView>
                                         <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="275" id="1204">
-                                            <rect key="frame" x="36" y="162" width="279" height="23"/>
+                                            <rect key="frame" x="38" y="147" width="279" height="23"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Weight" id="1307">
                                                 <font key="font" size="12" name="Papyrus"/>
@@ -329,13 +339,6 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <customView id="1308" customClass="ORCompositeTimeLineView">
-                                            <rect key="frame" x="-3" y="-3" width="377" height="163"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <connections>
-                                                <outlet property="delegate" destination="-2" id="1311"/>
-                                            </connections>
-                                        </customView>
                                     </subviews>
                                 </view>
                             </tabViewItem>
@@ -349,17 +352,14 @@
                         <rect key="frame" x="13" y="220" width="362" height="5"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </box>
-                    <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yYe-L6-DiA">
-                        <rect key="frame" x="286" y="237" width="89" height="19"/>
+                    <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="57" id="892">
+                        <rect key="frame" x="271" y="313" width="61" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1" drawsBackground="YES" id="7jw-yF-uLR">
-                            <font key="font" metaFont="smallSystem"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="---" id="1296">
+                            <font key="font" metaFont="label"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
-                        <connections>
-                            <action selector="tareAction:" target="-2" id="vh5-bh-8VO"/>
-                        </connections>
                     </textField>
                 </subviews>
             </view>
