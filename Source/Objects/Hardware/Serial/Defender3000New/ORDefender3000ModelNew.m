@@ -229,7 +229,8 @@ NSString* ORDefender3000NewLock                   = @"ORDefender3000NewLock";
 
 - (void) setWeight:(float)aValue;
 {
-	weight = aValue;
+    weight = [self convertWeightToSelectedUnit : [self convertSerialWeightToPound: aValue]];
+    //weight = aValue;
 	//get the time(UT!)
 	time_t	ut_Time;
 	time(&ut_Time);
@@ -242,6 +243,72 @@ NSString* ORDefender3000NewLock                   = @"ORDefender3000NewLock";
 	if(timeRate == nil) timeRate = [[ORTimeRate alloc] init];
 	[timeRate addDataToTimeAverage:aValue];
 }
+- (float) convertSerialWeightToPound:(float)aValue;
+{
+    switch (unitData) {
+        case 1: // Grams to Pounds
+            weight = aValue * 0.00220462;
+            break;
+            
+        case 2: // Kilograms to Pounds
+            weight = aValue * 2.20462;
+            break;
+            
+        case 3: // Pounds
+            weight = aValue;
+            // Already in pounds
+            break;
+            
+        case 4: // Ounces to Pounds
+            weight = aValue / 16.0;
+            break;
+            
+        case 5: // lb:oz to Pounds
+            /* Logic: Assumes 'weight' is total ounces.
+               If weight is 18 (representing 1lb 2oz), 18 / 16 = 1.125 lbs
+            */
+            weight = aValue / 16.0;
+            break;
+            
+        default:
+            break;
+    }
+    return weight;
+}
+
+- (float) convertWeightToSelectedUnit:(float)aValue;
+{
+    switch (units) {
+        case 1: // pounds to gm
+            weight = aValue / 0.00220462;
+            break;
+            
+        case 2: // pounds to Kilograms
+            weight = aValue / 2.20462;
+            break;
+            
+        case 3: // Pounds
+            weight = aValue;
+            // Already in pounds
+            break;
+            
+        case 4: // Pounds to Ounces
+            weight = aValue * 16.0;
+            break;
+            
+        case 5: // Pounds to lb:oz
+            /* Logic: Assumes 'weight' is total ounces.
+               If weight is 18 (representing 1lb 2oz), 18 / 16 = 1.125 lbs
+            */
+            weight = aValue * 16.0;
+            break;
+            
+        default:
+            break;
+    }
+    return weight;
+}
+
 
 - (uint8_t) command
 {
@@ -293,12 +360,12 @@ NSString* ORDefender3000NewLock                   = @"ORDefender3000NewLock";
     [[NSNotificationCenter defaultCenter] postNotificationName:ORDefender3000NewUnitsChanged
                                                         object:self];
 }
-- (uint16_t) tare
+- (float) tare
 {
     return tare;
 }
 
-- (void) setTare:(uint16_t)aValue
+- (void) setTare:(float)aValue
 {
     [[[self undoManager] prepareWithInvocationTarget:self] setTare:tare];
         
@@ -657,8 +724,9 @@ NSString* ORDefender3000NewLock                   = @"ORDefender3000NewLock";
         components = [theResponse componentsSeparatedByString:@" "];
         if([components count]>=3){
             //format is wt unit mode
-            //[self setWeight:[[components objectAtIndex:0]floatValue]];
-            //[self setUnitData: [components objectAtIndex:1]];
+            [self setWeight:[[components objectAtIndex:0]floatValue]];
+            [self sendDefender3000ToInflux:[[components objectAtIndex:0]doubleValue]];
+            [self setUnitData: [components objectAtIndex:1]];
             [self setModeData:[components objectAtIndex:2]];
         }
         else if([components count]==2){
@@ -679,30 +747,25 @@ NSString* ORDefender3000NewLock                   = @"ORDefender3000NewLock";
 -(void)sendDefender3000ToInflux:(double)weight
 {
     @autoreleasepool {
-	// Retrieve the InFluxDB model instance                                                                                                                                                                                                                                                                                                                             
+        // Retrieve the InFluxDB model instance
         InFluxDB = [[[(ORAppDelegate*)[NSApp delegate] document] findObjectWithFullID:@"ORInFluxDBModel,1"] retain];
-
-	if (InFluxDB == nil) {
+        if (InFluxDB == nil) {
             NSLog(@"Error: Unable to find the InfluxDB model.");
             return;
         }
-        // Current timestamp                                                                                                                                                                                                                                                                                                                                                
-	double currentTimeStamp = [[NSDate date] timeIntervalSince1970];
-
-        // Create a new measurement object for the InfluxDB bucket                                                                                                                                                                                                                                                                                                          
+        // Current timestamp
+        double currentTimeStamp = [[NSDate date] timeIntervalSince1970]; //timestamp is already there check.
+        // Create a new measurement object for the InfluxDB bucket
         ORInFluxDBMeasurement *measurement = [ORInFluxDBMeasurement measurementForBucket:@"ENAP_SC_UNC" org:[InFluxDB org]];
-
+        
         [measurement start:@"Defender3000New_1"];
         [measurement addTag:@"GasOfWeight" withString:@"weightMeasured"];
         [measurement addField:@"weight" withDouble:weight];
-
-        // Set the timestamp                                                                                                                                                                                                                                                                                                                                                
+        // Set the timestamp
         [measurement setTimeStamp:currentTimeStamp];
-
-        // Execute the database command                                                                                                                                                                                                                                                                                                                                     
-	[InFluxDB executeDBCmd:measurement];
-
-        // Manually release InFluxDB if using manual memory management (MRC)                                                                                                                                                                                                                                                                                                
+        // Execute the database command
+        [InFluxDB executeDBCmd:measurement];
+        // Manually release InFluxDB if using manual memory management (MRC)
         [InFluxDB release];
     }
 }

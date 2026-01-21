@@ -78,6 +78,8 @@
 - (void) openPort:(BOOL)state;
 - (uint32_t) timeMeasured;
 - (void) setWeight:(float)aValue;
+- (float) convertSerialWeightToPound:(float)aValue;
+- (float) convertWeightToSelectedUnit:(float)aValue;
 - (float) weight;
 - (uint16_t) printInterval;
 - (void) setPrintInterval:(uint16_t)aValue;
@@ -85,8 +87,8 @@
 - (void) setUnits:(uint8_t)aValue;
 - (uint8_t) command;
 - (void) setCommand:(uint8_t)aValue;
-- (uint16_t) tare;
-- (void) setTare:(uint16_t)aValue;
+- (float) tare;
+- (void) setTare:(float)aValue;
 - (void) sendAllCommands;
 
 #pragma mark ***Data Records
