@@ -17,7 +17,9 @@ II. Notes
 - Orca is now a 64 bit application by default.  The source code is available at https://github.com/unc-enap/Orca
 - If you use OrcaRoot, it is available at https://github.com/unc-enap/OrcaRoot
 - For more extensive GitHub instructions than what is provided below: https://help.github.com/en/github
-- The [Orca website](http://orca.physics.unc.edu) provides details on using Orca and the hardware it interfaces with
+- The ORCA Help website (https://unc-enap.github.io/ORCAHelp) provides detailed documentation on using ORCA and the hardware it interfaces with.
+    - For archival purposes, if you need materials from older help pages, a previous version is available at http://152.19.204.16:8080/orca/Orca_Help/Home.html
+    - Please note that this archived site can only be accessed when connected to the UNC VPN.
 
 
 III. Getting Started
