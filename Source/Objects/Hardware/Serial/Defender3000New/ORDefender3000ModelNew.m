@@ -51,7 +51,7 @@ NSString* ORDefender3000NewLock                   = @"ORDefender3000NewLock";
 - (void) pollWeight;
 - (void) setUnitData:(NSString*)theUnit;
 - (void) setModeData:(NSString*)theMode;
-
+- (void) sendDefender3000ToInflux:(double)wt;
 @end
 
 @implementation ORDefender3000ModelNew
@@ -219,7 +219,8 @@ NSString* ORDefender3000NewLock                   = @"ORDefender3000NewLock";
 
 - (float) weight
 {
-	return weight;
+    //NSLog(@"Weight: %f", weight);
+    return weight;
 }
 
 - (uint32_t) timeMeasured
@@ -229,7 +230,10 @@ NSString* ORDefender3000NewLock                   = @"ORDefender3000NewLock";
 
 - (void) setWeight:(float)aValue;
 {
+    //NSLog(@"Weight: %f", aValue);
     weight = [self convertWeightToSelectedUnit : [self convertSerialWeightToPound: aValue]];
+    weight = [self aftertTareWeight: weight];
+    //NSLog(@"Weight: %f", weight);
     //weight = aValue;
 	//get the time(UT!)
 	time_t	ut_Time;
@@ -241,10 +245,12 @@ NSString* ORDefender3000NewLock                   = @"ORDefender3000NewLock";
 														object:self];
 
 	if(timeRate == nil) timeRate = [[ORTimeRate alloc] init];
-	[timeRate addDataToTimeAverage:aValue];
+	[timeRate addDataToTimeAverage:weight];
+    [self sendDefender3000ToInflux:(double)weight];
 }
 - (float) convertSerialWeightToPound:(float)aValue;
 {
+    //NSLog(@"unitData: %i", unitData);
     switch (unitData) {
         case 1: // Grams to Pounds
             weight = aValue * 0.00220462;
@@ -273,30 +279,31 @@ NSString* ORDefender3000NewLock                   = @"ORDefender3000NewLock";
         default:
             break;
     }
+    //NSLog(@"Weight after converting to pounds: %f \n", weight);
     return weight;
 }
 
 - (float) convertWeightToSelectedUnit:(float)aValue;
 {
     switch (units) {
-        case 1: // pounds to gm
+        case 0: // pounds to gm
             weight = aValue / 0.00220462;
             break;
             
-        case 2: // pounds to Kilograms
+        case 1: // pounds to Kilograms
             weight = aValue / 2.20462;
             break;
             
-        case 3: // Pounds
+        case 2: // Pounds
             weight = aValue;
             // Already in pounds
             break;
             
-        case 4: // Pounds to Ounces
+        case 3: // Pounds to Ounces
             weight = aValue * 16.0;
             break;
             
-        case 5: // Pounds to lb:oz
+        case 4: // Pounds to lb:oz
             /* Logic: Assumes 'weight' is total ounces.
                If weight is 18 (representing 1lb 2oz), 18 / 16 = 1.125 lbs
             */
@@ -304,11 +311,17 @@ NSString* ORDefender3000NewLock                   = @"ORDefender3000NewLock";
             break;
             
         default:
+            weight = aValue;
             break;
     }
+    //NSLog(@"Weight after converting to selected units: %f \n", weight);
     return weight;
 }
-
+-(float)aftertTareWeight:(float)aValue;
+{
+    aValue=aValue-tare;
+    return aValue;
+}
 
 - (uint8_t) command
 {
@@ -352,8 +365,8 @@ NSString* ORDefender3000NewLock                   = @"ORDefender3000NewLock";
 {
     [[[self undoManager] prepareWithInvocationTarget:self] setUnits:units];
     
-    if(units<1)     units = 1;
-    else if(units>5)units = 5;
+    if(units<0)     units = 0;
+    else if(units>5)units = 4;
     
     units = aValue;
     
@@ -585,12 +598,12 @@ NSString* ORDefender3000NewLock                   = @"ORDefender3000NewLock";
 }
 - (NSString*)  getUnitString
 {
-    switch(unitData){
-        case 1: return @"g";
-        case 2: return @"kg";
-        case 3: return @"lb";
-        case 4: return @"oz";
-        case 5: return @"lb:oz";
+    switch(units){
+        case 0: return @"g";
+        case 1: return @"kg";
+        case 2: return @"lb";
+        case 3: return @"oz";
+        case 4: return @"lb:oz";
         default:return @"kg";
     }
 }
@@ -725,26 +738,23 @@ NSString* ORDefender3000NewLock                   = @"ORDefender3000NewLock";
         if([components count]>=3){
             //format is wt unit mode
             [self setWeight:[[components objectAtIndex:0]floatValue]];
-            [self sendDefender3000ToInflux:[[components objectAtIndex:0]doubleValue]];
             [self setUnitData: [components objectAtIndex:1]];
+            //NSLog(@"UnitData at response 3: %@\n", [components objectAtIndex:1]);
             [self setModeData:[components objectAtIndex:2]];
         }
         else if([components count]==2){
             [self setWeight:[[components objectAtIndex:0]floatValue]];
-            [self sendDefender3000ToInflux:[[components objectAtIndex:0]doubleValue]];
+            //[self sendDefender3000ToInflux:[[components objectAtIndex:0]doubleValue]];
             [self setUnitData: [components objectAtIndex:1]];
-            
-            if([[components objectAtIndex:0] isEqualToString:@"UNIT"]){
-                [self setUnitData: [components objectAtIndex:1]];
-            }
-            else if([[components objectAtIndex:0] isEqualToString:@"MODE"]){
-                [self setModeData: [components objectAtIndex:1]];
-            }
+            //NSLog(@"Unit Data at response 2 : %@\n", [components objectAtIndex:1]);
+            [self setUnitData: [components objectAtIndex:1]];
+            [self setModeData: [components objectAtIndex:1]];
         }
 	}
+    //[self sendDefender3000ToInflux:(double)weight];
 }
 
--(void)sendDefender3000ToInflux:(double)weight
+-(void)sendDefender3000ToInflux:(double)wt
 {
     @autoreleasepool {
         // Retrieve the InFluxDB model instance
@@ -758,9 +768,9 @@ NSString* ORDefender3000NewLock                   = @"ORDefender3000NewLock";
         // Create a new measurement object for the InfluxDB bucket
         ORInFluxDBMeasurement *measurement = [ORInFluxDBMeasurement measurementForBucket:@"ENAP_SC_UNC" org:[InFluxDB org]];
         
-        [measurement start:@"Defender3000New_1"];
+        [measurement start:@"Defender3000_1"];
         [measurement addTag:@"GasOfWeight" withString:@"weightMeasured"];
-        [measurement addField:@"weight" withDouble:weight];
+        [measurement addField:@"weight" withDouble:wt];
         // Set the timestamp
         [measurement setTimeStamp:currentTimeStamp];
         // Execute the database command
@@ -782,14 +792,14 @@ NSString* ORDefender3000NewLock                   = @"ORDefender3000NewLock";
 
 - (void) setUnitData:(NSString*)theUnit
 {
-    theUnit = 0;
+    //theUnit = 0;
     if([theUnit isEqualToString:     @"G"])     unitData = 1;
     else if([theUnit isEqualToString:@"KG"])    unitData = 2;
     else if([theUnit isEqualToString:@"LB"])    unitData = 3;
     else if([theUnit isEqualToString:@"OZ"])    unitData = 4;
     else if([theUnit isEqualToString:@"LB:OZ"]) unitData = 5;
     else theUnit = 0;
-    
+    //NSLog(@"Unit Data converted : %i", unitData);
     [[NSNotificationCenter defaultCenter] postNotificationName:ORDefender3000ModelNewUnitDataChanged object:self];
 }
 

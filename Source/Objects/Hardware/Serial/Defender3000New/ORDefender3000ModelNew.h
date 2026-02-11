@@ -80,6 +80,7 @@
 - (void) setWeight:(float)aValue;
 - (float) convertSerialWeightToPound:(float)aValue;
 - (float) convertWeightToSelectedUnit:(float)aValue;
+- (float) aftertTareWeight:(float)aValue;
 - (float) weight;
 - (uint16_t) printInterval;
 - (void) setPrintInterval:(uint16_t)aValue;
