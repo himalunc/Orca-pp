@@ -47,6 +47,7 @@ NSString* ORInFluxDBHostNameChanged        = @"ORInFluxDBHostNameChanged";
 NSString* ORInFluxDBModelDBInfoChanged     = @"ORInFluxDBModelDBInfoChanged";
 NSString* ORInFluxDBRateChanged            = @"ORInFluxDBRateChanged";
 NSString* ORInFluxDBStealthModeChanged     = @"ORInFluxDBStealthModeChanged";
+NSString* ORInFluxDBModeChanged            = @"ORInFluxDBModeChanged";
 NSString* ORInFluxDBBucketArrayChanged     = @"ORInFluxDBBucketArrayChanged";
 NSString* ORInFluxDBOrgArrayChanged        = @"ORInFluxDBOrgArrayChanged";
 NSString* ORInFluxDBErrorChanged           = @"ORInFluxDBErrorChanged";
@@ -104,6 +105,7 @@ static NSString* ORInFluxDBModelInConnector = @"ORInFluxDBModelInConnector";
     [connectionAlarm release];
     [lastAlarmDate   release];
     [cmdBuffer       release];
+    [messageQueue    release];
 
     [super dealloc];
 }
@@ -430,6 +432,11 @@ static NSString* ORInFluxDBModelInConnector = @"ORInFluxDBModelInConnector";
     return stealthMode;
 }
 
+- (BOOL) inFluxdbMode
+{
+    return inFluxdbMode;
+}
+
 - (void) setStealthMode:(BOOL)aStealthMode
 {
     [[[self undoManager] prepareWithInvocationTarget:self] setStealthMode:stealthMode];
@@ -439,6 +446,13 @@ static NSString* ORInFluxDBModelInConnector = @"ORInFluxDBModelInConnector";
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:ORInFluxDBStealthModeChanged object:self];
 }
+- (void) setInFluxDBMode:(BOOL) aInFluxDBMode
+{
+    [[[self undoManager] prepareWithInvocationTarget:self] setInFluxDBMode:inFluxdbMode];
+    inFluxdbMode = aInFluxDBMode;
+    [[NSNotificationCenter defaultCenter] postNotificationName:ORInFluxDBModeChanged object:self];
+}
+
 - (short) measurementTimeOut { return measurementTimeOut;}
 - (short) maxLineCount       { return maxLineCount;}
 
@@ -801,6 +815,7 @@ static NSString* ORInFluxDBModelInConnector = @"ORInFluxDBModelInConnector";
     [self setExperimentName: [decoder decodeObjectForKey : @"experimentName"]];
     [self setMeasurementTimeOut: [decoder decodeIntForKey: @"measurementTimeOut"]];
     [self setMaxLineCount: [decoder decodeIntForKey      : @"maxLineCount"]];
+    [self setInFluxDBMode:[decoder decodeBoolForKey      :@"inFluxdbMode"]];
     [[self undoManager]  enableUndoRegistration];
     [self registerNotificationObservers];
     return self;
@@ -815,6 +830,7 @@ static NSString* ORInFluxDBModelInConnector = @"ORInFluxDBModelInConnector";
     [encoder encodeObject:experimentName forKey: @"experimentName"];
     [encoder encodeInt:measurementTimeOut forKey: @"measurementTimeOut"];
     [encoder encodeInt:maxLineCount      forKey: @"maxLineCount"];
+    [encoder encodeBool:inFluxdbMode forKey:@"inFluxdbMode"];
 }
 
 - (void) _cancelAllPeriodicOperations
@@ -957,41 +973,153 @@ static NSString* ORInFluxDBModelInConnector = @"ORInFluxDBModelInConnector";
 {
     return orgArray;
 }
-
-- (void) decodeBucketList:(NSDictionary*)result
+- (void) decodeBucketList:(id)result
 {
-    NSArray* anArray = [result objectForKey:@"buckets"];
-    [bucketArray release];
-    bucketArray = [[NSMutableArray array] retain];
-    for(NSDictionary* aBucket in anArray){
-        if(![[aBucket objectForKey:@"name"] hasPrefix:@"_"]){
-            [bucketArray addObject:aBucket];
+    if (!inFluxdbMode)
+    {
+        NSArray* anArray = [result objectForKey:@"buckets"];
+        [bucketArray release];
+        bucketArray = [[NSMutableArray array] retain];
+        for(NSDictionary* aBucket in anArray){
+            if(![[aBucket objectForKey:@"name"] hasPrefix:@"_"]){
+                [bucketArray addObject:aBucket];
+            }
         }
-    }
-    [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:ORInFluxDBBucketArrayChanged
-                                    object:self
-                                  userInfo:nil
-                             waitUntilDone:NO];
-    [self printBucketTable];
-}
-
-- (void) decodeOrgList:(NSDictionary*)result
-{
-    NSArray* anArray = [result objectForKey:@"orgs"];
-    if([anArray count]){
-        [orgArray release];
-        orgArray = [anArray retain];
+        [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:ORInFluxDBBucketArrayChanged
+                                                                            object:self
+                                                                          userInfo:nil
+                                                                     waitUntilDone:NO];
+        [self printBucketTable];
     }
     else {
-        [orgArray release];
-        orgArray = nil;
+        NSArray* anArray = nil;
+        if ([result isKindOfClass:[NSArray class]]) {
+            anArray = (NSArray*)result;
+        }
+        
+        [bucketArray release];
+        bucketArray = [[NSMutableArray array] retain];
+        
+        for(NSDictionary* aBucket in anArray){
+            // Change: Look for "iox::database" instead of "name"
+            NSString* dbName = [aBucket objectForKey:@"iox::database"];
+            
+            if(dbName && ![dbName hasPrefix:@"_"]){
+                // To keep the rest of your app from breaking, you might want to
+                // inject the "name" key so other functions can find it easily.
+                NSMutableDictionary* mutableBucket = [aBucket mutableCopy];
+                [mutableBucket setObject:dbName forKey:@"name"];
+                
+                [bucketArray addObject:mutableBucket];
+                [mutableBucket release];
+            }
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:ORInFluxDBBucketArrayChanged
+                                                                            object:self
+                                                                          userInfo:nil
+                                                                     waitUntilDone:NO];
+        [self printBucketTable];
     }
-    [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:ORInFluxDBOrgArrayChanged
-                                                                        object:self
-                                                                      userInfo:nil
-                                                                 waitUntilDone:NO];
-    [self printOrgTable];
 }
+
+//- (void) decodeBucketList:(NSDictionary*)result
+//{
+//    NSArray* anArray = [result objectForKey:@"buckets"];
+//    [bucketArray release];
+//    bucketArray = [[NSMutableArray array] retain];
+//    for(NSDictionary* aBucket in anArray){
+//        if(![[aBucket objectForKey:@"name"] hasPrefix:@"_"]){
+//            [bucketArray addObject:aBucket];
+//        }
+//    }
+//    [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:ORInFluxDBBucketArrayChanged
+//                                    object:self
+//                                  userInfo:nil
+//                             waitUntilDone:NO];
+//    [self printBucketTable];
+//}
+
+- (void) decodeOrgList:(id)result
+{
+    if (!inFluxdbMode)
+    {
+        NSArray* anArray = [result objectForKey:@"orgs"];
+        if([anArray count]){
+            [orgArray release];
+            orgArray = [anArray retain];
+        }
+        else {
+            [orgArray release];
+            orgArray = nil;
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:ORInFluxDBOrgArrayChanged
+                                                                            object:self
+                                                                          userInfo:nil
+                                                                     waitUntilDone:NO];
+        [self printOrgTable];
+    }
+    else {
+        NSArray* rawArray = nil;
+        if ([result isKindOfClass:[NSArray class]]) {
+            rawArray = (NSArray*)result;
+        }
+        
+        [orgArray release];
+        
+        if([rawArray count] > 0){
+            NSMutableArray* processedArray = [[NSMutableArray alloc] init];
+            
+            for(NSDictionary* item in rawArray) {
+                NSString* dbName = [item objectForKey:@"iox::database"];
+                
+                if (dbName) {
+                    NSMutableDictionary* mutableItem = [item mutableCopy];
+                    
+                    // FIX: Map the Name to the ID field
+                    // This ensures [delegate orgId] or [delegate bucketId] is never null
+                    [mutableItem setObject:dbName forKey:@"name"];
+                    [mutableItem setObject:dbName forKey:@"id"];
+                    
+                    // FIX: Provide a friendly string for the "Org" column
+                    [mutableItem setObject:@"InfluxDB 3.0" forKey:@"org_display_name"];
+                    
+                    [processedArray addObject:mutableItem];
+                    [mutableItem release];
+                }
+            }
+            orgArray = processedArray;
+        }
+        else {
+            // If no databases found, create a placeholder so the UI isn't empty
+            NSDictionary* placeholder = @{@"name": @"Default", @"id": @"default", @"org_display_name": @"V3 Engine"};
+            orgArray = [[NSMutableArray arrayWithObject:placeholder] retain];
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:ORInFluxDBOrgArrayChanged
+                                                                            object:self
+                                                                          userInfo:nil
+                                                                     waitUntilDone:NO];
+    }
+}
+
+//- (void) decodeOrgList:(NSDictionary*)result
+//{
+//    NSArray* anArray = [result objectForKey:@"orgs"];
+//    if([anArray count]){
+//        [orgArray release];
+//        orgArray = [anArray retain];
+//    }
+//    else {
+//        [orgArray release];
+//        orgArray = nil;
+//    }
+//    [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:ORInFluxDBOrgArrayChanged
+//                                                                        object:self
+//                                                                      userInfo:nil
+//                                                                 waitUntilDone:NO];
+//    [self printOrgTable];
+//}
 
 - (void) printBucketTable
 {
@@ -1080,3 +1208,4 @@ static NSString* ORInFluxDBModelInConnector = @"ORInFluxDBModelInConnector";
     [outerPool release];
 }
 @end
+

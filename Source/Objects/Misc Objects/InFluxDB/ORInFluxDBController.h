@@ -28,6 +28,7 @@
     IBOutlet NSButton*          deleteBucketButton;
     IBOutlet NSButton*          InFluxDBLockButton;
     IBOutlet NSButton*          stealthModeButton;
+    IBOutlet NSButton*          InFluxdbModeButton;
     IBOutlet NSTextField*       dbStatusField;
     IBOutlet NSTableView*       bucketTableView;
     IBOutlet ORTimedTextField*  errorField;
@@ -44,6 +45,7 @@
 - (void) inFluxDBLockChanged:(NSNotification*)aNote;
 - (void) rateChanged:(NSNotification*)aNote;
 - (void) stealthModeChanged:(NSNotification*)aNote;
+- (void) inFluxdbModeChanged:(NSNotification*)aNote;
 - (void) bucketArrayChanged:(NSNotification*)aNote;
 - (void) errorStringChanged:(NSNotification*)aNote;
 - (void) connectionStatusChanged:(NSNotification*)aNote;
@@ -58,6 +60,7 @@
 - (IBAction) deleteBucketsAction:(id)sender;
 - (IBAction) InFluxDBLockAction:(id)sender;
 - (IBAction) stealthModeAction:(id)sender;
+- (IBAction) inFluxdbModeAction:(id)sender;
 - (IBAction) createBucketsAction:(id)sender;
 - (IBAction) measurementTimeOutAction:(id)sender;
 - (IBAction) maxLineCountAction:(id)sender;
