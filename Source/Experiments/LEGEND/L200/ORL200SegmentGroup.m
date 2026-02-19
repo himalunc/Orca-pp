@@ -71,6 +71,7 @@ NSString* ORRelinkSegments   = @"ORRelinkSegments";
     if(![card respondsToSelector:@selector(baselineHistory:)]) return 0.0;
     if(![card enableBaselineHistory] || ![card isRunning]) return 0.0;
     ORTimeRate* baseHistory = [card baselineHistory:[segment channel]];
+    if (!baseHistory || [baseHistory count] == 0) return 0.0;
     return [baseHistory valueAtIndex:[baseHistory count]-1];
 }
 
@@ -126,7 +127,7 @@ NSString* ORRelinkSegments   = @"ORRelinkSegments";
         for(id key in dict) [channels addObject:[NSString stringWithString:key]];
         //chans = [NSArray array];
         chans = [channels sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-        if (type==kL200SISType) NSLog(@"/n Here I am without expectation: /n ");
+        if (type==kL200SISType) NSLog(@"\n Here I am without expectation: \n ");
         if(type == kL200CC4Type){
             for(id aPosition in chans){
                 NSDictionary* segInfo = [[dict objectForKey:aPosition]objectForKey:@"cc4"];

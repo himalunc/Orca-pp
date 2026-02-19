@@ -427,7 +427,7 @@
     }
     float auxOffset = 0.0;
     for(int i=kL200AuxLabels-1; i>=0; i--){
-        if(!auxLabel[i]) auxLabel[0] = [@"" copy];
+        if(!auxLabel[i]) auxLabel[i] = [@"" copy];
         if([auxLabel[i] length] == 0) continue;
         NSAttributedString* s = [[NSAttributedString alloc] initWithString:auxLabel[i] attributes:auxLabelAttr];
         [s drawAtPoint:NSMakePoint(kL200DetViewWidth*0.92+kL200AuxViewWidth/2-[s size].width/2, auxLabelY+auxOffset)];
