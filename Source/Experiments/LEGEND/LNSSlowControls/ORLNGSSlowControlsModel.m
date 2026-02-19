@@ -410,7 +410,7 @@ NSString* ORL200SlowControlsSourceHeightChanged = @"ORL200SlowControlsSourceHeig
             [task waitUntilExit];
             [task release];
         
-            NSString* result = [[[NSString alloc] initWithData:dataRead encoding:NSUTF8StringEncoding] release];
+            NSString* result = [[[NSString alloc] initWithData:dataRead encoding:NSUTF8StringEncoding] autorelease];
             [timer stop];
             if(!scriptCmd){
                 [self setCmd:aCmd key:kCmdTime   value:[NSString stringWithFormat:@"%.2f",[timer seconds]]];
