@@ -119,7 +119,10 @@
 
 - (void)writeData:(NSData*)inData
 {
-    [socket writeData:inData];
+    NetSocket* sock = [[socket retain] autorelease];
+    if(sock){
+        [socket writeData:inData];
+    }
 }
 
 - (int) socketStatus
