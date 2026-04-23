@@ -1102,7 +1102,10 @@ static NSString* ORInFluxDBModelInConnector = @"ORInFluxDBModelInConnector";
                                                                      waitUntilDone:NO];
     }
 }
-
+- (void)processElementStateChanged:(NSNotification *)aNote {
+    // The app will no longer crash.
+    // You can add code here later if you need this object to react to drag/drop state changes.
+}
 //- (void) decodeOrgList:(NSDictionary*)result
 //{
 //    NSArray* anArray = [result objectForKey:@"orgs"];
