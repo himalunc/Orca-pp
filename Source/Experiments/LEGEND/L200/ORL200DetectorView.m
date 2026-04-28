@@ -47,7 +47,7 @@
 #define kL200CC4InnerR          (kL200CC4Offset*2-5)
 #define kL200CC4OuterR          (kL200CC4Offset*2 + 2*kL200CC4Size*7+10)
 #define kL200CC4DeltaAngle      (360/kNumCC4Positions)
-static NSInteger NumberofTimesCall = 0;
+//static NSInteger NumberofTimesCall = 0;
 
 @interface ORL200DetectorView (private)
 - (void) makeAllSegments;
@@ -212,11 +212,11 @@ static NSInteger NumberofTimesCall = 0;
 
 - (NSColor*) getColorForSet:(int)setIndex value:(float)aValue
 {
-    if (NumberofTimesCall==1000){ //only calling to make source once in 1000 times
-        [self makeSource];
-        NumberofTimesCall=0;
-    }
-    NumberofTimesCall++;
+    //if (NumberofTimesCall==10000){ //only calling to make source once in 1000 times
+    //    [self makeSource];
+    //    NumberofTimesCall=0;
+    //}
+    //NumberofTimesCall++;
     if(setIndex == kL200DetType)       return [detColorScale     getColorForValue:aValue];
     else if(setIndex == kL200SiPMType) return [sipmColorScale    getColorForValue:aValue];
     else if(setIndex == kL200PMTType)  return [pmtColorScale     getColorForValue:aValue];
@@ -427,7 +427,7 @@ static NSInteger NumberofTimesCall = 0;
     }
     float auxOffset = 0.0;
     for(int i=kL200AuxLabels-1; i>=0; i--){
-        if(!auxLabel[i]) auxLabel[0] = [@"" copy];
+        if(!auxLabel[i]) auxLabel[i] = [@"" copy];
         if([auxLabel[i] length] == 0) continue;
         NSAttributedString* s = [[NSAttributedString alloc] initWithString:auxLabel[i] attributes:auxLabelAttr];
         [s drawAtPoint:NSMakePoint(kL200DetViewWidth*0.92+kL200AuxViewWidth/2-[s size].width/2, auxLabelY+auxOffset)];
@@ -1024,6 +1024,7 @@ static NSInteger NumberofTimesCall = 0;
 }
 -(void)drawSourceLabel{
     NSFont* font = [NSFont fontWithName:@"Geneva" size:7];
+    [sourceLabelAttr release];
     sourceLabelAttr = [[NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName,
                      [NSColor systemRedColor], NSForegroundColorAttributeName, nil] retain];
     for(int i=0; i<4; i++){

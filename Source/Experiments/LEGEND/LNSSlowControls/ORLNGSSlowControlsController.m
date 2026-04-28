@@ -29,7 +29,8 @@
 
 - (void) dealloc
 {
-	[super dealloc];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super dealloc];
 }
 
 - (void) awakeFromNib

@@ -94,19 +94,48 @@
 
 - (void) setBucketId:(NSString*) anId
 {
-    [bucketId autorelease];
+    [bucketId release];
     bucketId = [anId copy];
 }
 - (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
 {
-    NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/buckets/%@",[delegate hostName],bucketId];
-    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
-    request.HTTPMethod = @"DELETE";
-    [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]]                     forHTTPHeaderField:@"Authorization"];
-    [request setValue:@"text/plain; application/json" forHTTPHeaderField:@"Accept"];
-    requestSize = [requestString length];
-    return request;
+    BOOL isInFluxOn = [delegate inFluxdbMode];
+    if (!isInFluxOn) {
+        NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/buckets/%@",[delegate hostName],bucketId];
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+        request.HTTPMethod = @"DELETE";
+        [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]]                     forHTTPHeaderField:@"Authorization"];
+        [request setValue:@"text/plain; application/json" forHTTPHeaderField:@"Accept"];
+        requestSize = [requestString length];
+        return request;
+    }
+    else{
+        // 1. Change path to /api/v3/database/ and ensure you pass the NAME (e.g., "ENAP_SC_UNC")
+        NSString* requestString = [NSString stringWithFormat:@"%@/api/v3/database/%@", [delegate hostName], bucketId];
+        
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+        request.HTTPMethod = @"DELETE";
+        
+        // 2. Change "Token" to "Bearer"
+        [request setValue:[NSString stringWithFormat:@"Bearer %@", [delegate authToken]] forHTTPHeaderField:@"Authorization"];
+        
+        // 3. Clean up the Accept header (standard JSON is usually enough)
+        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        
+        requestSize = [requestString length];
+        return request;
+    }
 }
+//- (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate/
+//{
+//    NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/buckets/%@",[delegate hostName],bucketId];
+//    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+//    request.HTTPMethod = @"DELETE";
+//    [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]]                     forHTTPHeaderField:@"Authorization"];
+//    [request setValue:@"text/plain; application/json" forHTTPHeaderField:@"Accept"];
+//    requestSize = [requestString length];
+//    return request;
+//}
 
 - (void) logResult:(id)result code:(int)aCode delegate:(ORInFluxDBModel*)delegate
 {
@@ -134,14 +163,44 @@
     return [[[self alloc] init:kFluxListBuckets] autorelease];
 }
 
+//- (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
+//{
+//    NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/buckets?org=%@",[delegate hostName],[delegate org]];
+//    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+ //   request.HTTPMethod = @"GET";
+//   [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]]                     forHTTPHeaderField:@"Authorization"];
+ //   requestSize = [requestString length];
+ //   return request;
+//}
 - (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
 {
-    NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/buckets?org=%@",[delegate hostName],[delegate org]];
-    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
-    request.HTTPMethod = @"GET";
-    [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]]                     forHTTPHeaderField:@"Authorization"];
-    requestSize = [requestString length];
-    return request;
+    BOOL isInFluxOn = [delegate inFluxdbMode];
+    if (!isInFluxOn) {
+        NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/buckets?org=%@",[delegate hostName],[delegate org]];
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+        request.HTTPMethod = @"GET";
+        [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]]                     forHTTPHeaderField:@"Authorization"];
+        requestSize = [requestString length];
+        return request;
+    }
+    else{
+        // 1. Change to the v3 database configuration endpoint
+        // 2. Added ?format=json to ensure a standard JSON response
+        NSString* requestString = [NSString stringWithFormat:@"%@/api/v3/configure/database?format=json", [delegate hostName]];
+        
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+        
+        request.HTTPMethod = @"GET";
+        
+        // 3. Update 'Token' to 'Bearer'
+        [request setValue:[NSString stringWithFormat:@"Bearer %@", [delegate authToken]] forHTTPHeaderField:@"Authorization"];
+        
+        // 4. Explicitly ask for JSON
+        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        
+        requestSize = [requestString length];
+        return request;
+    }
 }
 
 - (void) logResult:(id)aResult code:(int)aCode delegate:(ORInFluxDBModel*)delegate;
@@ -171,16 +230,49 @@
     return delayTime;
 }
 
+//- (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
+//{
+//    NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/orgs",[delegate hostName]];
+//    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+
+ //   request.HTTPMethod = @"GET";
+ //   [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]] forHTTPHeaderField:@"Authorization"];
+//    requestSize = [requestString length];
+//
+//    return request;
+//}
 - (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
 {
-    NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/orgs",[delegate hostName]];
-    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
-
-    request.HTTPMethod = @"GET";
-    [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]] forHTTPHeaderField:@"Authorization"];
-    requestSize = [requestString length];
-
-    return request;
+    BOOL isInFluxOn = [delegate inFluxdbMode];
+    if (!isInFluxOn) {
+        NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/orgs",[delegate hostName]];
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+        
+        request.HTTPMethod = @"GET";
+        [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]] forHTTPHeaderField:@"Authorization"];
+        requestSize = [requestString length];
+        
+        return request;
+    }
+    else{
+        // 1. Change endpoint to /api/v3/configure/database
+        // 2. Added ?format=json to get a clean JSON array back
+        NSString* requestString = [NSString stringWithFormat:@"%@/api/v3/configure/database?format=json",[delegate hostName]];
+        
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+        
+        request.HTTPMethod = @"GET";
+        
+        // 3. Change "Token" to "Bearer"
+        [request setValue:[NSString stringWithFormat:@"Bearer %@",[delegate authToken]] forHTTPHeaderField:@"Authorization"];
+        
+        // 4. Good practice: explicitly ask for JSON
+        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        
+        requestSize = [requestString length];
+        
+        return request;
+    }
 }
 
 - (void) logResult:(id)aResult code:(int)aCode delegate:(ORInFluxDBModel*)delegate;
@@ -197,16 +289,52 @@
     return [[[self alloc] init:kFluxListOrgs] autorelease];
 }
 
+//- (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
+//{
+//    NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/orgs",[delegate hostName]];
+//    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+
+ //   request.HTTPMethod = @"GET";
+ //   [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]] forHTTPHeaderField:@"Authorization"];
+  //  requestSize = [requestString length];
+//
+ //   return request;
+//}
+
 - (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
 {
-    NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/orgs",[delegate hostName]];
-    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
-
-    request.HTTPMethod = @"GET";
-    [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]] forHTTPHeaderField:@"Authorization"];
-    requestSize = [requestString length];
-
-    return request;
+    BOOL isInFluxOn = [delegate inFluxdbMode];
+    if (!isInFluxOn) {
+        //NSLog(@"Listing Orgs: This is Influx 2");
+        NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/orgs",[delegate hostName]];
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+        
+        request.HTTPMethod = @"GET";
+        [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]] forHTTPHeaderField:@"Authorization"];
+        requestSize = [requestString length];
+        
+        return request;
+    }
+    else{
+        //NSLog(@"Listing Orgs: This is Influx 3");
+        // 1. Point to the v3 database configuration list
+        // 2. We use ?format=json to make the response machine-readable
+        NSString* requestString = [NSString stringWithFormat:@"%@/api/v3/configure/database?format=json",[delegate hostName]];
+        
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+        
+        request.HTTPMethod = @"GET";
+        
+        // 3. Update 'Token' to 'Bearer' (The v3 standard)
+        [request setValue:[NSString stringWithFormat:@"Bearer %@",[delegate authToken]] forHTTPHeaderField:@"Authorization"];
+        
+        // 4. Ensure the app knows it is receiving JSON
+        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        
+        requestSize = [requestString length];
+        
+        return request;
+    }
 }
 
 - (void) logResult:(id)result code:(int)aCode delegate:(ORInFluxDBModel*)delegate
@@ -244,36 +372,104 @@
     [orgId release];
     [super dealloc];
 }
-
 - (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
 {
-    NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/buckets",[delegate hostName]];
-    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
-    request.HTTPMethod = @"POST";
-    [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]] forHTTPHeaderField:@"Authorization"];
-    [request setValue:@"text/plain; application/json" forHTTPHeaderField:@"Accept"];
-
-    NSMutableDictionary* dict = [NSMutableDictionary dictionary];
-    [dict setObject:orgId  forKey:@"orgID"];
-    [dict setObject:bucket forKey:@"name"];
-    if(expireTime){
-        NSMutableDictionary* ret = [NSMutableDictionary dictionary];
-        [ret setObject:@"expire" forKey:@"type"];
-        [ret setObject:[NSNumber numberWithLong:expireTime] forKey:@"everySeconds"];
-        [ret setObject:[NSNumber numberWithInt:0] forKey:@"shardGroupDurationSeconds"];
-        NSArray* retArray = [NSArray arrayWithObject:ret];
-        [dict setObject:retArray forKey:@"retentionRules"];
+    BOOL isInFluxOn = [delegate inFluxdbMode];
+    if (!isInFluxOn) {
+        NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/buckets",[delegate hostName]];
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+        request.HTTPMethod = @"POST";
+        [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]] forHTTPHeaderField:@"Authorization"];
+        [request setValue:@"text/plain; application/json" forHTTPHeaderField:@"Accept"];
+        
+        NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+        [dict setObject:orgId  forKey:@"orgID"];
+        [dict setObject:bucket forKey:@"name"];
+        if(expireTime){
+            NSMutableDictionary* ret = [NSMutableDictionary dictionary];
+            [ret setObject:@"expire" forKey:@"type"];
+            [ret setObject:[NSNumber numberWithLong:expireTime] forKey:@"everySeconds"];
+            [ret setObject:[NSNumber numberWithInt:0] forKey:@"shardGroupDurationSeconds"];
+            NSArray* retArray = [NSArray arrayWithObject:ret];
+            [dict setObject:retArray forKey:@"retentionRules"];
+        }
+        NSError* error;
+        NSData*  jsonData = [NSJSONSerialization dataWithJSONObject:dict
+                                                            options:0 //because don't care about readability
+                                                              error:&error];
+        request.HTTPBody = jsonData;
+        requestSize = [requestString length];
+        requestSize += [jsonData length];
+        
+        return request;
     }
-    NSError* error;
-    NSData*  jsonData = [NSJSONSerialization dataWithJSONObject:dict
-                                                        options:0 //because don't care about readability
-                                                          error:&error];
-    request.HTTPBody = jsonData;
-    requestSize = [requestString length];
-    requestSize += [jsonData length];
-
-    return request;
+    else{
+        // 1. Point to the v3 database configuration endpoint
+        NSString* requestString = [NSString stringWithFormat:@"%@/api/v3/configure/database", [delegate hostName]];
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+        
+        request.HTTPMethod = @"POST";
+        
+        // 2. Use "Bearer" instead of "Token"
+        [request setValue:[NSString stringWithFormat:@"Bearer %@", [delegate authToken]] forHTTPHeaderField:@"Authorization"];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        
+        // 3. Rebuild the dictionary for V3
+        NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+        [dict setObject:orgId  forKey:@"orgID"];
+        [dict setObject:bucket forKey:@"name"]; // In V3, 'bucket' name becomes the database name
+        
+        // V3 uses 'retention_rules' (plural/underscore) or specific config settings.
+        // If you just want a standard database, the name is often enough.
+        if(expireTime > 0){
+            // V3 simple retention (Check your specific 3.0 version docs,
+            // as some community versions handle retention via 'retention_period')
+            [dict setObject:[NSNumber numberWithLong:expireTime] forKey:@"retention_period"];
+        }
+        
+        NSError* error;
+        NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dict
+                                                           options:0
+                                                             error:&error];
+        request.HTTPBody = jsonData;
+        
+        requestSize = [requestString length];
+        requestSize += [jsonData length];
+        
+        return request;
+    }
 }
+
+//- (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
+//{
+//    NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/buckets",[delegate hostName]];
+//    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+//    request.HTTPMethod = @"POST";
+//    [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]] forHTTPHeaderField:@"Authorization"];
+ //   [request setValue:@"text/plain; application/json" forHTTPHeaderField:@"Accept"];
+
+ //   NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+ //   [dict setObject:orgId  forKey:@"orgID"];
+ //   [dict setObject:bucket forKey:@"name"];
+ //   if(expireTime){
+ //       NSMutableDictionary* ret = [NSMutableDictionary dictionary];
+//        [ret setObject:@"expire" forKey:@"type"];
+//        [ret setObject:[NSNumber numberWithLong:expireTime] forKey:@"everySeconds"];
+//        [ret setObject:[NSNumber numberWithInt:0] forKey:@"shardGroupDurationSeconds"];
+//        NSArray* retArray = [NSArray arrayWithObject:ret];
+//        [dict setObject:retArray forKey:@"retentionRules"];
+//    }
+//    NSError* error;
+//    NSData*  jsonData = [NSJSONSerialization dataWithJSONObject:dict
+//                                                        options:0 //because don't care about readability
+//                                                          error:&error];
+//    request.HTTPBody = jsonData;
+//    requestSize = [requestString length];
+//    requestSize += [jsonData length];
+
+//    return request;
+//}
 - (void) logResult:(id)result code:(int)aCode delegate:(ORInFluxDBModel*)delegate
 {
     if(aCode == 201)   NSLog(@"Influx: Created Bucket: %@\n",bucket);
@@ -401,22 +597,65 @@
 
 }
 
+//- (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
+//{
+//    NSString* cmdLine = [self cmdLine];
+            
+//    NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/write?org=%@&bucket=%@&precision=ns",[delegate hostName],org,bucket];
+//    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+
+//    request.HTTPMethod = @"POST";
+//    [request setValue:@"text/plain; application/json" forHTTPHeaderField:@"Accept"];
+//    [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]]                     forHTTPHeaderField:@"Authorization"];
+    
+//    request.HTTPBody = [cmdLine dataUsingEncoding:NSASCIIStringEncoding];
+//    requestSize = [cmdLine length];
+    
+//    return request;
+//}
 - (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
 {
-    NSString* cmdLine = [self cmdLine];
-            
-    NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/write?org=%@&bucket=%@&precision=ns",[delegate hostName],org,bucket];
-    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
-
-    request.HTTPMethod = @"POST";
-    [request setValue:@"text/plain; application/json" forHTTPHeaderField:@"Accept"];
-    [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]]                     forHTTPHeaderField:@"Authorization"];
-    
-    request.HTTPBody = [cmdLine dataUsingEncoding:NSASCIIStringEncoding];
-    requestSize = [cmdLine length];
-    
-    return request;
+    BOOL isInFluxOn = [delegate inFluxdbMode];
+    if (!isInFluxOn) {
+        NSString* cmdLine = [self cmdLine];
+        
+        NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/write?org=%@&bucket=%@&precision=ns",[delegate hostName],org,bucket];
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+        
+        request.HTTPMethod = @"POST";
+        [request setValue:@"text/plain; application/json" forHTTPHeaderField:@"Accept"];
+        [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]]                     forHTTPHeaderField:@"Authorization"];
+        
+        request.HTTPBody = [cmdLine dataUsingEncoding:NSASCIIStringEncoding];
+        requestSize = [cmdLine length];
+        
+        return request;
+    }
+    else{
+        NSString* cmdLine = [self cmdLine];
+        
+        // 1. Remove the 'org' parameter. Keep 'bucket' (used as the database name).
+        NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/write?bucket=%@&precision=ns",[delegate hostName],bucket];
+        
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+        
+        request.HTTPMethod = @"POST";
+        
+        // 2. Standard headers for Line Protocol
+        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        [request setValue:@"text/plain; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+        
+        // 3. Update 'Token' to 'Bearer'
+        [request setValue:[NSString stringWithFormat:@"Bearer %@",[delegate authToken]] forHTTPHeaderField:@"Authorization"];
+        
+        request.HTTPBody = [cmdLine dataUsingEncoding:NSUTF8StringEncoding];
+        requestSize = [cmdLine length];
+        
+        return request;
+    }
 }
+
+
 @end
 
 @implementation ORInFluxDBCmdLineMode
@@ -452,20 +691,62 @@
     return line;
 }
 
+//- (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
+//{
+//    NSString* cmdLine = [self line];
+//    NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/write?org=%@&bucket=%@&precision=ns",[delegate hostName],org,bucket];
+//    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+//
+//    request.HTTPMethod = @"POST";
+//    [request setValue:@"text/plain; application/json" forHTTPHeaderField:@"Accept"];
+//    [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]]                     forHTTPHeaderField:@"Authorization"];
+    
+//    request.HTTPBody = [cmdLine dataUsingEncoding:NSASCIIStringEncoding];
+//    requestSize = [cmdLine length];
+//
+//    return request;
+//}
+
 - (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
 {
-    NSString* cmdLine = [self line];
-    NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/write?org=%@&bucket=%@&precision=ns",[delegate hostName],org,bucket];
-    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
-    
-    request.HTTPMethod = @"POST";
-    [request setValue:@"text/plain; application/json" forHTTPHeaderField:@"Accept"];
-    [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]]                     forHTTPHeaderField:@"Authorization"];
-    
-    request.HTTPBody = [cmdLine dataUsingEncoding:NSASCIIStringEncoding];
-    requestSize = [cmdLine length];
-    
-    return request;
+    BOOL isInFluxOn = [delegate inFluxdbMode];
+    if (!isInFluxOn) {
+        NSString* cmdLine = [self line];
+        NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/write?org=%@&bucket=%@&precision=ns",[delegate hostName],org,bucket];
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+        
+        request.HTTPMethod = @"POST";
+        [request setValue:@"text/plain; application/json" forHTTPHeaderField:@"Accept"];
+        [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]]                     forHTTPHeaderField:@"Authorization"];
+        
+        request.HTTPBody = [cmdLine dataUsingEncoding:NSASCIIStringEncoding];
+        requestSize = [cmdLine length];
+        
+        return request;
+        
+    }
+    else{
+        NSString* cmdLine = [self line];
+        
+        // 1. Removed 'org=' parameter. Keep 'bucket=' as the database name.
+        NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/write?bucket=%@&precision=ns", [delegate hostName], bucket];
+        
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+        
+        request.HTTPMethod = @"POST";
+        
+        // 2. Set headers: Content-Type is critical for Line Protocol (text/plain)
+        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        [request setValue:@"text/plain; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+        
+        // 3. Changed "Token" to "Bearer"
+        [request setValue:[NSString stringWithFormat:@"Bearer %@", [delegate authToken]] forHTTPHeaderField:@"Authorization"];
+        
+        request.HTTPBody = [cmdLine dataUsingEncoding:NSUTF8StringEncoding];
+        requestSize = [cmdLine length];
+        
+        return request;
+    }
 }
 
 @end
@@ -498,27 +779,87 @@
     [super dealloc];
 }
 
+//- (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
+//{
+//    NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/delete?org=%@&bucket=%@",[delegate hostName],org,bucket];
+//    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+//    request.HTTPMethod = @"POST";
+//    [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]] forHTTPHeaderField:@"Authorization"];
+//    [request setValue:@"text/plain; application/json" forHTTPHeaderField:@"Accept"];
+
+//    NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+//    [dict setObject:start forKey:@"start"];
+//    [dict setObject:stop forKey:@"stop"];
+
+//    NSError* error;
+//    NSData*  jsonData = [NSJSONSerialization dataWithJSONObject:dict
+//                                                        options:0 //because don't care about readability
+//                                                          error:&error];
+//    request.HTTPBody = jsonData;
+//    requestSize = [requestString length];
+//    requestSize += [jsonData length];
+
+//    return request;
+//}
 - (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
 {
-    NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/delete?org=%@&bucket=%@",[delegate hostName],org,bucket];
-    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
-    request.HTTPMethod = @"POST";
-    [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]] forHTTPHeaderField:@"Authorization"];
-    [request setValue:@"text/plain; application/json" forHTTPHeaderField:@"Accept"];
-
-    NSMutableDictionary* dict = [NSMutableDictionary dictionary];
-    [dict setObject:start forKey:@"start"];
-    [dict setObject:stop forKey:@"stop"];
-
-    NSError* error;
-    NSData*  jsonData = [NSJSONSerialization dataWithJSONObject:dict
-                                                        options:0 //because don't care about readability
-                                                          error:&error];
-    request.HTTPBody = jsonData;
-    requestSize = [requestString length];
-    requestSize += [jsonData length];
-
-    return request;
+    BOOL isInFluxOn = [delegate inFluxdbMode];
+    if (!isInFluxOn) {
+        NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/delete?org=%@&bucket=%@",[delegate hostName],org,bucket];
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+        request.HTTPMethod = @"POST";
+        [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]] forHTTPHeaderField:@"Authorization"];
+        [request setValue:@"text/plain; application/json" forHTTPHeaderField:@"Accept"];
+        
+        NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+        [dict setObject:start forKey:@"start"];
+        [dict setObject:stop forKey:@"stop"];
+        
+        NSError* error;
+        NSData*  jsonData = [NSJSONSerialization dataWithJSONObject:dict
+                                                            options:0 //because don't care about readability
+                                                              error:&error];
+        request.HTTPBody = jsonData;
+        requestSize = [requestString length];
+        requestSize += [jsonData length];
+        
+        return request;
+    }
+    else
+    {
+        // 1. Remove 'org' from the URL. Keep 'bucket' as your database name.
+        NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/delete?bucket=%@", [delegate hostName], bucket];
+        
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+        request.HTTPMethod = @"POST";
+        
+        // 2. Change 'Token' to 'Bearer'
+        [request setValue:[NSString stringWithFormat:@"Bearer %@", [delegate authToken]] forHTTPHeaderField:@"Authorization"];
+        
+        // 3. Set proper JSON headers
+        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        
+        // 4. Time format: Ensure 'start' and 'stop' are RFC3339 strings (e.g., "2023-01-01T00:00:00Z")
+        // InfluxDB 3.0 is very strict about the timestamp format in the JSON body.
+        NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+        [dict setObject:start forKey:@"start"];
+        [dict setObject:stop forKey:@"stop"];
+        
+        // Optional: Add a predicate if you only want to delete certain measurements
+        // [dict setObject:@"_measurement=\"weather\"" forKey:@"predicate"];
+        
+        NSError* error;
+        NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dict
+                                                           options:0
+                                                             error:&error];
+        request.HTTPBody = jsonData;
+        
+        requestSize = [requestString length];
+        requestSize += [jsonData length];
+        
+        return request;
+    }
 }
 @end
 
@@ -545,27 +886,84 @@
     [super dealloc];
 }
 
+//- (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
+//{
+//    NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/delete?org=%@&bucket=%@",[delegate hostName],org,bucket];
+//    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+//    request.HTTPMethod = @"POST";
+//    [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]] forHTTPHeaderField:@"Authorization"];
+//    [request setValue:@"text/plain; application/json" forHTTPHeaderField:@"Accept"];
+
+//    NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+//    [dict setObject:start       forKey:@"start"];
+//    [dict setObject:stop        forKey:@"stop"];
+//    [dict setObject:predicate   forKey:@"predicate"];
+
+//    NSError* error;
+//    NSData*  jsonData = [NSJSONSerialization dataWithJSONObject:dict
+ //                                                       options:0 //because don't care about readability
+ //                                                         error:&error];
+//    request.HTTPBody = jsonData;
+//    requestSize = [requestString length];
+//    requestSize += [jsonData length];
+
+//    return request;
+//}
 - (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
 {
-    NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/delete?org=%@&bucket=%@",[delegate hostName],org,bucket];
-    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
-    request.HTTPMethod = @"POST";
-    [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]] forHTTPHeaderField:@"Authorization"];
-    [request setValue:@"text/plain; application/json" forHTTPHeaderField:@"Accept"];
-
-    NSMutableDictionary* dict = [NSMutableDictionary dictionary];
-    [dict setObject:start       forKey:@"start"];
-    [dict setObject:stop        forKey:@"stop"];
-    [dict setObject:predicate   forKey:@"predicate"];
-
-    NSError* error;
-    NSData*  jsonData = [NSJSONSerialization dataWithJSONObject:dict
-                                                        options:0 //because don't care about readability
-                                                          error:&error];
-    request.HTTPBody = jsonData;
-    requestSize = [requestString length];
-    requestSize += [jsonData length];
-
-    return request;
+    BOOL isInFluxOn = [delegate inFluxdbMode];
+    if (!isInFluxOn) {
+        NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/delete?org=%@&bucket=%@",[delegate hostName],org,bucket];
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+        request.HTTPMethod = @"POST";
+        [request setValue:[NSString stringWithFormat:@"Token %@",[delegate authToken]] forHTTPHeaderField:@"Authorization"];
+        [request setValue:@"text/plain; application/json" forHTTPHeaderField:@"Accept"];
+        
+        NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+        [dict setObject:start       forKey:@"start"];
+        [dict setObject:stop        forKey:@"stop"];
+        [dict setObject:predicate   forKey:@"predicate"];
+        
+        NSError* error;
+        NSData*  jsonData = [NSJSONSerialization dataWithJSONObject:dict
+                                                            options:0 //because don't care about readability
+                                                              error:&error];
+        request.HTTPBody = jsonData;
+        requestSize = [requestString length];
+        requestSize += [jsonData length];
+        
+        return request;
+    }
+    else{
+        // 1. Remove 'org' parameter. Keep 'bucket' as the database name.
+        NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/delete?bucket=%@", [delegate hostName], bucket];
+        
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+        request.HTTPMethod = @"POST";
+        
+        // 2. Change 'Token' to 'Bearer'
+        [request setValue:[NSString stringWithFormat:@"Bearer %@", [delegate authToken]] forHTTPHeaderField:@"Authorization"];
+        
+        // 3. Set standard JSON headers
+        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        
+        // 4. Construct the JSON body
+        NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+        [dict setObject:start     forKey:@"start"];     // Must be RFC3339 string
+        [dict setObject:stop      forKey:@"stop"];      // Must be RFC3339 string
+        [dict setObject:predicate forKey:@"predicate"]; // e.g. "room='kitchen'"
+        
+        NSError* error;
+        NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dict
+                                                           options:0
+                                                             error:&error];
+        request.HTTPBody = jsonData;
+        
+        requestSize = [requestString length];
+        requestSize += [jsonData length];
+        
+        return request;
+    }
 }
 @end

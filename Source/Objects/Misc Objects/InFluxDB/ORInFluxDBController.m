@@ -100,7 +100,10 @@
                      selector : @selector(stealthModeChanged:)
                          name : ORInFluxDBStealthModeChanged
                         object: model];
-    
+    [notifyCenter addObserver : self
+                     selector : @selector(inFluxdbModeChanged:)
+                         name : ORInFluxDBModeChanged
+                        object: model];
     [notifyCenter addObserver : self
                      selector : @selector(bucketArrayChanged:)
                          name : ORInFluxDBBucketArrayChanged
@@ -151,6 +154,7 @@
     [self inFluxDBLockChanged:nil];
     [self rateChanged:nil];
     [self stealthModeChanged:nil];
+    [self inFluxdbModeChanged:nil];
     [self bucketArrayChanged:nil];
     [self errorStringChanged:nil];
     [self connectionStatusChanged:nil];
@@ -216,6 +220,10 @@
     [stealthModeButton setIntValue: [model stealthMode]];
     [dbStatusField setStringValue:![model stealthMode]?@"":@"Disabled"];
 }
+- (void) inFluxdbModeChanged:(NSNotification*)aNote
+{
+    [InFluxdbModeButton setIntValue:[model inFluxdbMode]];
+}
 
 - (void) bucketArrayChanged:(NSNotification*)aNote
 {
@@ -251,6 +259,7 @@
     [authTokenField       setEnabled:!locked];
     [orgField             setEnabled:!locked];
     [stealthModeButton    setEnabled:!locked];
+    [InFluxdbModeButton   setEnabled:!locked];
 }
 
 - (void) checkGlobalSecurity
@@ -282,7 +291,48 @@
     }
     else [model setStealthMode:NO];
 }
-
+- (IBAction) inFluxdbModeAction:(id)sender
+{
+    BOOL currentlyV3 = [model inFluxdbMode];
+    if (!currentlyV3) {
+        // Confirm enabling InfluxDB v3 mode
+        NSString* s = [NSString stringWithFormat:@"Change InfluxDB to version 3.0?\n"];
+        NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+        [alert setMessageText:s];
+        [alert setInformativeText:@"Database format will be changed to InfluxDB 3 format."];
+        [alert addButtonWithTitle:@"Cancel"]; // First button
+        [alert addButtonWithTitle:@"Yes, Change DB Version"]; // Second button
+        [alert setAlertStyle:NSAlertStyleWarning];
+        [alert beginSheetModalForWindow:[self window] completionHandler:^(NSModalResponse result){
+            if(result == NSAlertSecondButtonReturn){
+                [model setInFluxDBMode:YES];
+            }
+            else {
+                // Keep current state (remain on v2)
+                [model setInFluxDBMode:NO];
+            }
+        }];
+    }
+    else {
+        // Confirm disabling InfluxDB v3 mode (switching back)
+        NSString* s = [NSString stringWithFormat:@"Switch back to InFluxDB 2.x?\n"];
+        NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+        [alert setMessageText:s];
+        [alert setInformativeText:@"The app will stop using InfluxDB 3 endpoints and revert to InfluxDB 2 APIs."];
+        [alert addButtonWithTitle:@"Cancel"]; // First button
+        [alert addButtonWithTitle:@"Yes, Revert to v2"]; // Second button
+        [alert setAlertStyle:NSAlertStyleWarning];
+        [alert beginSheetModalForWindow:[self window] completionHandler:^(NSModalResponse result){
+            if(result == NSAlertSecondButtonReturn){
+                [model setInFluxDBMode:NO];
+            }
+            else {
+                // Keep current state (remain on v3)
+                [model setInFluxDBMode:YES];
+            }
+        }];
+    }
+}
 - (IBAction) measurementTimeOutAction:(id)sender
 {
     [model setMeasurementTimeOut:[sender intValue]];

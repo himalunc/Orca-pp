@@ -3462,6 +3462,14 @@
 		84FFCAA90636D5B10069432F /* ORCaen792Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FFCAA30636D5B10069432F /* ORCaen792Controller.m */; };
 		84FFCAAA0636D5B10069432F /* ORCaen792Model.h in Headers */ = {isa = PBXBuildFile; fileRef = 84FFCAA40636D5B10069432F /* ORCaen792Model.h */; };
 		84FFCAAB0636D5B10069432F /* ORCaen792Model.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FFCAA50636D5B10069432F /* ORCaen792Model.m */; };
+		863287B12F1F22600004C519 /* ORDefender3000ModelNew.h in Headers */ = {isa = PBXBuildFile; fileRef = 863287AA2F1F22600004C519 /* ORDefender3000ModelNew.h */; };
+		863287B22F1F22600004C519 /* ORDefender3000ControllerNew.h in Headers */ = {isa = PBXBuildFile; fileRef = 863287AC2F1F22600004C519 /* ORDefender3000ControllerNew.h */; };
+		863287B32F1F22600004C519 /* ORDefender3000DecodersNew.h in Headers */ = {isa = PBXBuildFile; fileRef = 863287AE2F1F22600004C519 /* ORDefender3000DecodersNew.h */; };
+		863287B42F1F22600004C519 /* Defender3000New.tif in Resources */ = {isa = PBXBuildFile; fileRef = 863287A92F1F22600004C519 /* Defender3000New.tif */; };
+		863287B52F1F22600004C519 /* Defender3000New.nib in Resources */ = {isa = PBXBuildFile; fileRef = 863287A82F1F22600004C519 /* Defender3000New.nib */; };
+		863287B62F1F22600004C519 /* ORDefender3000ControllerNew.m in Sources */ = {isa = PBXBuildFile; fileRef = 863287AD2F1F22600004C519 /* ORDefender3000ControllerNew.m */; };
+		863287B72F1F22600004C519 /* ORDefender3000DecodersNew.m in Sources */ = {isa = PBXBuildFile; fileRef = 863287AF2F1F22600004C519 /* ORDefender3000DecodersNew.m */; };
+		863287B82F1F22600004C519 /* ORDefender3000ModelNew.m in Sources */ = {isa = PBXBuildFile; fileRef = 863287AB2F1F22600004C519 /* ORDefender3000ModelNew.m */; };
 		9C086CE90D10AB6200524F47 /* mainFocalPlaneDetector.tif in Resources */ = {isa = PBXBuildFile; fileRef = 9C086CE80D10AB6200524F47 /* mainFocalPlaneDetector.tif */; };
 		9C1363C70D0A7921006C550D /* Caen265.nib in Resources */ = {isa = PBXBuildFile; fileRef = 9C1363BF0D0A7921006C550D /* Caen265.nib */; };
 		9C1363C80D0A7921006C550D /* Caen265Card.tif in Resources */ = {isa = PBXBuildFile; fileRef = 9C1363C00D0A7921006C550D /* Caen265Card.tif */; };
@@ -7439,6 +7447,14 @@
 		84FFCAA30636D5B10069432F /* ORCaen792Controller.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ORCaen792Controller.m; sourceTree = "<group>"; };
 		84FFCAA40636D5B10069432F /* ORCaen792Model.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ORCaen792Model.h; sourceTree = "<group>"; };
 		84FFCAA50636D5B10069432F /* ORCaen792Model.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ORCaen792Model.m; sourceTree = "<group>"; };
+		863287A82F1F22600004C519 /* Defender3000New.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = Defender3000New.nib; sourceTree = "<group>"; };
+		863287A92F1F22600004C519 /* Defender3000New.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Defender3000New.tif; sourceTree = "<group>"; };
+		863287AA2F1F22600004C519 /* ORDefender3000ModelNew.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ORDefender3000ModelNew.h; sourceTree = "<group>"; };
+		863287AB2F1F22600004C519 /* ORDefender3000ModelNew.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ORDefender3000ModelNew.m; sourceTree = "<group>"; };
+		863287AC2F1F22600004C519 /* ORDefender3000ControllerNew.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ORDefender3000ControllerNew.h; sourceTree = "<group>"; };
+		863287AD2F1F22600004C519 /* ORDefender3000ControllerNew.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ORDefender3000ControllerNew.m; sourceTree = "<group>"; };
+		863287AE2F1F22600004C519 /* ORDefender3000DecodersNew.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ORDefender3000DecodersNew.h; sourceTree = "<group>"; };
+		863287AF2F1F22600004C519 /* ORDefender3000DecodersNew.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ORDefender3000DecodersNew.m; sourceTree = "<group>"; };
 		9C086CE80D10AB6200524F47 /* mainFocalPlaneDetector.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = mainFocalPlaneDetector.tif; path = "Source/Objects/Hardware/I2C/Custom Hardware/KATRIN Hardware/eGun/mainFocalPlaneDetector.tif"; sourceTree = SOURCE_ROOT; };
 		9C1363BF0D0A7921006C550D /* Caen265.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Caen265.nib; path = Source/Objects/Hardware/Vme/CAEN/CV265/Caen265.nib; sourceTree = SOURCE_ROOT; };
 		9C1363C00D0A7921006C550D /* Caen265Card.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = Caen265Card.tif; path = Source/Objects/Hardware/Vme/CAEN/CV265/Caen265Card.tif; sourceTree = SOURCE_ROOT; };
@@ -10530,6 +10546,7 @@
 				84B28CD50F4C597900E2B056 /* BocTIC3 */,
 				84499CBD0F13E457004B855B /* CTITemp */,
 				8407F05F2BF3A90D00668A6C /* Defender3000 */,
+				863287B02F1F22600004C519 /* Defender3000New */,
 				84499B6E0F13BB6E004B855B /* MksPdr2000 */,
 				84098F4D0F964F0100036BE8 /* PDcu */,
 				840D56D70F39E9BF00F9A274 /* Pac */,
@@ -15201,6 +15218,21 @@
 			path = Source/Objects/Hardware/Vme/CAEN/CV792;
 			sourceTree = SOURCE_ROOT;
 		};
+		863287B02F1F22600004C519 /* Defender3000New */ = {
+			isa = PBXGroup;
+			children = (
+				863287A82F1F22600004C519 /* Defender3000New.nib */,
+				863287A92F1F22600004C519 /* Defender3000New.tif */,
+				863287AA2F1F22600004C519 /* ORDefender3000ModelNew.h */,
+				863287AB2F1F22600004C519 /* ORDefender3000ModelNew.m */,
+				863287AC2F1F22600004C519 /* ORDefender3000ControllerNew.h */,
+				863287AD2F1F22600004C519 /* ORDefender3000ControllerNew.m */,
+				863287AE2F1F22600004C519 /* ORDefender3000DecodersNew.h */,
+				863287AF2F1F22600004C519 /* ORDefender3000DecodersNew.m */,
+			);
+			path = Defender3000New;
+			sourceTree = "<group>";
+		};
 		9C1363BE0D0A7921006C550D /* CV265 */ = {
 			isa = PBXGroup;
 			children = (
@@ -16325,6 +16357,7 @@
 				8434A200055B3287002D3102 /* ORWaveformController.h in Headers */,
 				8489177A1D6B73D300CF5AAF /* ORCytecVM8Controller.h in Headers */,
 				8434A201055B3287002D3102 /* ORGenericData.h in Headers */,
+				863287B32F1F22600004C519 /* ORDefender3000DecodersNew.h in Headers */,
 				8434A202055B3287002D3102 /* ORGpibDeviceModel.h in Headers */,
 				8434A203055B3287002D3102 /* ORHPPulserModel.h in Headers */,
 				8434A204055B3287002D3102 /* Utilities.h in Headers */,
@@ -16429,6 +16462,7 @@
 				8468E6FA06932C3F00B57CE8 /* NcdLogAmpTask.h in Headers */,
 				846798C5069475DA00DF8B2A /* StatusLog.h in Headers */,
 				846798E9069488AE00DF8B2A /* NcdLinearityTask.h in Headers */,
+				863287B22F1F22600004C519 /* ORDefender3000ControllerNew.h in Headers */,
 				4AB9E5331DE5D820007C75E0 /* postgres_ext.h in Headers */,
 				846799570694B82200DF8B2A /* NcdThresholdTask.h in Headers */,
 				84F9836D06A441CF0087FA3E /* ORGTIDGenerator.h in Headers */,
@@ -16516,6 +16550,7 @@
 				84749D1F07D6526F001553EC /* ORM321Model.h in Headers */,
 				A87BA18E2C6817C400E14CCE /* timestamps.h in Headers */,
 				84749D2407D6526F001553EC /* ORMCarrierController.h in Headers */,
+				863287B12F1F22600004C519 /* ORDefender3000ModelNew.h in Headers */,
 				84749D2607D6526F001553EC /* ORMCarrierModel.h in Headers */,
 				84749D7107D663A2001553EC /* ORVmeMCard.h in Headers */,
 				84749DC607D66BDF001553EC /* ORVmeDaughterCard.h in Headers */,
@@ -18155,6 +18190,7 @@
 				84AB8BD00D2314DD00EC39F2 /* JAMF.gif in Resources */,
 				84AB8BD10D2314DD00EC39F2 /* JAMF.nib in Resources */,
 				84A8B14A0D35702300263D31 /* SBC_LAM.gif in Resources */,
+				863287B52F1F22600004C519 /* Defender3000New.nib in Resources */,
 				84A8B14B0D35702300263D31 /* SBC_LAM.nib in Resources */,
 				84A5CD590D464F4600D9833C /* Filter.nib in Resources */,
 				84A5CD5A0D464F4600D9833C /* Filter.tif in Resources */,
@@ -18487,6 +18523,7 @@
 				8472AA7B12DB44B400DEEB02 /* MPodC.tif in Resources */,
 				8472AA8012DB44B400DEEB02 /* MPodMiniCrate.nib in Resources */,
 				8472AA8112DB44B400DEEB02 /* MPodMiniCrate.tif in Resources */,
+				863287B42F1F22600004C519 /* Defender3000New.tif in Resources */,
 				8472AA8212DB44B400DEEB02 /* MPodMiniCrateSmall.tif in Resources */,
 				842544EA12F1FF9F00472314 /* BamDetector.nib in Resources */,
 				842544EB12F1FF9F00472314 /* BamDetector.tif in Resources */,
@@ -19065,6 +19102,7 @@
 				2A41A2B6089AB2A0003D77DD /* ORScalerSum.m in Sources */,
 				2A943A6508A8194B00D04541 /* ORSerialPort.m in Sources */,
 				2A943A6708A8194B00D04541 /* ORSerialPortAdditions.m in Sources */,
+				863287B82F1F22600004C519 /* ORDefender3000ModelNew.m in Sources */,
 				8494F8D31C440E2C00A35F8B /* ORMJDDewarScaleController.m in Sources */,
 				2A943A6908A8194B00D04541 /* ORSerialPortList.m in Sources */,
 				2A943A6B08A8194B00D04541 /* ORStandardEnumerator.m in Sources */,
@@ -19521,6 +19559,7 @@
 				84D359CD0FB487AA005F429B /* ORMCA927Decoders.m in Sources */,
 				8408322C0FC3307F002B2394 /* ORLongTermView.m in Sources */,
 				84B194BC0FC44E1800775CF1 /* ORMotionNodeDecoders.m in Sources */,
+				863287B72F1F22600004C519 /* ORDefender3000DecodersNew.m in Sources */,
 				146822440FC4799C0082BD70 /* ORCircularBufferUV.m in Sources */,
 				8408A22B0FD85B3A00B0206D /* ORTemplates.m in Sources */,
 				84B74CEA0FEBE9B90033E658 /* ORCaen965Controller.m in Sources */,
@@ -19689,6 +19728,7 @@
 				8449CC88123E85DA009C8AA2 /* ORVHSC040nModel.m in Sources */,
 				0FB2022F1CDFCF4E0083F552 /* TUBiiController.m in Sources */,
 				84E9F6A1123FE4D600116607 /* ORNHQ226LController.m in Sources */,
+				863287B62F1F22600004C519 /* ORDefender3000ControllerNew.m in Sources */,
 				84E9F6A3123FE4D600116607 /* ORNHQ226LDecoders.m in Sources */,
 				84E9F6A5123FE4D600116607 /* ORNHQ226LModel.m in Sources */,
 				8475D8181A3665BC00EE4DE4 /* ORMJDInterlocks.m in Sources */,

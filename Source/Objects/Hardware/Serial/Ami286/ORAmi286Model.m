@@ -1185,29 +1185,90 @@ NSString* ORAmi286Lock = @"ORAmi286Lock";
 - (void) process_response:(NSString*)theResponse
 {
     isValid = YES;
-
-	if([lastRequest rangeOfString:@":LEV?"].location != NSNotFound){
-		int channel = [[lastRequest substringFromIndex:2] intValue] - 1;
-		if(channel >= 0 && channel <=3){
-			[self setLevel:channel value:[theResponse floatValue]];
-		}
-	}
-	else if([lastRequest rangeOfString:@":FILL:STATE?"].location != NSNotFound){
-		int channel = [[lastRequest substringFromIndex:2] intValue] - 1;
-		if(channel >= 0 && channel <=3){
-			[self setFillStatus:channel value:[theResponse intValue]];
-		}
-	}
-	else if([lastRequest rangeOfString:@":STATUS:ALARM:CONDITION?"].location != NSNotFound){
-		int channel = [[lastRequest substringFromIndex:2] intValue] - 1;
-		if(channel >= 0 && channel <=3){
-			[self setAlarmStatus:channel value:[theResponse intValue]];
-		}
-	}
-	else if([lastRequest rangeOfString:@"*OPC?"].location != NSNotFound){
-		//device returns a '1' when finished.
-	}
+    //define the array to send it to the InfluxDB
+    double ami_array[4] = {999.99,999.99,999.99,999.99};
+    int j_ami;
+    NSMutableArray *InFluxDB_AMI_Input = [[NSMutableArray alloc] initWithCapacity:4];
+    
+    if([lastRequest rangeOfString:@":LEV?"].location != NSNotFound){
+        int channel = [[lastRequest substringFromIndex:2] intValue] - 1;
+        if(channel >= 0 && channel <=3){
+            [self setLevel:channel value:[theResponse floatValue]];
+            //NSLog(@"%@", theResponse);
+            // Fill the array for InfluxDB input
+            ami_array[channel]=[theResponse doubleValue];
+        }
+        // Fill the array for InfluxDB input
+        for (j_ami = 0; j_ami < 4; j_ami++) {
+            [InFluxDB_AMI_Input addObject:[NSNumber numberWithDouble:ami_array[j_ami]]];
+        }
+        
+        //Send data to influxDB
+        [self sendAMI286ToInflux:InFluxDB_AMI_Input];
+        [InFluxDB_AMI_Input release];
+    }
+    else if([lastRequest rangeOfString:@":FILL:STATE?"].location != NSNotFound){
+        int channel = [[lastRequest substringFromIndex:2] intValue] - 1;
+        if(channel >= 0 && channel <=3){
+            [self setFillStatus:channel value:[theResponse intValue]];
+            //NSLog(@"Here,The Filling state Happens");
+            //NSLog(@"%@", theResponse);
+        }
+    }
+    else if([lastRequest rangeOfString:@":STATUS:ALARM:CONDITION?"].location != NSNotFound){
+        int channel = [[lastRequest substringFromIndex:2] intValue] - 1;
+        if(channel >= 0 && channel <=3){
+            [self setAlarmStatus:channel value:[theResponse intValue]];
+        }
+    }
+    else if([lastRequest rangeOfString:@"*OPC?"].location != NSNotFound){
+        //device returns a '1' when finished.
+    }
 }
+
+- (void)sendAMI286ToInflux:(NSArray *)arrayCh
+{
+    @autoreleasepool {
+        // Retrieve the InFluxDB model instance
+        InFluxDB = [[[(ORAppDelegate*)[NSApp delegate] document] findObjectWithFullID:@"ORInFluxDBModel,1"] retain];
+        
+        if (InFluxDB == nil) {
+            NSLog(@"Error: Unable to find the InfluxDB model.");
+            return;
+        }
+
+        // Current timestamp
+        double currentTimeStamp = [[NSDate date] timeIntervalSince1970];
+
+        // Create a new measurement object for the InfluxDB bucket
+        ORInFluxDBMeasurement *measurement = [ORInFluxDBMeasurement measurementForBucket:@"ENAP_SC_UNC" org:[InFluxDB org]];
+
+        [measurement start:@"AMI286_Measurement"];
+        [measurement addTag:@"Volume_Measured" withString:@"VolumeChannels"];
+
+        // Add fields for each channel
+        for (NSInteger i = 0; i < [arrayCh count]; i++) {
+            
+            if ([[arrayCh objectAtIndex:i] doubleValue] == 999.99) {
+                continue;
+            }
+            NSString *fieldName = [NSString stringWithFormat:@"Channel%ld", (long)i];
+            double fieldValue = [[arrayCh objectAtIndex:i] doubleValue];
+            [measurement addField:fieldName withDouble:fieldValue];
+        }
+    
+        // Set the timestamp
+        [measurement setTimeStamp:currentTimeStamp];
+
+        // Execute the database command
+        [InFluxDB executeDBCmd:measurement];
+        
+        // Manually release InFluxDB if using manual memory management (MRC)
+        [InFluxDB release];
+    }
+}
+
+
 
 - (void) startExpiredTimer:(int) index
 {

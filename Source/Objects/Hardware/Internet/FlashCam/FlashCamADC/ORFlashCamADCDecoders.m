@@ -35,6 +35,9 @@
 - (void) dealloc
 {
     [fcCards release];
+    fcCards = nil;
+    [decoderOptions release]; //
+    decoderOptions = nil;
     [super dealloc];
 }
 
@@ -117,26 +120,30 @@
     struct timeval tv;
     gettimeofday(&tv, NULL);
     uint64_t now = (uint64_t)(tv.tv_sec)*1000 + (uint64_t)(tv.tv_usec)/1000;
-    if(!decoderOptions) decoderOptions = [[NSMutableDictionary dictionary] retain];
-    NSString* lastTimeKey = [NSString stringWithFormat:@"%@,%@,%@,LastTime", crateKey, cardKey, channelKey];
+    if(!decoderOptions) decoderOptions = [[NSMutableDictionary alloc] init];
+    NSString* lastTimeKey = [[NSString alloc] initWithFormat:@"%@,%@,%@,LastTime", crateKey, cardKey, channelKey];
     uint64_t lastTime = [[decoderOptions objectForKey:lastTimeKey] unsignedLongLongValue];
     if(now - lastTime >= 100){
         fullDecode = YES;
         [decoderOptions setObject:[NSNumber numberWithUnsignedLongLong:now] forKey:lastTimeKey];
     }
     BOOL someoneWatching = NO;
-    if([aDataSet isSomeoneLooking:[NSString stringWithFormat:@"FlashCamADC,Waveforms,%d,%d,%d", crate, card, channel]]){
+    NSString* watchKey = [[NSString alloc] initWithFormat:@"FlashCamADC,Waveforms,%u,%u,%u", crate, card, channel];
+    if([aDataSet isSomeoneLooking:watchKey]){
+    //if([aDataSet isSomeoneLooking:[NSString stringWithFormat:@"FlashCamADC,Waveforms,%d,%d,%d", crate, card, channel]]){
         someoneWatching = YES;
     }
-    
+    [watchKey release]; // Memory is freed INSTANTLY
+    [lastTimeKey release];
     // decode the waveform if this is the first one or the above conditions are satisfied
     if(lastTime == 0 || (fullDecode && someoneWatching)){
         ptr ++;
-        NSMutableData* tmpData = [NSMutableData dataWithCapacity:wfSamples*sizeof(unsigned short)];
+        NSMutableData* tmpData = [[NSMutableData alloc] initWithCapacity:wfSamples*sizeof(unsigned short)];
         [tmpData setLength:wfSamples/2*sizeof(uint32_t)];
         memcpy((uint32_t*) [tmpData bytes], ptr, wfSamples*sizeof(unsigned short));
         [aDataSet loadWaveform:tmpData offset:0 unitSize:2 sender:self
                       withKeys:@"FlashCamADC", @"Waveforms", crateKey, cardKey, channelKey, nil];
+        [tmpData release];
     }
     
     return length;
@@ -191,6 +198,7 @@
 
 - (void) dealloc
 {
+    
     [super dealloc];
 }
 

@@ -89,7 +89,7 @@
     [nlinesTextField setIntegerValue:(NSInteger)[model fclogLines]];
     [[historyView textStorage] deleteCharactersInRange:NSMakeRange(0, [[historyView textStorage] length])];
     [[errorView   textStorage] deleteCharactersInRange:NSMakeRange(0, [[errorView   textStorage] length])];
-    for(NSUInteger i=[model fclogLines]-1; i<[model fclogLines]; i--){
+    for(NSUInteger i=[model fclogLines]-1; i>=0; i--){
         NSString* line = [model fclog:i];
         if([line isEqualToString:@""]) continue;
         NSAttributedString* s = [self makeAttributedString:line];
@@ -98,7 +98,7 @@
            [line rangeOfString:@"warning" options:NSCaseInsensitiveSearch].location != NSNotFound)
             [[errorView textStorage] appendAttributedString:s];
     }
-    for(NSUInteger i=[model fcrunlogLines]-1; i<[model fcrunlogLines]; i--){
+    for(NSUInteger i=[model fcrunlogLines]-1; i>=0; i--){
         NSString* line = [model fcrunlog:i];
         NSAttributedString* s = [self makeAttributedString:line];
         [[historyView textStorage] appendAttributedString:s];

@@ -37,6 +37,7 @@ typedef enum { kInFluxDBConnectionBad,
     NSInteger      totalSent;
     NSInteger      messageRate;
     BOOL           stealthMode;
+    BOOL           inFluxdbMode;
     BOOL           scheduledForRunInfoUpdate;
     //NSString*      alertMessage;
     //int            alertType;
@@ -93,7 +94,9 @@ typedef enum { kInFluxDBConnectionBad,
 - (id)          nextObject;
 - (NSInteger)   messageRate;
 - (BOOL)        stealthMode;
+- (BOOL)        inFluxdbMode;
 - (void)        setStealthMode:(BOOL)aStealthMode;
+- (void)        setInFluxDBMode:(BOOL)aInFluxDBMode;
 - (void)        executeDBCmd:(id)aCmd;
 - (NSArray*)    bucketArray;
 - (NSArray*)    orgArray;
@@ -132,6 +135,7 @@ extern NSString* ORInFluxDBRateChanged;
 extern NSString* ORInFluxDBAuthTokenChanged;
 extern NSString* ORInFluxDBOrgChanged;
 extern NSString* ORInFluxDBStealthModeChanged;
+extern NSString* ORInFluxDBModeChanged;
 extern NSString* ORInFluxDBBucketChanged;
 extern NSString* ORInFluxDBErrorChanged;
 extern NSString* ORInFluxDBConnectionStatusChanged;

@@ -49,6 +49,7 @@ NSString* ORL200SlowControlsSourceHeightChanged = @"ORL200SlowControlsSourceHeig
     [cmdExe         release];
     [inFluxDB       release];
     [sourceHeight   release];
+    [ipAddress      release];
     [super dealloc];
 }
 
@@ -170,7 +171,7 @@ NSString* ORL200SlowControlsSourceHeightChanged = @"ORL200SlowControlsSourceHeig
 {
     if(!anIP)anIP = @"";
     [[[self undoManager] prepareWithInvocationTarget:self] setIPAddress:ipAddress];
-    [ipAddress autorelease];
+    [ipAddress release];
     ipAddress = [anIP copy];
     [[NSNotificationCenter defaultCenter] postNotificationName:ORL200SlowControlsIPAddressChanged object:self];
 }
@@ -184,7 +185,7 @@ NSString* ORL200SlowControlsSourceHeightChanged = @"ORL200SlowControlsSourceHeig
 {
     if(!aName)aName = @"";
     [[[self undoManager] prepareWithInvocationTarget:self] setUserName:userName];
-    [userName autorelease];
+    [userName release];
     userName = [aName copy];
     [[NSNotificationCenter defaultCenter] postNotificationName:ORL200SlowControlsUserNameChanged object:self];
 }
@@ -198,7 +199,7 @@ NSString* ORL200SlowControlsSourceHeightChanged = @"ORL200SlowControlsSourceHeig
 {
     if(!aPath)aPath = @"";
     [[[self undoManager] prepareWithInvocationTarget:self] setCmdPath:cmdPath];
-    [cmdPath autorelease];
+    [cmdPath release];
     cmdPath = [aPath copy];
     [[NSNotificationCenter defaultCenter] postNotificationName:ORL200SlowControlsCmdPathChanged object:self];
 }

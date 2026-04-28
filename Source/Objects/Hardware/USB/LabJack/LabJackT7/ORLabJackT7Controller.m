@@ -295,7 +295,24 @@
 {
     [deviceSerialNumberField setIntValue: [model deviceSerialNumber]];
 }
+- (void)deviceHandleChanged:(NSNotification *)aNote
+{
+    BOOL isOpen = [model deviceOpen];
 
+    [probeButton setEnabled:!isOpen];
+    [openCloseButton setTitle:(isOpen ? @"Close" : @"Open")];
+
+    if (isOpen) {
+        [[self window] setTitle:
+            [NSString stringWithFormat:@"LabJack T7 : 0x%x",
+             [model deviceSerialNumber]]];
+        [openCloseStatusField setStringValue:@"Open"];
+    } else {
+        [[self window] setTitle:@"LabJack T7"];
+        [openCloseStatusField setStringValue:@"Closed"];
+    }
+}
+/*
 - (void) deviceHandleChanged:(NSNotification*)aNote
 {
     if([model deviceOpen]){
@@ -317,7 +334,7 @@
     }
 
 }
-
+*/
 - (void)tabView:(NSTabView *)aTabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem
 {
     [[self window] setContentView:blankView];

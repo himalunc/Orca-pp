@@ -745,7 +745,7 @@ static NSString* ORLabJackI2CConnection         = @"ORLabJackI2CConnection";
         [self closeDevice];
     }
 }
-
+/*
 - (void) openDevice
 {
     int h;
@@ -771,7 +771,42 @@ static NSString* ORLabJackI2CConnection         = @"ORLabJackI2CConnection";
         }
     }
 }
+ */
+- (void)openDevice
+{
+    int h = 0;
 
+    NSString *serialStr = nil;
+    const char *serial = NULL;
+
+    if (deviceSerialNumber != 0) {
+        serialStr = [NSString stringWithFormat:@"%d", deviceSerialNumber];
+        serial = [serialStr UTF8String];
+    }
+
+    int openError = openLabJack(&h, serial);
+    if (openError != 0 || h == 0) {
+        NSLog(@"%@ cannot open device (error: %d)",
+              [self fullID], openError);
+        return;
+    }
+
+    [self setDeviceHandle:h];
+
+    int calError = getCalibration(deviceHandle, &caliInfo);
+    if (calError != 0) {
+        NSLog(@"%@ invalid calibration constants (error: %d)",
+              [self fullID], calError);
+        return;
+    }
+
+    [[NSNotificationCenter defaultCenter]
+        postNotificationName:ORLabJackT7CalibrationInfoChanged
+        object:self];
+
+    [self setUpCounters];
+    [self setUpPwm];
+}
 - (void) closeDevice
 {
     closeLabJack(deviceHandle);
@@ -1217,7 +1252,7 @@ static NSString* ORLabJackI2CConnection         = @"ORLabJackI2CConnection";
 {
     // TODO: option to change settling time
     // Initialize an array to store voltage values
-    double volt_channel[16] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+    //double volt_channel[16] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
     
     // Check if the device handle is valid
     if(deviceHandle){
@@ -1238,7 +1273,7 @@ static NSString* ORLabJackI2CConnection         = @"ORLabJackI2CConnection";
                         [self adcConvertedRange:i], [self adcConvertedRes:i], 0, 0);
                 [self setAdc:i withValue:dblVoltage];
                 // Store the voltage in the array
-                volt_channel[i] = dblVoltage;
+                //volt_channel[i] = dblVoltage;
                 
                 // adjacent channel not used
                 [self setAdc:i+1 withValue:0];
@@ -1250,19 +1285,19 @@ static NSString* ORLabJackI2CConnection         = @"ORLabJackI2CConnection";
                     readAIN(deviceHandle, &caliInfo, chanP, -1, &dblVoltage, NULL,
                             [self adcConvertedRange:i], [self adcConvertedRes:i], 0, 0);
                     [self setAdc:i withValue:dblVoltage];
-                    volt_channel[i] = dblVoltage;
+                    //volt_channel[i] = dblVoltage;
                 }
                 else if (chanP==14) {
                     readAIN(deviceHandle, &caliInfo, chanP, -1, NULL, &dblTemp,
                             0, 0, 0, 0);  // using auto-range + auto-res
-                    volt_channel[i]=dblTemp;
+                    //volt_channel[i]=dblTemp;
                     [self setAdc:i withValue:dblTemp];  // temperature in K
                 }
                 else if (chanP==15) {
                     readAIN(deviceHandle, &caliInfo, chanP, -1, &dblVoltage, NULL,
                             0, 0, 0, 0);  // using auto-range + auro-res
                     [self setAdc:i withValue:dblVoltage];  // noise level
-                    volt_channel[i]=dblVoltage;
+                    //volt_channel[i]=dblVoltage;
                 }
                 else [self setAdc:i withValue:0];
             }
@@ -1270,7 +1305,8 @@ static NSString* ORLabJackI2CConnection         = @"ORLabJackI2CConnection";
         // Prepare the array for InfluxDB input
         NSMutableArray *InFluxDBArry_Input = [NSMutableArray arrayWithCapacity:16];
                 for (i = 0; i < 16; i++) {
-                    [InFluxDBArry_Input addObject:[NSNumber numberWithDouble:volt_channel[i]]];
+                    //[InFluxDBArry_Input addObject:[NSNumber numberWithDouble:volt_channel[i]]];
+                    [InFluxDBArry_Input addObject:[NSNumber numberWithDouble:[self convertedValue:i]]];
                 }
         
         //Send data to influxDB in the system

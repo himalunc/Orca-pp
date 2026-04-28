@@ -54,11 +54,23 @@
 
 - (void) dealloc
 {
-    [super dealloc];
+    //[super dealloc];
     for (int i = 0; i < kMaxFCIOStreams; i++) {
-        FCIOClose(fcioStreams[i]);
-        FSPDestroy(processors[i]);
+        if (fcioStreams[i]) {
+            FCIOClose(fcioStreams[i]);
+            fcioStreams[i] = NULL;
+        }
+        if (processors[i]) {
+            FSPDestroy(processors[i]);
+            processors[i] = NULL;
+        }
+        
+        //FCIOClose(fcioStreams[i]);
+        //FSPDestroy(processors[i]);
     }
+    [decoderOptions release];
+    decoderOptions = nil;
+    [super dealloc];
 }
 
 - (void)broadcastToOthers:(ORDecoder*)aDecoder
@@ -78,7 +90,8 @@
 
 - (void) setupOptionsfromHeader:(NSDictionary*)aHeader forListener:(uint32_t) listener_id andTracemap:(unsigned int*)tracemap withSize:(size_t)nadcs;
 {
-    if(!decoderOptions) decoderOptions = [[NSMutableDictionary dictionary] retain];
+    //if(!decoderOptions) decoderOptions = [[NSMutableDictionary dictionary] retain];
+    if(!decoderOptions) decoderOptions = [[NSMutableDictionary alloc] init];
     //set up the crate cache
     NSArray* crates = [aHeader nestedObjectForKey:@"ObjectInfo",@"Crates",nil];
 
@@ -97,10 +110,26 @@
                 unsigned int fcioCardAddress = tracemap[trace_idx] >> 16;
                 if (fcioCardAddress == cardAddress) {
                     unsigned int chan = tracemap[trace_idx] & 0xFFFF;
-                    NSNumber* channel = [NSNumber numberWithUnsignedInteger:chan];
-                    [decoderOptions setObject:crate forKey:[NSString stringWithFormat:@"Listener %2d,Trace %4d,crate", listener_id, trace_idx]];
-                    [decoderOptions setObject:card forKey:[NSString stringWithFormat:@"Listener %2d,Trace %4d,card", listener_id, trace_idx]];
-                    [decoderOptions setObject:channel forKey:[NSString stringWithFormat:@"Listener %2d,Trace %4d,channel", listener_id, trace_idx]];
+                    NSNumber* channel = [[NSNumber alloc] initWithUnsignedInt:chan];
+                    
+                    // Create keys manually to avoid autorelease pool bloat
+                    NSString* kCrate = [[NSString alloc] initWithFormat:@"Listener %2d,Trace %4d,crate", listener_id, trace_idx];
+                    NSString* kCard = [[NSString alloc] initWithFormat:@"Listener %2d,Trace %4d,card", listener_id, trace_idx];
+                    NSString* kChan = [[NSString alloc] initWithFormat:@"Listener %2d,Trace %4d,channel", listener_id, trace_idx];
+                    
+                    [decoderOptions setObject:crate forKey:kCrate];
+                    [decoderOptions setObject:card forKey:kCard];
+                    [decoderOptions setObject:channel forKey:kChan];
+                    
+                    [kCrate release];
+                    [kCard release];
+                    [kChan release];
+                    [channel release];
+                    
+                    //NSNumber* channel = [NSNumber numberWithUnsignedInteger:chan];
+                    //[decoderOptions setObject:crate forKey:[NSString stringWithFormat:@"Listener %2d,Trace %4d,crate", listener_id, trace_idx]];
+                    //[decoderOptions setObject:card forKey:[NSString stringWithFormat:@"Listener %2d,Trace %4d,card", listener_id, trace_idx]];
+                    //[decoderOptions setObject:channel forKey:[NSString stringWithFormat:@"Listener %2d,Trace %4d,channel", listener_id, trace_idx]];
                 }
             }
         }
@@ -300,51 +329,68 @@
         return 0;
     }
     if (aDataSet) {
+        //suggested fix of the memory loop
+        if(!decoderOptions) {
+            decoderOptions = [[NSMutableDictionary alloc] init];
+        }
         uint32_t wfSamples = fcio->config.eventsamples;
         for (int i = 0; i < fcio->event.num_traces; i++) {
             int trace_idx = fcio->event.trace_list[i];
             unsigned int crate = [[config getCrateForTrace:trace_idx] unsignedIntValue];
             unsigned int card = [[config getCardForTrace:trace_idx] unsignedIntValue];
             unsigned int  channel = [[config getChannelForTrace:trace_idx] unsignedIntValue];
-
+            
             NSString* crateKey = [self getCrateKey:crate];
+            // Instead of autoreleased helper:
             NSString* cardKey = [self getCardKey:card];
             NSString* channelKey = [self getChannelKey:channel];
-
+            
             uint16_t fpga_baseline = fcio->event.theader[trace_idx][0];
             uint16_t fpga_integrator = fcio->event.theader[trace_idx][1];
-
+            
             [aDataSet histogram:fpga_baseline numBins:0xffff sender:self
                        withKeys:@"FlashCamADC", @"Baseline", crateKey, cardKey, channelKey, nil];
             [aDataSet histogram:fpga_integrator numBins:0xffff sender:self
                        withKeys:@"FlashCamADC", @"Energy", crateKey, cardKey, channelKey, nil];
-
+            
             // Event specific, not in Header
             // only decode the waveform if it has been 100 ms since the last decoded waveform and the plotting window is open
             BOOL fullDecode = NO;
             struct timeval tv;
             gettimeofday(&tv, NULL);
             uint64_t now = (uint64_t)(tv.tv_sec)*1000 + (uint64_t)(tv.tv_usec)/1000;
-            if(!decoderOptions) decoderOptions = [[NSMutableDictionary dictionary] retain];
-            NSString* lastTimeKey = [NSString stringWithFormat:@"%@,%@,%@,LastTime", crateKey, cardKey, channelKey];
+            
+            //if(!decoderOptions) decoderOptions = [[NSMutableDictionary dictionary] retain];
+            
+            NSString* lastTimeKey = [[NSString alloc] initWithFormat:@"%@,%@,%@,LastTime", crateKey, cardKey, channelKey];
             uint64_t lastTime = [[decoderOptions objectForKey:lastTimeKey] unsignedLongLongValue];
+            
             if(now - lastTime >= 100){
                 fullDecode = YES;
-                [decoderOptions setObject:[NSNumber numberWithUnsignedLongLong:now] forKey:lastTimeKey];
+                NSNumber* nowNum = [[NSNumber alloc] initWithUnsignedLongLong:now];
+                [decoderOptions setObject:nowNum forKey:lastTimeKey];
+                [nowNum release];
+                //[decoderOptions setObject:[NSNumber numberWithUnsignedLongLong:now] forKey:lastTimeKey];
             }
             BOOL someoneWatching = NO;
-            if([aDataSet isSomeoneLooking:[NSString stringWithFormat:@"FlashCamADC,Waveforms,%d,%d,%d", crate , card, channel]]){
+            NSString* watchKey = [[NSString alloc] initWithFormat:@"FlashCamADC,Waveforms,%d,%d,%d", crate, card, channel];
+            
+            //if([aDataSet isSomeoneLooking:[NSString stringWithFormat:@"FlashCamADC,Waveforms,%d,%d,%d", crate , card, channel]]){
+            if([aDataSet isSomeoneLooking:watchKey]){
                 someoneWatching = YES;
             }
-
+            [watchKey release];
+            [lastTimeKey release];
             // decode the waveform if this is the first one or the above conditions are satisfied
             if(lastTime == 0 || (fullDecode && someoneWatching)){
-                NSMutableData* tmpData = [NSMutableData dataWithCapacity:wfSamples*sizeof(unsigned short)];
+                NSMutableData* tmpData = [[NSMutableData alloc] initWithCapacity:wfSamples*sizeof(unsigned short)];
                 [tmpData setLength:wfSamples*sizeof(unsigned short)];
                 memcpy((uint32_t*) [tmpData bytes], fcio->event.trace[trace_idx], wfSamples*sizeof(unsigned short));
                 [aDataSet loadWaveform:tmpData offset:0 unitSize:2 sender:self
                               withKeys:@"FlashCamADC", @"Waveforms", crateKey, cardKey, channelKey, nil];
+                [tmpData release];
             }
+            //}
         }
     }
 
