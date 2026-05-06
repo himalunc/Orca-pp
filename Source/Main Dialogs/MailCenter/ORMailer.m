@@ -19,7 +19,7 @@
 //-------------------------------------------------------------
 
 #import "ORMailer.h"
-#import "mail.h"
+//#import "mail.h"
 #import "ORMailer.h"
 #import "SynthesizeSingleton.h"
 
@@ -107,7 +107,7 @@
       
                 //body
                 [args addObject:@"-m"];
-                NSString* content = [NSString stringWithFormat:@"\"Sent from ORCA running on: %@%@\"",computerName(),[[self body]string]];
+                NSString* content = [NSString stringWithFormat:@"Sent from ORCA running on: %@\n%@\n",computerName(),[[self body]string]];
                 [args addObject:content];
                 
                 NSTask* task = [[[NSTask alloc] init] autorelease];
@@ -115,7 +115,7 @@
                 task.arguments = args;
                 
                 
-                NSPipe *stdOutPipe = nil;
+                NSPipe* stdOutPipe = nil;
                 stdOutPipe = [NSPipe pipe];
                 [task setStandardOutput:stdOutPipe];
                 
@@ -130,88 +130,37 @@
                 if (exitCode != 0){
                     NSLogColor([NSColor redColor], @"Mail Script Error!\n");
                 }
-                
-               //NSString* s = [[[NSString alloc] initWithBytes: data.bytes length:data.length encoding: NSUTF8StringEncoding] autorelease];
-               // NSLog(@"%@\n",s);
             }
             @catch (NSException* e){
                 NSLogColor([NSColor redColor], @"Python script sending mail exception\n");
             }
         }
         else {
-            /* create a new outgoing message object */
-            /* create a Scripting Bridge object for talking to the Mail application */
-            NSString* content = [NSString stringWithFormat:@"\n\nFrom ORCA running on: %@\n\n\n%@",computerName(),[[self body]string]];
-
-            MailApplication *mail = [SBApplication applicationWithBundleIdentifier:@"com.apple.Mail"];
-            MailOutgoingMessage *emailMessage = [[[mail classForScriptingClass:@"outgoing message"] alloc] initWithProperties:
-                                                 [NSDictionary dictionaryWithObjectsAndKeys:
-                                                  subject, @"subject",
-                                                  content, @"content",
-                                                  nil]];
-
-            @try {
-                /* add the object to the mail app  */
-                [[mail outgoingMessages] addObject: emailMessage];
+            //---- run in separate thread after 2 sec delay ----
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                    
+                NSString* recipient = to;
+                NSString* messageSubject = [self subject];
+                NSString *messageBody    = [[self body] string];
+                //---- use an AppleScript to control Mail ----
+                NSString *scriptSource = [NSString stringWithFormat:
+                    @"tell application id \"com.apple.mail\"\n"
+                     "  set newMessage to make new outgoing message with properties {subject:\"%@\", content:\"%@\", visible:false}\n"
+                     "  tell newMessage\n"
+                     "      make new to recipient at end of to recipients with properties {address:\"%@\"}\n"
+                     "      send\n"
+                     "  end tell\n"
+                     "end tell", messageSubject, messageBody, recipient];
                 
-                int delayCount = 0;
-                while (![mail isRunning]) {
-                    [ORTimer delay:1];
-                    delayCount++;
-                    if(delayCount>5)break;
-                }
+                NSTask* task       = [[[NSTask alloc] init] autorelease];
+                task.executableURL = [NSURL fileURLWithPath:@"/usr/bin/osascript"];
+                task.arguments     = @[@"-e", scriptSource];
                 
-                if([mail isRunning]){
-                    /* set the sender, don't show the message */
-                    emailMessage.sender = @"ORCA";
-                    emailMessage.visible = YES;
-                    
-                    if ( [mail lastError] != nil ){
-                        @throw([NSException exceptionWithName:@"ORMailer had problems sending message" reason:@"" userInfo:nil]);
-                    }
-                    NSArray* people = [to componentsSeparatedByString:@","];
-                    int count = 0;
-                    for(id aPerson in people){
-                        if([aPerson rangeOfString:@"@"].location != NSNotFound){
-                            NSDictionary* properties = [NSDictionary dictionaryWithObjectsAndKeys: aPerson, @"address",nil];
-                            MailToRecipient *theRecipient = [[[mail classForScriptingClass:@"to recipient"] alloc] initWithProperties:properties];
-                            [emailMessage.toRecipients addObject: theRecipient];
-                            [theRecipient release];
-                            count++;
-                        }
-                    }
-                    
-                    people = [cc componentsSeparatedByString:@","];
-                    for(id aPerson in people){
-                        if([aPerson rangeOfString:@"@"].location != NSNotFound && [aPerson length]>0){
-                            NSDictionary*    properties   = [NSDictionary dictionaryWithObjectsAndKeys: aPerson, @"address",nil];
-                            MailCcRecipient* theRecipient = [[[mail classForScriptingClass:@"cc recipient"] alloc] initWithProperties:properties];
-                            [emailMessage.ccRecipients addObject: theRecipient];
-                            [theRecipient release];
-                        }
-                    }
-                    
-                    if ( [mail lastError] == nil && count>0){
-                        [emailMessage send];
-                        if([mail lastError] != nil)	{
-                            @throw([NSException exceptionWithName:@"ORMailer had problems sending message" reason:@"" userInfo:nil]);
-                        }
-                        else {
-                            if([delegate respondsToSelector:@selector(mailSent:)]){
-                                [delegate mailSent:to];
-                            }
-                            else NSLog(@"email sent to: %@\n",to);
-                        }
-                    }
-                }
-                else NSLogColor([NSColor redColor],@"Mail app did not start. ORCA unable to send email.\n");
-            }
-            @catch(NSException* e){
-                NSLog( @"Possible problems with sending e-mail to %@\n",to);
-            }
-            @finally {
-                [emailMessage release];
-            }
+                NSError* taskError = nil;
+                [task launchAndReturnError:&taskError];
+                if (taskError) NSLogColor([NSColor redColor],@"eMail failed: %s\n", taskError.localizedDescription.UTF8String);
+                else           NSLog(@"ORCA sent an email to %@\n",recipient);
+            });
         }
 	}
     [thePool release];
