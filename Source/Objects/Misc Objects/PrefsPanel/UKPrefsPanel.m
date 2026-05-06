@@ -244,7 +244,9 @@
 		
 		// Set up a reasonable tooltip, and image   Note, these aren't localized, but you will likely want to localize many of the item's properties 
 		[toolbarItem setToolTip: itemLabel];
-		[toolbarItem setImage: [NSImage imageNamed:itemIdent]];
+        NSImage* anImage = [NSImage imageNamed:itemIdent];
+        [anImage setSize:NSMakeSize(35,35)];
+		[toolbarItem setImage: anImage];
 		
 		// Tell the item what message to send when it is clicked 
 		[toolbarItem setTarget: self];
