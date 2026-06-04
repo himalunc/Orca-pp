@@ -98,6 +98,11 @@
 		tbi = [[[NSToolbarItem alloc] initWithItemIdentifier: itemIdentifier] autorelease];
 		[tbi setAction: itemAction];
 		[tbi setLabel: itemLabel];
+        
+        //------ MAH set size to limit image sizes, which changed with a recent OS update ----
+        [itemImage setSize:NSMakeSize(35,35)];
+        //------
+        
 		[tbi setImage: itemImage];
 		if(itemCustomLabel) [tbi setPaletteLabel: itemCustomLabel];
 		else				[tbi setPaletteLabel: itemLabel];
