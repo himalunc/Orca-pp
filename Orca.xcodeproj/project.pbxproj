@@ -3212,7 +3212,6 @@
 		84E5B23A0715C65500C7B798 /* NcdCableCheckTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 84E5B2360715C65500C7B798 /* NcdCableCheckTask.h */; };
 		84E5B23B0715C65500C7B798 /* NcdCableCheckTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E5B2370715C65500C7B798 /* NcdCableCheckTask.m */; };
 		84E5B30F0715E16700C7B798 /* NcdCableCheckTask.nib in Resources */ = {isa = PBXBuildFile; fileRef = 84E5B30E0715E16700C7B798 /* NcdCableCheckTask.nib */; };
-		84E6CD001E4247BD004D6978 /* libusb-1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E6CCFF1E4247BD004D6978 /* libusb-1.0.a */; };
 		84E6CD061E4276CE004D6978 /* labjackusb.c in Sources */ = {isa = PBXBuildFile; fileRef = 84E6CD051E4276CE004D6978 /* labjackusb.c */; };
 		84E6E5DB10BC570800187AF6 /* ORSISRegisterDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 84E6E5DA10BC570800187AF6 /* ORSISRegisterDefs.h */; };
 		84E6FB220B2DDC6000CAA7C5 /* ObjectFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E6FB200B2DDC5F00CAA7C5 /* ObjectFactory.m */; };
@@ -3477,6 +3476,17 @@
 		864518FF2FD880B5003CB42F /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 864518FC2FD880B5003CB42F /* libz.1.dylib */; };
 		864519002FD880FC003CB42F /* libz.1.dylib in Frameworks_Copy */ = {isa = PBXBuildFile; fileRef = 864518FC2FD880B5003CB42F /* libz.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		864519012FD880FC003CB42F /* libzstd.1.dylib in Frameworks_Copy */ = {isa = PBXBuildFile; fileRef = 864518FD2FD880B5003CB42F /* libzstd.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		864519062FD8B4AF003CB42F /* libgssapi_krb5.2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 864519022FD8B4AF003CB42F /* libgssapi_krb5.2.2.dylib */; };
+		864519072FD8B4AF003CB42F /* libkrb5.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 864519042FD8B4AF003CB42F /* libkrb5.3.3.dylib */; };
+		864519082FD8B4AF003CB42F /* libkrb5support.1.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 864519052FD8B4AF003CB42F /* libkrb5support.1.1.dylib */; };
+		864519092FD8B4AF003CB42F /* libk5crypto.3.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 864519032FD8B4AF003CB42F /* libk5crypto.3.1.dylib */; };
+		8645190A2FD8B4F3003CB42F /* libgssapi_krb5.2.2.dylib in Frameworks_Copy */ = {isa = PBXBuildFile; fileRef = 864519022FD8B4AF003CB42F /* libgssapi_krb5.2.2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		8645190B2FD8B513003CB42F /* libkrb5.3.3.dylib in Frameworks_Copy */ = {isa = PBXBuildFile; fileRef = 864519042FD8B4AF003CB42F /* libkrb5.3.3.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		8645190C2FD8B53D003CB42F /* libkrb5support.1.1.dylib in Frameworks_Copy */ = {isa = PBXBuildFile; fileRef = 864519052FD8B4AF003CB42F /* libkrb5support.1.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		8645190D2FD8B565003CB42F /* libk5crypto.3.1.dylib in Frameworks_Copy */ = {isa = PBXBuildFile; fileRef = 864519032FD8B4AF003CB42F /* libk5crypto.3.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		8645190F2FD99311003CB42F /* libcom_err.3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8645190E2FD99311003CB42F /* libcom_err.3.0.dylib */; };
+		864519102FD9935C003CB42F /* libcom_err.3.0.dylib in Frameworks_Copy */ = {isa = PBXBuildFile; fileRef = 8645190E2FD99311003CB42F /* libcom_err.3.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		864519112FD9938A003CB42F /* libpq.5.dylib in Frameworks_Copy */ = {isa = PBXBuildFile; fileRef = E67BCDF925998CF8007A7473 /* libpq.5.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		9C086CE90D10AB6200524F47 /* mainFocalPlaneDetector.tif in Resources */ = {isa = PBXBuildFile; fileRef = 9C086CE80D10AB6200524F47 /* mainFocalPlaneDetector.tif */; };
 		9C1363C70D0A7921006C550D /* Caen265.nib in Resources */ = {isa = PBXBuildFile; fileRef = 9C1363BF0D0A7921006C550D /* Caen265.nib */; };
 		9C1363C80D0A7921006C550D /* Caen265Card.tif in Resources */ = {isa = PBXBuildFile; fileRef = 9C1363C00D0A7921006C550D /* Caen265Card.tif */; };
@@ -4113,6 +4123,12 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				864519112FD9938A003CB42F /* libpq.5.dylib in Frameworks_Copy */,
+				864519102FD9935C003CB42F /* libcom_err.3.0.dylib in Frameworks_Copy */,
+				8645190D2FD8B565003CB42F /* libk5crypto.3.1.dylib in Frameworks_Copy */,
+				8645190C2FD8B53D003CB42F /* libkrb5support.1.1.dylib in Frameworks_Copy */,
+				8645190B2FD8B513003CB42F /* libkrb5.3.3.dylib in Frameworks_Copy */,
+				8645190A2FD8B4F3003CB42F /* libgssapi_krb5.2.2.dylib in Frameworks_Copy */,
 				864519002FD880FC003CB42F /* libz.1.dylib in Frameworks_Copy */,
 				864519012FD880FC003CB42F /* libzstd.1.dylib in Frameworks_Copy */,
 				864518FB2FD87FCB003CB42F /* libcrypto.3.dylib in Frameworks_Copy */,
@@ -7209,7 +7225,6 @@
 		84E5B2360715C65500C7B798 /* NcdCableCheckTask.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NcdCableCheckTask.h; sourceTree = "<group>"; };
 		84E5B2370715C65500C7B798 /* NcdCableCheckTask.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = NcdCableCheckTask.m; sourceTree = "<group>"; };
 		84E5B30E0715E16700C7B798 /* NcdCableCheckTask.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = NcdCableCheckTask.nib; path = Source/Experiments/Ncd/CableCheckTask/NcdCableCheckTask.nib; sourceTree = SOURCE_ROOT; };
-		84E6CCFF1E4247BD004D6978 /* libusb-1.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libusb-1.0.a"; sourceTree = "<group>"; };
 		84E6CD051E4276CE004D6978 /* labjackusb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = labjackusb.c; sourceTree = "<group>"; };
 		84E6E5DA10BC570800187AF6 /* ORSISRegisterDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORSISRegisterDefs.h; sourceTree = "<group>"; };
 		84E6FB200B2DDC5F00CAA7C5 /* ObjectFactory.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = ObjectFactory.m; path = Source/Objects/OrcaObject/ObjectFactory.m; sourceTree = SOURCE_ROOT; };
@@ -7468,6 +7483,11 @@
 		864518F92FD87FA3003CB42F /* libcrypto.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libcrypto.3.dylib; sourceTree = "<group>"; };
 		864518FC2FD880B5003CB42F /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libz.1.dylib; sourceTree = "<group>"; };
 		864518FD2FD880B5003CB42F /* libzstd.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libzstd.1.dylib; sourceTree = "<group>"; };
+		864519022FD8B4AF003CB42F /* libgssapi_krb5.2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libgssapi_krb5.2.2.dylib; sourceTree = "<group>"; };
+		864519032FD8B4AF003CB42F /* libk5crypto.3.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libk5crypto.3.1.dylib; sourceTree = "<group>"; };
+		864519042FD8B4AF003CB42F /* libkrb5.3.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libkrb5.3.3.dylib; sourceTree = "<group>"; };
+		864519052FD8B4AF003CB42F /* libkrb5support.1.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libkrb5support.1.1.dylib; sourceTree = "<group>"; };
+		8645190E2FD99311003CB42F /* libcom_err.3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libcom_err.3.0.dylib; sourceTree = "<group>"; };
 		9C086CE80D10AB6200524F47 /* mainFocalPlaneDetector.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = mainFocalPlaneDetector.tif; path = "Source/Objects/Hardware/I2C/Custom Hardware/KATRIN Hardware/eGun/mainFocalPlaneDetector.tif"; sourceTree = SOURCE_ROOT; };
 		9C1363BF0D0A7921006C550D /* Caen265.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Caen265.nib; path = Source/Objects/Hardware/Vme/CAEN/CV265/Caen265.nib; sourceTree = SOURCE_ROOT; };
 		9C1363C00D0A7921006C550D /* Caen265Card.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = Caen265Card.tif; path = Source/Objects/Hardware/Vme/CAEN/CV265/Caen265Card.tif; sourceTree = SOURCE_ROOT; };
@@ -7888,10 +7908,14 @@
 				2DC1EE800F33724E00E93C75 /* WebKit.framework in Frameworks */,
 				840F5B191222C90000D49A75 /* QTKit.framework in Frameworks */,
 				864518FA2FD87FA3003CB42F /* libcrypto.3.dylib in Frameworks */,
-				84E6CD001E4247BD004D6978 /* libusb-1.0.a in Frameworks */,
+				8645190F2FD99311003CB42F /* libcom_err.3.0.dylib in Frameworks */,
 				864518F22FD8583D003CB42F /* libmysqlclient.24.dylib in Frameworks */,
 				E67BCDFA25998CF9007A7473 /* libpq.5.dylib in Frameworks */,
 				8458E91515DA8A2A005C43A9 /* ScriptingBridge.framework in Frameworks */,
+				864519062FD8B4AF003CB42F /* libgssapi_krb5.2.2.dylib in Frameworks */,
+				864519072FD8B4AF003CB42F /* libkrb5.3.3.dylib in Frameworks */,
+				864519082FD8B4AF003CB42F /* libkrb5support.1.1.dylib in Frameworks */,
+				864519092FD8B4AF003CB42F /* libk5crypto.3.1.dylib in Frameworks */,
 				864518FE2FD880B5003CB42F /* libzstd.1.dylib in Frameworks */,
 				864518FF2FD880B5003CB42F /* libz.1.dylib in Frameworks */,
 				8481E67917653766001AB905 /* SystemConfiguration.framework in Frameworks */,
@@ -8207,6 +8231,11 @@
 		2AE87BDC0D6E486900A839FC /* libUniversal */ = {
 			isa = PBXGroup;
 			children = (
+				8645190E2FD99311003CB42F /* libcom_err.3.0.dylib */,
+				864519022FD8B4AF003CB42F /* libgssapi_krb5.2.2.dylib */,
+				864519032FD8B4AF003CB42F /* libk5crypto.3.1.dylib */,
+				864519042FD8B4AF003CB42F /* libkrb5.3.3.dylib */,
+				864519052FD8B4AF003CB42F /* libkrb5support.1.1.dylib */,
 				864518FC2FD880B5003CB42F /* libz.1.dylib */,
 				864518FD2FD880B5003CB42F /* libzstd.1.dylib */,
 				864518F92FD87FA3003CB42F /* libcrypto.3.dylib */,
@@ -11346,7 +11375,6 @@
 		8475EC0414759D53003A165D /* libusb */ = {
 			isa = PBXGroup;
 			children = (
-				84E6CCFF1E4247BD004D6978 /* libusb-1.0.a */,
 				847C66261E3BC6D5002696C3 /* libusb.h */,
 			);
 			path = libusb;
