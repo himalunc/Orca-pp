@@ -98,6 +98,8 @@
 #import <net/if.h>
 #import <sys/ioctl.h>
 #import "vxi11_user.h"
+//define the variable here
+#define MAXSIZE 100
 
 NSString* ORHardwareFinderAvailableHardwareChanged = @"ORHardwareFinderAvailableHardwareChanged";
 
@@ -347,7 +349,7 @@ done_broad:
 {
     NSMutableDictionary* retDict = [NSMutableDictionary dictionary];
     struct timeval t;
-    const size_t MAXSIZE = 100;
+    //const size_t MAXSIZE = 100;
     char rcv[MAXSIZE];    
     char str[INET_ADDRSTRLEN];    
     t.tv_sec = 1;
