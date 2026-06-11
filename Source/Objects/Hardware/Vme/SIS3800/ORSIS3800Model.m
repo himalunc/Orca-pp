@@ -451,9 +451,9 @@ NSString* ORSIS3800ChannelNameChanged				 = @"ORSIS3800ChannelNameChanged";
 	((lemoInMode & 0x3) << 2)			|  //the '1' bits set the mode bits
 	((~lemoInMode & 0x3) << 10)			|  //the '0' bits set the mode clr bits
 	((enable25MHzPulses & 0x1) << 4)	|
-	((~enable25MHzPulses & 0x1) << 12)	|
+	((!enable25MHzPulses & 0x1) << 12)	|
 	((enableInputTestMode & 0x1) << 5)	|
-	((~enableInputTestMode & 0x1) << 13);
+	((!enableInputTestMode & 0x1) << 13);
 			  
 	[[self adapter] writeLongBlock:&aMask
                          atAddress:[self baseAddress] + kControlStatus

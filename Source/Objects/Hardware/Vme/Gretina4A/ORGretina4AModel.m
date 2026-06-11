@@ -2633,8 +2633,8 @@ NSString* ORGretina4AAcceptedEventCountChanged          = @"ORGretina4AAcceptedE
     
     unsigned short ledThresholdResultMask   = 0xFFFF; //assume all OK
     unsigned short baselineStartResultMask  = 0xFFFF; //assume all OK
-    unsigned short rawDataLengthResultMask  = 0xFFFF; //assume all OK
-    unsigned short rawDataWindowResultMask  = 0xFFFF; //assume all OK
+    //unsigned short rawDataLengthResultMask  = 0xFFFF; //assume all OK
+    //unsigned short rawDataWindowResultMask  = 0xFFFF; //assume all OK
     unsigned short dWindowResultMask        = 0xFFFF; //assume all OK
     unsigned short kWindowResultMask        = 0xFFFF; //assume all OK
     unsigned short mWindowResultMask        = 0xFFFF; //assume all OK
@@ -2648,8 +2648,8 @@ NSString* ORGretina4AAcceptedEventCountChanged          = @"ORGretina4AAcceptedE
         if([self enabled:i]){
             if(![self checkLedThreshold:i verbose:verbose])  ledThresholdResultMask  ^= (0x1<<i);
             if(![self checkBaselineStart:i verbose:verbose]) baselineStartResultMask ^= (0x1<<i);
-            if(![self checkRawDataLength:i verbose:verbose]) rawDataLengthResultMask ^= (0x1<<i);
-            if(![self checkRawDataWindow:i verbose:verbose]) rawDataWindowResultMask ^= (0x1<<i);
+            //if(![self checkRawDataLength:i verbose:verbose]) rawDataLengthResultMask ^= (0x1<<i);
+            //if(![self checkRawDataWindow:i verbose:verbose]) rawDataWindowResultMask ^= (0x1<<i);
             
             if(![self checkDWindow:i verbose:verbose])  dWindowResultMask   ^= (0x1<<i);
             if(![self checkKWindow:i verbose:verbose])  kWindowResultMask   ^= (0x1<<i);

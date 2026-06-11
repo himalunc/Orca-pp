@@ -1560,7 +1560,7 @@ enum {
 	double dt,Xwait;    /* dt is the time between Trace samples. */
 	int32_t FL,FG;   /* fast filter times are set here */
 	int32_t ndat,k,kmin,kmax,n,tcount,MaxTimeIndex = 0;
-	double threshold,t0,t1,TriggerLevelShift,avg,MaxTimeDiff;
+	double threshold,t0,t1,avg,MaxTimeDiff;
 	double localAmplitude, s1,s0; // used to determine which tau fit was best
 	int32_t TFcount;
 	
@@ -1607,7 +1607,7 @@ enum {
 				TimeStamp[tcount++]=k+2;  /* there are tcount triggers */
 		}
 		if(tcount>2){
-			TriggerLevelShift=0.0;
+			//TriggerLevelShift=0.0;
 			for(n=0; n<(tcount-1); n+=1){
 				avg=0.0;
 				kmin=(int32_t)(TimeStamp[n]+2*FL+FG);
@@ -1616,10 +1616,10 @@ enum {
 					for(k=kmin;k<kmax;k+=1)
 						avg+=FF2[k];
 					
-					TriggerLevelShift+=avg/(kmax-kmin);
+					//TriggerLevelShift+=avg/(kmax-kmin);
 				}
 			}
-			TriggerLevelShift/=tcount;
+			//TriggerLevelShift/=tcount;
 		}
 		
 		switch(tcount){

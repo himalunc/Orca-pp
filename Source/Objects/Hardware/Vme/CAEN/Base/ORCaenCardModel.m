@@ -734,7 +734,7 @@ static NSString*	CAENThresholdChnl       = @"CAENThresholdChnl%d";
         // Read the buffer.
         if ((bufferIsNotBusy && dataIsReady) || bufferIsFull) {
             
-            unsigned short totalEventCount = 0;     //reset the total number of events
+            //unsigned short totalEventCount = 0;     //reset the total number of events
             short dataIndex = 2;                    //leave space for our header
             
             while(1){
@@ -792,7 +792,7 @@ static NSString*	CAENThresholdChnl       = @"CAENThresholdChnl%d";
                             usingAddSpace:0x01];
                 
                 if([dataDecoder isEndOfBlock:dataValue]){
-                    totalEventCount++;
+                    //totalEventCount++;
                     dataBuffer[dataIndex++] = dataValue;
 					//we did read some data, so fill in the header
 					dataBuffer[0] = dataId |  (dataIndex & 0x3ffff);

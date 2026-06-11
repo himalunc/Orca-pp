@@ -529,9 +529,9 @@ NSString* ORSIS3820ModelShipAtRunEndOnlyChanged		 = @"ORSIS3820ModelShipAtRunEnd
 	((enable25MHzPulses & 0x1) << 4)		|
 	((enableCounterTestMode & 0x1) << 5)	|
 	((enableReferencePulser & 0x1) << 6)	|
-	((~enable25MHzPulses & 0x1) << 20)		|
-	((~enableCounterTestMode & 0x1) << 21)	|
-	((~enableReferencePulser & 0x1) << 22);
+	((!enable25MHzPulses & 0x1) << 20)		|
+	((!enableCounterTestMode & 0x1) << 21)	|
+	((!enableReferencePulser & 0x1) << 22);
 			  
 	[[self adapter] writeLongBlock:&aMask
                          atAddress:[self baseAddress] + kControlStatus

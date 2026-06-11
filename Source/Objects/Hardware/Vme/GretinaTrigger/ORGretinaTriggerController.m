@@ -402,7 +402,7 @@
     int value = [model serdesRPowerMask];
 	short i;
 	for(i=0;i<[serDesRPowerMasMatrix numberOfColumns];i++){
-		[[serDesRPowerMasMatrix cellWithTag:i] setIntValue:(value & 1L<<i)];
+		[[serDesRPowerMasMatrix cellWithTag:i] setIntValue:(value & 1<<i)];
 	}
 }
 
