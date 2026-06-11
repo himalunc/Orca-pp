@@ -41,7 +41,7 @@
 {
     if(!alreadyEvaluated){
         alreadyEvaluated = YES;
-        int theState = !([[self evalInput1] boolValue] & [[self evalInput2] boolValue]);
+        int theState = !([[self evalInput1] boolValue] && [[self evalInput2] boolValue]);
         [self setState: theState];
         [self setEvaluatedState: theState];
     }

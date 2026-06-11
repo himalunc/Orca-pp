@@ -1437,7 +1437,7 @@ static NSComparisonResult compareXL3s(ORXL3Model *xl3_1, ORXL3Model *xl3_2, void
      * events to determine if any slots are not firing triggers correctly.
      * This function should only be called in a separate thread. */
     int i, j, k;
-    uint32_t crate_pedestal_mask, coarse_delay, fine_delay, pedestal_width, gt_mask;
+    uint32_t crate_pedestal_mask, coarse_delay, fine_delay, pedestal_width;//, gt_mask;
     float pulser_rate;
     uint32_t channelMasks[16];
 
@@ -1463,7 +1463,7 @@ static NSComparisonResult compareXL3s(ORXL3Model *xl3_1, ORXL3Model *xl3_2, void
     coarse_delay = [mtc coarseDelay];
     fine_delay = [mtc fineDelay];
     pedestal_width = [mtc pedestalWidth];
-    gt_mask = [mtc gtMask];
+    //gt_mask = [mtc gtMask];
 
     pulser_rate = [mtc pgtRate];
 

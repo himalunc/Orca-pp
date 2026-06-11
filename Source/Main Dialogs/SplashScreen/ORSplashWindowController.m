@@ -64,7 +64,7 @@
 
 }
 
-#pragma mark ¥¥¥Notifications
+#pragma mark ï¿½ï¿½ï¿½Notifications
 - (void) registerNotificationObservers
 {
 	
@@ -112,4 +112,10 @@
     }
 
     return self;
-}@end
+}
+
+- (BOOL)canBecomeKeyWindow
+{
+    return YES;
+}
+@end

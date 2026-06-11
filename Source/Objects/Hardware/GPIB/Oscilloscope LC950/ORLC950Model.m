@@ -1151,7 +1151,7 @@ NSString* ORLC950GpibLock  = @"ORLC950GpibLock";
 	static L950IDefHeaderStruct	headerInfo;
 	char						*theHeader;
 	//	size_t						theLength;
-	int32_t						numBytes;
+	//int32_t						numBytes;
 	short						i;
 	
     @try {
@@ -1169,7 +1169,7 @@ NSString* ORLC950GpibLock  = @"ORLC950GpibLock";
 					
                     // Read header information
 					[ mController readFromDevice: mPrimaryAddress data: (char*)&headerInfo maxLength: sizeof( headerInfo ) ];
-					numBytes = atoi( headerInfo.mDataLength );							// length of pulse in chnls	
+					//numBytes = atoi( headerInfo.mDataLength );							// length of pulse in chnls
 					//					 printf( "Header length: %d\n", numBytes );
 					
                     memset( theHeader, 0, sizeof( struct L950Header ) );

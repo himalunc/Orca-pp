@@ -517,7 +517,7 @@ int	_vxi11_open_link(const char *inputip, CLIENT **client, VXI11_LINK **link, ch
 
 
 	/* Set link parameters */
-	link_parms.clientId	= (int) *client;
+	link_parms.clientId	= (int)(intptr_t) *client;
 	link_parms.lockDevice	= 0;
 	link_parms.lock_timeout	= VXI11_DEFAULT_TIMEOUT;
 	link_parms.device	= device;

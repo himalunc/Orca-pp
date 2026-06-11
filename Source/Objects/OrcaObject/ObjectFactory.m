@@ -90,9 +90,13 @@
 	[object release];
 	object = nil;
 }
-- (BOOL)ignoreModifierKeysWhileDragging
+//- (BOOL)ignoreModifierKeysWhileDragging
+//{
+//    return YES;
+//}
+- (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context
 {
-    return YES;
+    return NSDragOperationCopy;
 }
 
 #pragma mark ¥¥¥Pasteboard and Dragging
@@ -113,11 +117,14 @@
 }
 
 
-- (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)flag
-{
-    return NSDragOperationCopy;
-}
-
+//- (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)flag/
+//{
+//    return NSDragOperationCopy;
+//}
+//- (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context
+//{
+//    return NSDragOperationCopy;
+//}
 #pragma mark ¥¥¥Factory method
 - (void) makeObject
 {

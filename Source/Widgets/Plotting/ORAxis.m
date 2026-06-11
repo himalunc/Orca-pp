@@ -1418,8 +1418,8 @@ enum {
 	}
 	else {
 		NSSize labelSize = [label sizeWithAttributes:labelAttributes];
-		float labelAndTic = kLongTickLength + [@"300M" sizeWithAttributes:labelAttributes].width;
-		float totalWidth = labelAndTic + labelSize.height;		
+		CGFloat labelAndTic = (CGFloat)kLongTickLength + [@"300M" sizeWithAttributes:labelAttributes].width;
+		float totalWidth = labelAndTic + labelSize.height;
 		float x =  [self frame].size.height/2 - labelSize.width/2;
 		NSAffineTransform *transform = [NSAffineTransform transform];
 		NSGraphicsContext *context   = [NSGraphicsContext currentContext];
@@ -1834,7 +1834,7 @@ enum {
 				}
 				else {
 					if(isOpposite)[axisNumberString drawAtPoint:NSMakePoint(axisPosition + kLongTickLength+4,ticStartY+1-axisNumberSize.height/2) withAttributes:labelAttributes];
-					else [axisNumberString drawAtPoint:NSMakePoint(axisPosition-kXNumberCenter - axisNumberSize.width - kLongTickLength-2,ticStartY+1-axisNumberSize.height/2) withAttributes:labelAttributes];
+					else [axisNumberString drawAtPoint:NSMakePoint(axisPosition-kXNumberCenter - axisNumberSize.width - (CGFloat)kLongTickLength-2,ticStartY+1-axisNumberSize.height/2) withAttributes:labelAttributes];
 				}
 			}
 			else {
@@ -2099,7 +2099,7 @@ enum {
 			}
 			else {
 				if(isOpposite)[axisNumberString drawAtPoint:NSMakePoint(axisPosition + kLongTickLength+4,ticStartY+1-axisNumberSize.height/2) withAttributes:labelAttributes];
-				else [axisNumberString drawAtPoint:NSMakePoint(axisPosition-kXNumberCenter - axisNumberSize.width - kLongTickLength-2,ticStartY+1-axisNumberSize.height/2) withAttributes:labelAttributes];
+				else [axisNumberString drawAtPoint:NSMakePoint(axisPosition-kXNumberCenter - axisNumberSize.width - (CGFloat) kLongTickLength-2,ticStartY+1-axisNumberSize.height/2) withAttributes:labelAttributes];
 			}
 			ival += sep;
 			i = 1;

@@ -99,6 +99,7 @@
 }
 - (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
 {
+    if(![[delegate hostName] length]) return nil;
     BOOL isInFluxOn = [delegate inFluxdbMode];
     if (!isInFluxOn) {
         NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/buckets/%@",[delegate hostName],bucketId];
@@ -174,6 +175,7 @@
 //}
 - (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
 {
+    if(![[delegate hostName] length]) return nil;
     BOOL isInFluxOn = [delegate inFluxdbMode];
     if (!isInFluxOn) {
         NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/buckets?org=%@",[delegate hostName],[delegate org]];
@@ -243,6 +245,7 @@
 //}
 - (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
 {
+    if(![[delegate hostName] length]) return nil;
     BOOL isInFluxOn = [delegate inFluxdbMode];
     if (!isInFluxOn) {
         NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/orgs",[delegate hostName]];
@@ -303,6 +306,7 @@
 
 - (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
 {
+    if(![[delegate hostName] length]) return nil;
     BOOL isInFluxOn = [delegate inFluxdbMode];
     if (!isInFluxOn) {
         //NSLog(@"Listing Orgs: This is Influx 2");
@@ -374,6 +378,7 @@
 }
 - (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
 {
+    if(![[delegate hostName] length]) return nil;
     BOOL isInFluxOn = [delegate inFluxdbMode];
     if (!isInFluxOn) {
         NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/buckets",[delegate hostName]];
@@ -615,6 +620,7 @@
 //}
 - (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
 {
+    if(![[delegate hostName] length]) return nil;
     BOOL isInFluxOn = [delegate inFluxdbMode];
     if (!isInFluxOn) {
         NSString* cmdLine = [self cmdLine];
@@ -709,6 +715,7 @@
 
 - (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
 {
+    if(![[delegate hostName] length]) return nil;
     BOOL isInFluxOn = [delegate inFluxdbMode];
     if (!isInFluxOn) {
         NSString* cmdLine = [self line];
@@ -803,6 +810,7 @@
 //}
 - (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
 {
+    if(![[delegate hostName] length]) return nil;
     BOOL isInFluxOn = [delegate inFluxdbMode];
     if (!isInFluxOn) {
         NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/delete?org=%@&bucket=%@",[delegate hostName],org,bucket];
@@ -911,6 +919,7 @@
 //}
 - (NSMutableURLRequest*) requestFrom:(ORInFluxDBModel*)delegate
 {
+    if(![[delegate hostName] length]) return nil;
     BOOL isInFluxOn = [delegate inFluxdbMode];
     if (!isInFluxOn) {
         NSString* requestString = [NSString stringWithFormat:@"%@/api/v2/delete?org=%@&bucket=%@",[delegate hostName],org,bucket];

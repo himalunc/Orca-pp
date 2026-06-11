@@ -1175,7 +1175,7 @@ static NSString* ORInFluxDBModelInConnector = @"ORInFluxDBModelInConnector";
         id     aCmd = [messageQueue dequeue];
         if(aCmd!=nil){
             NSMutableURLRequest* request = [aCmd requestFrom:self];
-            if(request){
+            if(request && [request URL]){
                 NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
                 NSURLSession*             session = [NSURLSession sessionWithConfiguration:config];
                 NSURLSessionDataTask*      dbTask = [session dataTaskWithRequest:request

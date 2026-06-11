@@ -55,7 +55,7 @@ void freeBMPData(void *info, const void *data, size_t size) {
     size_t bitsPerPixel = 32;
     size_t bytesPerRow = 4 * dim;
     CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB	();
-    CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast;
+    CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault | (CGBitmapInfo)kCGImageAlphaPremultipliedLast;
     CGColorRenderingIntent renderingIntent = kCGRenderingIntentDefault;
     
     CGImageRef iref = CGImageCreate(dim, dim, bitsPerComponent, bitsPerPixel, bytesPerRow, colorSpaceRef, bitmapInfo, provider, NULL, YES, renderingIntent);

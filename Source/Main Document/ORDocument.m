@@ -3,7 +3,7 @@
 //  Orca
 //
 //  Created by Mark Howe on Tue Dec 03 2002.
-//  Copyright  © 2002 CENPA, University of Washington. All rights reserved.
+//  Copyright  ï¿½ 2002 CENPA, University of Washington. All rights reserved.
 //-----------------------------------------------------------
 //This program was prepared for the Regents of the University of 
 //Washington at the Center for Experimental Nuclear Physics and 
@@ -19,7 +19,7 @@
 //-------------------------------------------------------------
 
 
-#pragma mark ¥¥¥Imported Files
+#pragma mark ï¿½ï¿½ï¿½Imported Files
 #define __CARBONSOUND__ //temp until undated to >10.3
 #import <Carbon/Carbon.h>
 #import "ORStatusController.h"
@@ -34,19 +34,24 @@
 
 @implementation ORDocument
 
-#pragma mark ¥¥¥Document ID Strings
++ (BOOL)autosavesInPlace
+{
+    return NO;
+}
+
+#pragma mark ï¿½ï¿½ï¿½Document ID Strings
 static NSString* ORDocumentType       = @"Orca Experiment"; //must == CFBundleTypeName entry in Info.plist file.
 static NSString* ORDocumentVersionKey = @"Version";
 static int       ORDocumentVersion    = 1;
 
-#pragma mark ¥¥¥External Strings
+#pragma mark ï¿½ï¿½ï¿½External Strings
 NSString* ORStatusTextChangedNotification   = @"Status Text Has Changed";
 NSString* ORDocumentLoadedNotification      = @"ORDocumentLoadedNotification";
 NSString* ORDocumentScaleChangedNotification= @"ORDocumentScaleChangedNotification";
 NSString* ORDocumentClosedNotification		=@"ORDocumentClosedNotification";
 NSString* ORDocumentLock					= @"ORDocumentLock";
 
-#pragma mark ¥¥¥Initialization
+#pragma mark ï¿½ï¿½ï¿½Initialization
 - (id)init
 {
     if(self =[super init]){
@@ -138,7 +143,7 @@ NSString* ORDocumentLock					= @"ORDocumentLock";
     [super dealloc];
 }
 
-#pragma mark ¥¥¥Assessors
+#pragma mark ï¿½ï¿½ï¿½Assessors
 
 - (BOOL) documentCanBeChanged
 {
@@ -233,7 +238,7 @@ NSString* ORDocumentLock					= @"ORDocumentLock";
     }
 }
 
-#pragma mark ¥¥¥Window Management
+#pragma mark ï¿½ï¿½ï¿½Window Management
 - (void) makeWindowControllers
 {
     ORDocumentController* documentController = [[ORDocumentController alloc] init];
@@ -406,7 +411,7 @@ NSString* ORDocumentLock					= @"ORDocumentLock";
     [customRunParameters setObject:anObject forKey:aKey];
 }
 
-#pragma mark ¥¥¥Archival
+#pragma mark ï¿½ï¿½ï¿½Archival
 static NSString* ORGroupKey             = @"ORGroup";
 static NSString* OROrcaControllers	    = @"OROrcaControllers";
 static NSString* ORTaskMasterVisibleKey = @"ORTaskMasterVisibleKey";
@@ -615,7 +620,7 @@ static NSString* ORDocumentScaleFactor  = @"ORDocumentScaleFactor";
 }
 
 
-#pragma mark ¥¥¥Orca Dialog Management
+#pragma mark ï¿½ï¿½ï¿½Orca Dialog Management
 - (void) duplicateDialog:(id)dialog
 {
     

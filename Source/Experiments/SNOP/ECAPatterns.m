@@ -63,8 +63,8 @@ NSMutableArray* getECAPattern(int pattern){
 NSMutableArray* eca_pattern_bb(void)
 {
 
-    const int nsteps = 8;
-
+    //const int nsteps = 8;
+    #define nsteps 8
     int pedestal_pattern_temp[nsteps][SNOP_NCRATES][SNOP_NCARDS] = {
         //Step 0
         {
@@ -259,7 +259,7 @@ NSMutableArray* eca_pattern_bb(void)
         [pedestal_pattern addObject:step_pattern];
         [step_pattern release];
     }
-
+    #undef nsteps
     return pedestal_pattern;
 
 }
@@ -267,8 +267,8 @@ NSMutableArray* eca_pattern_bb(void)
 NSMutableArray* eca_pattern_crates(void)
 {
 
-    const int nsteps = 19;
-
+    //const int nsteps = 19;
+    #define nsteps 19
     int pedestal_pattern_temp[nsteps][SNOP_NCRATES][SNOP_NCARDS] = {
         //Step 0
         {
@@ -703,7 +703,7 @@ NSMutableArray* eca_pattern_crates(void)
         [pedestal_pattern addObject:step_pattern];
         [step_pattern release];
     }
-
+    #undef nsteps
     return pedestal_pattern;
 
 }
@@ -711,8 +711,8 @@ NSMutableArray* eca_pattern_crates(void)
 NSMutableArray* eca_pattern_bonus(void)
 {
 
-    const int nsteps = 9;
-
+    //const int nsteps = 9;
+    #define nsteps 9
     int pedestal_pattern_temp[nsteps][SNOP_NCRATES][SNOP_NCARDS] = {
         //Step 0
         {
@@ -928,7 +928,7 @@ NSMutableArray* eca_pattern_bonus(void)
         [pedestal_pattern addObject:step_pattern];
         [step_pattern release];
     }
-
+    #undef nsteps
     return pedestal_pattern;
 
 }
@@ -936,8 +936,8 @@ NSMutableArray* eca_pattern_bonus(void)
 NSMutableArray* eca_pattern_channels(void)
 {
 
-    const int nsteps = 32;
-
+    //const int nsteps = 32;
+    #define nsteps 32
     int pedestal_pattern_temp[nsteps][SNOP_NCRATES][SNOP_NCARDS] = {
         //Step 0
         {
@@ -1660,16 +1660,15 @@ NSMutableArray* eca_pattern_channels(void)
         [pedestal_pattern addObject:step_pattern];
         [step_pattern release];
     }
-
+    #undef nsteps
     return pedestal_pattern;
-
 }
 
 NSMutableArray* eca_pattern_hcrates(void)
 {
 
-    const int nsteps = 38;
-
+    //const int nsteps = 38;
+    #define nsteps 38
     int pedestal_pattern_temp[nsteps][SNOP_NCRATES][SNOP_NCARDS] = {
         //Step 0
         {
@@ -2523,15 +2522,15 @@ NSMutableArray* eca_pattern_hcrates(void)
         [pedestal_pattern addObject:step_pattern];
         [step_pattern release];
     }
-
+    #undef nsteps
     return pedestal_pattern;
-
+    
 }
 
 NSMutableArray* eca_pattern_solar(void)
 {
-
-    const int nsteps = 32;
+#define nsteps 32
+    //const int nsteps = 32;
 
     int pedestal_pattern_temp[nsteps][SNOP_NCRATES][SNOP_NCARDS] = {
         //Step 0
@@ -3254,7 +3253,7 @@ NSMutableArray* eca_pattern_solar(void)
         [pedestal_pattern addObject:step_pattern];
         [step_pattern release];
     }
-    
+    #undef nsteps
     return pedestal_pattern;
     
 }

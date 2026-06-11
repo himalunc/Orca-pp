@@ -85,7 +85,7 @@
 - (void) calculateAverage:(float)dataPoint
                minSamples:(int)minSamples
              triggerValue:(float)triggerValue
-                spikeType:(BOOL)triggerType
+                spikeType:(int)triggerType
                     group:(ORRunningAverageGroup*)aGroup
 {
     

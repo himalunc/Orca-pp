@@ -23,11 +23,10 @@
 #import "ORUSBInterface.h"
 
 void MyCallBackFunction(void *dummy, IOReturn result, void *arg0)
-{    
-    printf("MyCallbackfunction: %d, 0x%x, %d\n", (int)dummy, (int)result, (int)arg0);
+{
+    printf("MyCallbackfunction: %p, 0x%x, %p\n", dummy, (unsigned int)result, arg0);
 }
-
-void _interruptRecieved(void *refCon, IOReturn result, int len) 
+void _interruptRecieved(void *refCon, IOReturn result, int len)
 {
 	[((ORUSBInterface*) refCon) interruptRecieved:result length:len];
 }

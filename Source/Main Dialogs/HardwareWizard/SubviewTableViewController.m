@@ -247,14 +247,13 @@
 	return NO;
     }
 }
-
-- (BOOL) tableView:(NSTableView *) tableView writeRowsWithIndexes:(NSIndexSet *) rows toPasteboard:(NSPasteboard *) pboard
+- (id<NSPasteboardWriting>) tableView:(NSTableView *) tableView pasteboardWriterForRow:(NSInteger) row
 {
     if ([self isValidDelegateForSelector: _cmd]){
-        return [[self delegate] tableView: tableView writeRowsWithIndexes: rows toPasteboard: pboard];
+        return [[self delegate] tableView: tableView pasteboardWriterForRow: row];
     }
     else {
-        return NO;
+        return nil;
     }
 }
 

@@ -320,7 +320,7 @@ NSString*	ORICS8065ModelIpAddressChanged		= @"ORICS8065ModelIpAddressChanged";
         [theHWLock lock];   //-----begin critical section
 		
 		Create_LinkParms crlp;
-		crlp.clientId = (int)rpcClient;
+		crlp.clientId = (int)(unsigned long)rpcClient;
 		crlp.lockDevice = 0;
 		crlp.lock_timeout = 10000;
 		char device[64];

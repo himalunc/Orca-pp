@@ -2418,8 +2418,8 @@ snopGreenColor;
 
     NSInteger activeCell = [sender selectedRow];
     float raw;
-    int threshold_index;
-    float threshold_value;
+    int threshold_index = 0;
+    float threshold_value = 0;
     int units;
     switch (activeCell) {
         //NHIT100HI
@@ -2484,6 +2484,8 @@ snopGreenColor;
             [mtcModel setPgtRate:raw];
             return;
             break;
+        default:
+            return;
     }
     @try{
         units = (int)[self decideUnitsToUseForRow:(int)activeCell usingModel:mtcModel];

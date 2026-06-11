@@ -3,7 +3,7 @@
 //  Orca
 //
 //  Created by Mark Howe on Tue Dec 03 2002.
-//  Copyright  © 2002 CENPA, University of Washington. All rights reserved.
+//  Copyright  ï¿½ 2002 CENPA, University of Washington. All rights reserved.
 //-----------------------------------------------------------
 //This program was prepared for the Regents of the University of 
 //Washington at the Center for Experimental Nuclear Physics and 
@@ -19,7 +19,7 @@
 //-------------------------------------------------------------
 
 
-#pragma mark ¥¥¥Imported Files
+#pragma mark ï¿½ï¿½ï¿½Imported Files
 #import "ORHeartBeat.h"
 #import "ORAutoTester.h"
 #import "ORCommandCenter.h"
@@ -221,7 +221,7 @@ NSString* OROrcaFinalQuitNotice      = @"OROrcaFinalQuitNotice";
 	return ethernetHardwareAddress;
 }
 
-#pragma mark ¥¥¥Notifications
+#pragma mark ï¿½ï¿½ï¿½Notifications
 - (void) registerNotificationObservers
 {
     NSNotificationCenter* notifyCenter = [NSNotificationCenter defaultCenter];
@@ -282,7 +282,7 @@ NSString* OROrcaFinalQuitNotice      = @"OROrcaFinalQuitNotice";
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"ORAppTerminating" object:self];
 }
 
-#pragma mark ¥¥¥Actions
+#pragma mark ï¿½ï¿½ï¿½Actions
 - (IBAction) showArchive:(id)sender
 {
     [[ORArchive sharedArchive] showWindow:self];
@@ -430,7 +430,12 @@ NSString* OROrcaFinalQuitNotice      = @"OROrcaFinalQuitNotice";
 	return [[ORGlobal sharedGlobal] canQuitDuringRun] || ![[ORGlobal sharedGlobal] runInProgress];
 }
 
-#pragma mark ¥¥¥Accessors
+- (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app
+{
+    return YES;
+}
+
+#pragma mark ï¿½ï¿½ï¿½Accessors
 
 - (id) document
 {
@@ -460,7 +465,7 @@ NSString* OROrcaFinalQuitNotice      = @"OROrcaFinalQuitNotice";
     [NSApp relaunch:sender arguments:arguments];
 }
 
-#pragma mark ¥¥¥Notification Methods
+#pragma mark ï¿½ï¿½ï¿½Notification Methods
 -(void)applicationDidFinishLaunching:(NSNotification*)aNotification
 {
 	[self showStatusLog:self];
@@ -625,7 +630,7 @@ NSString* OROrcaFinalQuitNotice      = @"OROrcaFinalQuitNotice";
     return [[[NSUserDefaults standardUserDefaults] objectForKey: OROpeningDocPreferences] intValue];
 }
 
-#pragma mark ¥¥¥Menu Management
+#pragma mark ï¿½ï¿½ï¿½Menu Management
 - (BOOL) validateMenuItem:(NSMenuItem*)menuItem
 {
     BOOL documentIsOpen = [[NSApp orderedDocuments] count]>0;

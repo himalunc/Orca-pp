@@ -206,9 +206,13 @@
 		[pb setString:thePath forType:NSStringPboardType];
 	}
 }
-- (NSDragOperation) draggingSourceOperationMaskForLocal:(BOOL)isLocal
+//- (NSDragOperation) draggingSourceOperationMaskForLocal:(BOOL)isLocal
+//{
+//	return NSDragOperationCopy;
+//}
+- (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context
 {
-	return NSDragOperationCopy;
+    return NSDragOperationCopy;
 }
 
 - (IBAction) delete:(id)sender

@@ -99,7 +99,7 @@
 //runs in the process logic thread
 - (id) eval
 {
-    [self setState:[[self evalInput1] boolValue] | [[self evalInput2] boolValue]];
+    [self setState:[[self evalInput1] boolValue] || [[self evalInput2] boolValue]];
     [self setEvaluatedState: [self state]];
 	return [ORProcessResult processState:evaluatedState value:evaluatedState];
 }

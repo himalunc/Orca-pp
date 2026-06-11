@@ -816,7 +816,7 @@ NSString* HVkErrorMsg = @"ErrorMsg";
 //------------------------------------------------------------------------------------------
 - (NSString*) interpretDataFromSocket: (NSData*) aDataObject returnCode: (int*) aReturnCode
 {
-	const int	NUMcCODENUM = 5;
+    enum { NUMcCODENUM = 5 };
 	NSString*	returnStringFromSocket;
 	NSString*	returnCodeAsString;
 	char		returnBufferArray[ 257 ];	// 0 Byte is continuation character C is continuation.
@@ -827,7 +827,7 @@ NSString* HVkErrorMsg = @"ErrorMsg";
 	int			i;
 	int			responseIndex;
 	int			j;
-	int			nChar;
+	//int			nChar;
 	BOOL		newLine;
 	BOOL		haveCode;
 	
@@ -858,7 +858,7 @@ NSString* HVkErrorMsg = @"ErrorMsg";
 			NSLog( @"Interpreted.  Char( %d ): %s\n", i, displayArray );
 		}
 */		
-		nChar = 0;
+		//nChar = 0;
 				
 		// Find the C and \0 in the character array.  Replace them with \n except for the last
 		//\0 which stays.
@@ -882,7 +882,7 @@ NSString* HVkErrorMsg = @"ErrorMsg";
 				} 
 				else {
 					returnBufferString[ responseIndex++ ] = returnBufferArray[ i ];
-				nChar++;
+				//nChar++;
 				}
 			}
 

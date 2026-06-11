@@ -152,35 +152,59 @@ SYNTHESIZE_SINGLETON_FOR_ORCLASS(VXI11HardwareFinderController);
 }
 
 #pragma mark •••Drag and Drop Methods
-- (BOOL)tableView:(NSTableView *)aTableView writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard
+- (id<NSPasteboardWriting>)tableView:(NSTableView *)tableView pasteboardWriterForRow:(NSInteger)row
 {
+    NSDictionary* aDict = [[ORVXI11HardwareFinder sharedVXI11HardwareFinder] availableHardware];
+    NSArray* keys = [aDict allKeys];
+    if (row >= [keys count]) return nil;
+    
+    ORVXI11IPDevice* dev = [aDict objectForKey:[keys objectAtIndex:row]];
+    NSString* className = [self _stringOfClassToBuildOfDevice:[dev manufacturer] model:[dev model]];
+    if (!className) return nil;
+    
+    id obj = [[ObjectFactory makeObject:className] retain];
+    if ([obj respondsToSelector:@selector(setIpAddress:)]) {
+        [obj setIpAddress:[dev ipAddress]];
+    }
+    
+    NSNumber* num = [NSNumber numberWithUnsignedInteger:(NSUInteger)obj];
+    [self _setCreatedObjects:@[num]];
+    
+    NSPasteboardItem* pbItem = [[NSPasteboardItem alloc] init];
+    [pbItem setData:[NSData data] forType:ORGroupDragBoardItem];
+    return [pbItem autorelease];
+}
 
-    NSMutableArray* pointerArray = [NSMutableArray array];    
-    NSDictionary* aDict = [[ORVXI11HardwareFinder sharedVXI11HardwareFinder] availableHardware];    
-    NSArray* selectedObjects = [aDict objectsForKeys:[[aDict allKeys] objectsAtIndexes:rowIndexes]
-                                                                        notFoundMarker:[ORVXI11IPDevice deviceForString:@""]];
+
+//- (BOOL)tableView:(NSTableView *)aTableView writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard
+//{
+//
+//    NSMutableArray* pointerArray = [NSMutableArray array];
+//    NSDictionary* aDict = [[ORVXI11HardwareFinder sharedVXI11HardwareFinder] availableHardware];
+//    NSArray* selectedObjects = [aDict objectsForKeys:[[aDict allKeys] objectsAtIndexes:rowIndexes]
+//                                                                        notFoundMarker:[ORVXI11IPDevice deviceForString:@""]];
     
     //load the saved objects pointers into the paste board.    
-    int i;
-    for (i=0;i<[selectedObjects count];i++)
-    {
-        ORVXI11IPDevice* dev = [selectedObjects objectAtIndex:i];
-        NSString* className = [self _stringOfClassToBuildOfDevice:[dev manufacturer] model:[dev model]];
-        if (!className) continue;
-        id obj = [[ObjectFactory makeObject:className] retain];
-        if ([obj respondsToSelector:@selector(setIpAddress:)]) {
-            [obj setIpAddress:[dev ipAddress]];
-        }
-        NSNumber* num = [NSNumber numberWithUnsignedInteger:(NSUInteger)obj];
-        [pointerArray addObject:num];
-    }
-    if ([pointerArray count] == 0) return NO;
+//    int i;
+//    for (i=0;i<[selectedObjects count];i++)
+//    {
+//        ORVXI11IPDevice* dev = [selectedObjects objectAtIndex:i];
+//        NSString* className = [self _stringOfClassToBuildOfDevice:[dev manufacturer] model:[dev model]];
+//        if (!className) continue;
+//        id obj = [[ObjectFactory makeObject:className] retain];
+//        if ([obj respondsToSelector:@selector(setIpAddress:)]) {
+//            [obj setIpAddress:[dev ipAddress]];
+//        }
+//        NSNumber* num = [NSNumber numberWithUnsignedInteger:(NSUInteger)obj];
+//        [pointerArray addObject:num];
+//    }
+//    if ([pointerArray count] == 0) return NO;
     
-    [pboard declareTypes:[NSArray arrayWithObjects:ORGroupDragBoardItem, nil] owner:self];
-    [pboard setData:[NSData data] forType:ORObjArrayPtrPBType];    
-    [self _setCreatedObjects:pointerArray];
-    return YES;
-}
+//    [pboard declareTypes:[NSArray arrayWithObjects:ORGroupDragBoardItem, nil] owner:self];
+//    [pboard setData:[NSData data] forType:ORObjArrayPtrPBType];
+//    [self _setCreatedObjects:pointerArray];
+//    return YES;
+//}
 
 
 - (void)pasteboard:(NSPasteboard *)sender provideDataForType:(NSString *)type

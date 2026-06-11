@@ -122,8 +122,8 @@
     glTranslatef(tx,ty,tz);
     //glScalef(sx,sy,sz);
     
-	const GLint NUMVERTS = 50;
-	GLfloat outerCircleLower[NUMVERTS][2], innerCircleLower[NUMVERTS][2], 
+	enum { NUMVERTS = 50 };
+	GLfloat outerCircleLower[NUMVERTS][2], innerCircleLower[NUMVERTS][2],
         outerCircleUpper[NUMVERTS][2], innerCircleUpper[NUMVERTS][2]; //x and z coordinates
 	GLdouble y1 = -height/2, y2 = height/2;
     

@@ -224,7 +224,7 @@
 	}
 }
 
-#define ExtractLength(x) (IsShortForm(x) ? 1 : ((x) & ~kLongFormDataIdMask))
+//#define ExtractLength(x) (IsShortForm(x) ? 1 : ((x) & ~kLongFormDataIdMask))//check if it is intentional or duplicate of ORDataTypeAssigner.h line 37 before uncommenting it
 
 - (void) processGretina4Record:(uint32_t*)dataRecord
 {

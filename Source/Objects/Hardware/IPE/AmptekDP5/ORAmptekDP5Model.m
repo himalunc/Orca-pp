@@ -296,7 +296,7 @@ void* receiveFromDataReplyServerThreadFunctionXXX (void* p)
 	
 	//[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(receiveFromDataReplyServer) object:nil];
 	
-    const int maxSizeOfReadbuffer=4096*2;
+    enum { maxSizeOfReadbuffer = 4096*2 };
     char readBuffer[maxSizeOfReadbuffer];
 	
 	ssize_t retval=-1;
@@ -2473,7 +2473,7 @@ NSString* ORAmptekDP5V4cpuLock							= @"ORAmptekDP5V4cpuLock";
 
     //DEBUG 	       NSLog(@"Called %@::%@! xxxxx \n",NSStringFromClass([self class]),NSStringFromSelector(_cmd) );//TODO: DEBUG -tb-
 
-    const int maxSizeOfReadbuffer=MAXDP5PACKETLENGTH *2;//was 4096 * 2; //typically MAXDP5PACKETLENGTH=32775
+    enum { maxSizeOfReadbuffer = MAXDP5PACKETLENGTH * 2 }; //was 4096 * 2; //typically MAXDP5PACKETLENGTH=32775
     unsigned char readBuffer[maxSizeOfReadbuffer];
 
 	ssize_t retval=-1;
@@ -3836,7 +3836,7 @@ commands:
 	
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(receiveFromDataReplyServer) object:nil];
 
-    const int maxSizeOfReadbuffer=4096*2;
+    enum { maxSizeOfReadbuffer = 4096*2 };
     char readBuffer[maxSizeOfReadbuffer];
 
 	int retval=-1;
@@ -4752,9 +4752,10 @@ NSLog(@"WARNING: %@::%@: under construction! \n",NSStringFromClass([self class])
 
 - (uint32_t) readHwVersion
 {
-	uint32_t value;
+	uint32_t value = 0;
 	@try {
-		[self setHwVersion:[self readReg: kEWSltV4RevisionReg]];	
+		value = [self readReg: kEWSltV4RevisionReg];
+		[self setHwVersion:value];
 	}
 	@catch (NSException* e){
 	}

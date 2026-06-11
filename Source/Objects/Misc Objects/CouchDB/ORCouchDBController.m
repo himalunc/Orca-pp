@@ -231,7 +231,8 @@
 - (void) keepHistoryChanged:(NSNotification*)aNote
 {
 	[keepHistoryCB setIntValue: [model keepHistory]];
-	[keepHistoryStatusField setStringValue:([model keepHistory] & ![model stealthMode])?@"":@"Disabled"];
+	//[keepHistoryStatusField setStringValue:([model keepHistory] & ![model stealthMode])?@"":@"Disabled"];
+    [keepHistoryStatusField setStringValue:([model keepHistory] && ![model stealthMode])?@"":@"Disabled"];
 }
 
 - (void) useHttpsChanged:(NSNotification*)aNote
@@ -243,7 +244,8 @@
 {
 	[stealthModeButton setIntValue: [model stealthMode]];
 	[dbStatusField setStringValue:![model stealthMode]?@"":@"Disabled"];
-	[keepHistoryStatusField setStringValue:([model keepHistory] & ![model stealthMode])?@"":@"Disabled"];
+    [keepHistoryStatusField setStringValue:([model keepHistory] && ![model stealthMode])?@"":@"Disabled"];
+    //[keepHistoryStatusField setStringValue:([model keepHistory] & ![model stealthMode])?@"":@"Disabled"];
 }
 
 - (void) remoteHostNameChanged:(NSNotification*)aNote

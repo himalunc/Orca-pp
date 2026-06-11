@@ -324,7 +324,7 @@
 	float midR1 = (r2+r1)/2. - 2;
 	float midR2 = midR1 + 4;
 	float deltaAngle  = 360./5./8.;
-	float midVetoR = r1 + (r2 - r1)/2.;
+	//float midVetoR = r1 + (r2 - r1)/2.;
     int j;
     for(j=0;j<8;j++){
         int i;
@@ -352,7 +352,7 @@
 	r2 = 60;
 	midR1 = (r2+r1)/2.;
 	midR2 = midR1;
-	midVetoR = r1 + (r2 - r1)/2.;
+	//midVetoR = r1 + (r2 - r1)/2.;
 	startAngle = 0;
 	deltaAngle = 180/4.;
     centerPoint = NSMakePoint([self bounds].size.width-r2,r2+20);

@@ -289,7 +289,7 @@ char *NewBase64Encode(
 
 // If you change this, be sure it's a multiple of 90.
 // The base 64 encoding adds a new line every 90 characters.
-NSUInteger const WPBase64UtilsChunkSize = 18000;
+#define WPBase64UtilsChunkSize 18000
 
 @implementation WPBase64Utils
 + (NSString *)encodeData:(NSData *)data {

@@ -49,7 +49,7 @@
 - (void)    setTag:(NSUInteger)newTag;
 - (int)     groupTag;
 - (void)    setGroupTag:(int)newGroupTag;
-- (void) calculateAverage:(float)dataPoint minSamples:(int)minSamples triggerValue:(float)triggerValue spikeType:(BOOL)triggerType group:(ORRunningAverageGroup*)aGroup;
+- (void) calculateAverage:(float)dataPoint minSamples:(int)minSamples triggerValue:(float)triggerValue spikeType:(int)triggerType group:(ORRunningAverageGroup*)aGroup;
 - (BOOL) spiked;
 - (float) averageAtTimeOfSpike;
 

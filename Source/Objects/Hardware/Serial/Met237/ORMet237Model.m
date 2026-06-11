@@ -768,7 +768,7 @@ NSString* ORMet237Lock = @"ORMet237Lock";
 		else [self processStatus:theResponse];
 	}
 		
-	else if([theResponse hasPrefix:@"A"] | [theResponse hasPrefix:@"R"]){	//Send record
+	else if([theResponse hasPrefix:@"A"] || [theResponse hasPrefix:@"R"]){	//Send record
 		recordComingIn = YES;
 		[buffer release];
 		buffer = [[NSMutableString string] retain];

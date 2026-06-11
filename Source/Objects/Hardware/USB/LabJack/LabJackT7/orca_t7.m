@@ -334,7 +334,7 @@ int readAIN(int hDevice, DeviceCalibrationT7* CalibrationInfo,
         return 255;
     }
 
-    if( Settling < 0 && Settling > 50000 )
+    if( Settling < 0 || Settling > 50000 )
     {
         printf("eAIN error: Invalid Settling value\n");
         return 255;
