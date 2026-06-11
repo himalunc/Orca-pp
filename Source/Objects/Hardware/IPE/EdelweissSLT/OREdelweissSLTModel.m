@@ -265,10 +265,10 @@ void* receiveFromDataReplyServerThreadFunction (void* p)
 	int counterStatusPacket=-1;
 	
 	//[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(receiveFromDataReplyServer) object:nil];
-	
-    const int maxSizeOfReadbuffer=4096*2;
+
+    enum { maxSizeOfReadbuffer = 4096 * 2 };
     char readBuffer[maxSizeOfReadbuffer];
-	
+
 	ssize_t retval=-1;
 	
 	
@@ -1774,7 +1774,7 @@ NSLog(@"  arguments: %@ \n" , arguments);
 
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(receiveFromReplyServer) object:nil];
 
-    const int maxSizeOfReadbuffer=4096;
+    enum { maxSizeOfReadbuffer = 4096 };
     char readBuffer[maxSizeOfReadbuffer];
 
 	ssize_t retval=-1;
@@ -2150,7 +2150,7 @@ commands:
 	
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(receiveFromDataReplyServer) object:nil];
 
-    const int maxSizeOfReadbuffer=4096*2;
+    enum { maxSizeOfReadbuffer = 4096 * 2 };
     char readBuffer[maxSizeOfReadbuffer];
 
 	int retval=-1;
@@ -3132,9 +3132,10 @@ NSLog(@"WARNING: %@::%@: under construction! \n",NSStringFromClass([self class])
 
 - (uint32_t) readHwVersion
 {
-	uint32_t value;
+	uint32_t value = 0;
 	@try {
-		[self setHwVersion:[self readReg: kEWSltV4RevisionReg]];	
+		value = [self readReg: kEWSltV4RevisionReg];
+		[self setHwVersion:value];
 	}
 	@catch (NSException* e){
 	}

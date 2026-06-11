@@ -1588,7 +1588,7 @@ static const uint32_t SLTCommandReg      = 0xa80008 >> 2;
     settings =  ((histClrMode & 0x1)<<29) |
                 ((histMode    & 0x1)<<28) |
                 ((histEBin    & 0xF)<<20) |
-                histEMin & 0xFFFFF;
+                (histEMin & 0xFFFFF);
 
     if ([self readReg:kFLTV4HistgrSettingsReg] != settings) needUpdate = true;
     
@@ -1818,12 +1818,12 @@ static const uint32_t SLTCommandReg      = 0xa80008 >> 2;
 
 - (void) readHitRates
 {
-    uint32_t sltSec;
+    uint32_t sltSec = 0;
     uint32_t sltSubSec;
-    uint32_t sltSubSec2;
-    
+    uint32_t sltSubSec2 = 0;
+
     uint32_t runStatus;
-    uint32_t sltRunEndSec;
+    uint32_t sltRunEndSec = 0;
     
     
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(readHitRates) object:nil];

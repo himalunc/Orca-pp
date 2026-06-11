@@ -169,12 +169,12 @@ followed by multiplicity data (20 longwords -- 1 pixel mask per card)
 		}
 	}
 	
-	int nTriggered = 0;
-	for (i=0;i<20;i++){
-		for(j=0;j<22;j++){
-			if (((xyProj[i]>>j) & 0x1 ) == 0x1) nTriggered++;
-		}
-	}
+	//int nTriggered = 0;
+	//for (i=0;i<20;i++){
+	//	for(j=0;j<22;j++){
+	//		if (((xyProj[i]>>j) & 0x1 ) == 0x1) nTriggered++;
+	//	}
+	//}
 	
 	
 	// Clear dataset

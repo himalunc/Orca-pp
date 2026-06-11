@@ -1813,13 +1813,10 @@ enum {
 	id objx;
 	for(objx in setpointRequestsQueue){
 		NSDictionary *obj= objx;
-		int count;
 		NSString *path = [obj objectForKey:@"Path"];
 		NSArray* components = nil;
-		if([path isEqual:@"/"] || ([path length]==0)) count = 0;
-		else {
+		if(![path isEqual:@"/"] && ([path length]!=0)) {
 			components = [path componentsSeparatedByString:@"/"];
-			count = (int)[components count];
 		}
 //		NSMutableArray *pathThroughTree = [[NSMutableArray alloc] initWithObject: [obj objectForKey:@"URL"]];
 		NSMutableArray *pathThroughTree = [NSMutableArray arrayWithCapacity:5];
@@ -2188,11 +2185,11 @@ enum {
                 NSLog(@"handleSilentItemResult: ... result is %@ \n",result);//DEBUG OUTPUT -tb-
             NSString* errorObj  = [dictionary objectForKey:@"Error"];
             NSString* resultObj  = [dictionary objectForKey:@"Result"];
-            int isError = 0;
+            //int isError = 0;
             NSInteger tmp=[resultObj caseInsensitiveCompare:@"Error"];//note: caseInsensitiveCompare: returns a 'NSComparisonResult' which may be -1, 0 or 1 ({NSOrderedAscending = -1, NSOrderedSame, NSOrderedDescending})-tb-
             //DEBUG  NSLog(@"%@::%@   result is >>>%@<<< comparison is:(%i) ((NSOrderedAscending is %i))\n", NSStringFromClass([self class]), NSStringFromSelector(_cmd),result,tmp,NSOrderedAscending);//DEBUG OUTPUT -tb-
             if(tmp!=NSOrderedDescending){//== @"Error"  found 
-                isError=1;
+                //isError=1;
                 if([self showDebugOutput])
 		            NSLog(@"handleSilentItemResult: ... ERROR with string: %@ \n",errorObj);//DEBUG OUTPUT -tb-
                 [self setQueueError:1 forIndex: queueErrorIndex];

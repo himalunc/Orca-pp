@@ -3869,7 +3869,7 @@ for(chan=0; chan<6;chan++)
 	
 	@try {
 		
-		BOOL oneChanged = NO;
+		//BOOL oneChanged = NO;
 		float newTotal = 0;
 		int chan;
 		float freq = 1.0/((double)hitRateLengthSec);
@@ -3906,7 +3906,7 @@ for(chan=0; chan<6;chan++)
 					if(hitRateOverFlow[chan]) hitRate[chan] = 0;
 					hitRateOverFlow[chan] = overflow;
 					
-					oneChanged = YES;
+					//oneChanged = YES;
 				}
 				if(!hitRateOverFlow[chan]){
 					newTotal += hitRate[chan];
@@ -3937,9 +3937,7 @@ for(chan=0; chan<6;chan++)
 		
 		[self setHitRateTotal:newTotal];
 		
-		if(1 || oneChanged){//TODO: need to store the hitrate regulation bit and OR together in "oneCHanged" -tb- 2014-11
-		    [[NSNotificationCenter defaultCenter] postNotificationName:OREdelweissFLTModelHitRateChanged object:self];
-		}
+		[[NSNotificationCenter defaultCenter] postNotificationName:OREdelweissFLTModelHitRateChanged object:self];
 	}
 	@catch(NSException* localException) {
 	}

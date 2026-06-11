@@ -212,14 +212,14 @@ NSString* ORKatrinMchcpuLock                              = @"ORKatrinMchcpuLock
 {
     if([aNote object] == [self guardian]){
         NSArray* allCards = [[self guardian] children];
-        uint32_t aMask = 0x0;
+        //uint32_t aMask = 0x0;
         for(id aCard in allCards){
             if(![[aCard className] isEqualToString:[self className]]){
                 // Energy mode requires pixel bus
-                if ([aCard runMode] == kKatrinV4Flt_EnergyDaqMode){
-                    int n = (int)[aCard stationNumber]-1;
-                    aMask |= (0x1<<n);
-                }
+                //if ([aCard runMode] == kKatrinV4Flt_EnergyDaqMode){
+                    //int n = (int)[aCard stationNumber]-1;
+                    //aMask |= (0x1<<n);
+                //}
             }
         }
         [[self undoManager] disableUndoRegistration];
@@ -1990,7 +1990,7 @@ NSString* ORKatrinMchcpuLock                              = @"ORKatrinMchcpuLock
 
 - (void) takeData:(ORDataPacket*)aDataPacket userInfo:(NSDictionary*)userInfo
 {
-    uint32_t subseconds;
+    //uint32_t subseconds;
     uint32_t seconds;
     //uint32_t subsec2;
     double sltTime;
@@ -2051,7 +2051,7 @@ NSString* ORKatrinMchcpuLock                              = @"ORKatrinMchcpuLock
 
     
     // Read hitrate - alternative scheduling, independant from any macOS timer
-    subseconds = [self readSubSecondsCounter]; // req. to read subsec first !!!
+    //subseconds = [self readSubSecondsCounter]; // req. to read subsec first !!!
     seconds = [self readSecondsCounter];
     //subsec2 = (subseconds >> 11) & 0x3fff;
     

@@ -19,6 +19,9 @@
 //-------------------------------------------------------------
 
 #import "ORKatrinHgfAmcModel.h"
+#import "ORAlarm.h"
+#import "OrcaObject.h"
+#import "StatusLog.h"
 #import "ORIpeV4SLTModel.h"
 #import "ORKatrinV4SLTModel.h"
 #import "ORIpeCrateModel.h"
@@ -2778,14 +2781,14 @@ static const uint32_t SLTCommandReg      = 0xa80008 >> 2;
 - (void) printVersions
 {
 	uint32_t data;
-    uint32_t slot;
+    //uint32_t slot;
     uint32_t version;
     uint32_t revision;
     uint32_t project;
     
 	data = [self readVersion];
     
-    slot = data & 0x0f;
+    //slot = data & 0x0f;
     version = (data > 16) & 0xff;
     revision = (data > 8) & 0xff;
     project = (data > 24) & 0xff;

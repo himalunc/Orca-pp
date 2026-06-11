@@ -57,19 +57,22 @@
     NSMutableArray*       remoteRunItemControllers;
 }
 
-#pragma  mark ¥¥¥Initialization
+#pragma  mark ï¿½ï¿½ï¿½Initialization
 - (id)  init;
 - (void)dealloc;
 - (void) setModel:(id)aModel;
 - (NSView*) remoteRunItemContentView;
 
-#pragma mark ¥¥¥Interface Management
+#pragma mark ï¿½ï¿½ï¿½Interface Management
 - (NSView*) remoteRunItemContentView;
 - (void) updateButtons;
-- (void) isConnectedChanged:(NSNotification*)note;
+- (void) numberConnectedChanged:(NSNotification*)note;
+- (void) numberRunningChanged:(NSNotification*)note;
 - (void) runNumberLockChanged:(NSNotification*)aNotification;
 - (void) registerNotificationObservers;
+- (void) scanAndUpdate:(NSNotification*)aNote;
 - (void) runStatusChanged:(NSNotification*)aNotification;
+- (void) runTimeLimitChanged:(NSNotification*)aNotification;
 - (void) timedRunChanged:(NSNotification*)aNotification;
 - (void) repeatRunChanged:(NSNotification*)aNotification;
 - (void) elapsedTimeChanged:(NSNotification*)aNotification;
@@ -87,7 +90,7 @@
 - (void) remoteRunItemAdded:(NSNotification*)aNote;
 - (void) remoteRunItemRemoved:(NSNotification*)aNote;
 
-#pragma  mark ¥¥¥Actions
+#pragma  mark ï¿½ï¿½ï¿½Actions
 - (IBAction) startRunAction:(id)sender;
 - (IBAction) stopRunAction:(id)sender;
 - (IBAction) timeLimitTextAction:(id)sender;

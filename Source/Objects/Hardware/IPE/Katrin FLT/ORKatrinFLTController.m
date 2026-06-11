@@ -19,7 +19,7 @@
 //-------------------------------------------------------------
 
 
-#pragma mark ¥¥¥Imported Files
+#pragma mark ï¿½ï¿½ï¿½Imported Files
 #import "ORKatrinFLTController.h"
 #import "ORKatrinFLTModel.h"
 #import "ORIpeFLTDefs.h"
@@ -34,7 +34,7 @@
 
 @implementation ORKatrinFLTController
 
-#pragma mark ¥¥¥Initialization
+#pragma mark ï¿½ï¿½ï¿½Initialization
 -(id)init
 {
     self = [super initWithWindowNibName:@"KatrinFLT"];
@@ -42,7 +42,7 @@
     return self;
 }
 
-#pragma mark ¥¥¥Initialization
+#pragma mark ï¿½ï¿½ï¿½Initialization
 - (void) dealloc
 {
 	[rateFormatter release];
@@ -110,9 +110,9 @@
     [self updateWindow];
 }
 
-#pragma mark ¥¥¥Accessors
+#pragma mark ï¿½ï¿½ï¿½Accessors
 
-#pragma mark ¥¥¥Notifications
+#pragma mark ï¿½ï¿½ï¿½Notifications
 - (void) registerNotificationObservers
 {
     NSNotificationCenter* notifyCenter = [NSNotificationCenter defaultCenter];
@@ -399,7 +399,7 @@
 	
 }
 
-#pragma mark ¥¥¥Interface Management
+#pragma mark ï¿½ï¿½ï¿½Interface Management
 
 - (void) checkWaveFormEnabledChanged:(NSNotification*)aNote
 {
@@ -572,18 +572,12 @@
     
     //if in daq run mode popup there was something selected which is disabled, then change selection to an other mode
     // in fact: histogram replaces energy mode in histogram FPGA config. (and same for veto)
-    NSMenuItem *currSelection = [daqRunModeButton selectedItem];
-    //    if(currSelection == histogramDaqModeMenuItem) NSLog(@"currSelection == histogramDaqModeMenuItem\n");
-    //    if(currSelection == vetoDaqModeMenuItem) NSLog(@"currSelection == vetoDaqModeMenuItem\n");
-    //    if(currSelection == energyDaqModeMenuItem) NSLog(@"currSelection == energyDaqModeMenuItem\n");
-	
     // check std and energy item
     if(![model histoFeatureIsAvailable] && ![model vetoFeatureIsAvailable]){
     	[energyDaqModeMenuItem setEnabled:TRUE]; // in histogram mode we have no energy mode -tb-
         ////if(currSelection == histogramDaqModeMenuItem || currSelection == vetoDaqModeMenuItem){//I came from histo or veto mode -tb-
         if([model daqRunMode] == kKatrinFlt_DaqHistogram_Mode || [model daqRunMode] == kKatrinFlt_DaqVeto_Mode){//I came from histo or veto mode -tb-
             [model setDaqRunMode:kKatrinFlt_DaqEnergy_Mode];
-            currSelection = [daqRunModeButton selectedItem];
         }
     }
     
@@ -1124,7 +1118,7 @@
     
 }
 
-#pragma mark ¥¥¥Actions
+#pragma mark ï¿½ï¿½ï¿½Actions
 
 - (void) checkWaveFormEnabledAction:(id)sender
 {
@@ -1859,7 +1853,7 @@
 }
 
 
-#pragma mark ¥¥¥Plot DataSource
+#pragma mark ï¿½ï¿½ï¿½Plot DataSource
 - (int) numberPointsInPlot:(id)aPlotter
 {
 	int tag = (int)[aPlotter tag];

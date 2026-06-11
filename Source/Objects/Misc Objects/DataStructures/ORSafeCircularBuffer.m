@@ -28,8 +28,8 @@
 	self = [super init];
     if(aBufferSize==0)aBufferSize = 1024*100; //if passed zero, put something in....
 	bufferSize		 = (uint32_t)aBufferSize;
-	buffer			 = [[NSMutableData dataWithLength:bufferSize * sizeof(int32_t)] retain];
-	[buffer setLength:bufferSize * sizeof(int32_t)];
+	buffer			 = [[NSMutableData dataWithLength:bufferSize * sizeof(NSUInteger)] retain];
+	[buffer setLength:bufferSize * sizeof(NSUInteger)];
 	bufferLock		 = [[NSLock alloc] init];
 	numBlocksWritten = 0;
 	numBlocksRead	 = 0;
@@ -78,7 +78,7 @@
 	if(freeSpace > 0){
 		//theData is released when pulled from the CB
 		NSData* theData = [[NSData dataWithBytes:someBytes length:numBytes] retain];
-		*(dataPtr+writeMark) = (uint32_t)theData;
+		*(dataPtr+writeMark) = (NSUInteger)theData;
 		writeMark = (writeMark+1)%bufferSize;	//move the write mark ahead 
 		numBytesWritten += numBytes;
 		numBlocksWritten++;
@@ -95,7 +95,7 @@
 	BOOL full = NO;
 	if(freeSpace > 0){
 		[someData retain];
-		*(dataPtr+writeMark) = (uint32_t)someData;
+		*(dataPtr+writeMark) = (NSUInteger)someData;
 		writeMark = (writeMark+1)%bufferSize;	//move the write mark ahead 
 		numBytesWritten += [someData length];
 		numBlocksWritten++;

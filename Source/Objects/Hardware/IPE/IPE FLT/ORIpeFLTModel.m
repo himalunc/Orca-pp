@@ -830,7 +830,7 @@ static NSString* fltTestName[kNumIpeFLTTests]= {
 {
 	int fpga;
 	for(fpga=0;fpga<4;fpga++){
-		uint32_t aValue = (!fltRunMode &kIpeFlt_Periph_Mode_Mask) << kIpeFlt_Periph_Mode_Shift |
+		uint32_t aValue = ((!fltRunMode) &kIpeFlt_Periph_Mode_Mask) << kIpeFlt_Periph_Mode_Shift |
 		(coinTime & kIpeFlt_Periph_CoinTme_Mask) << kIpeFlt_Periph_CoinTme_Shift |    
 		(0 & kIpeFlt_Periph_LedOff_Mask) <<kIpeFlt_Periph_LedOff_Shift |
 		(1 & kIpeFlt_Periph_ThresDelta_Mask) <<kIpeFlt_Periph_ThresDelta_Shift |
@@ -1109,7 +1109,7 @@ static NSString* fltTestName[kNumIpeFLTTests]= {
 	@try {
 		uint32_t aValue;
 		BOOL overflow;
-		float measurementAge;
+		//float measurementAge;
 		
 		BOOL oneChanged = NO;
 		float newTotal = 0;
@@ -1117,7 +1117,7 @@ static NSString* fltTestName[kNumIpeFLTTests]= {
 		for(chan=0;chan<kNumFLTChannels;chan++){
 			
 			aValue = [self readReg:kFLTHitRateMemReg channel:chan];
-			measurementAge = (aValue >> 12) & 0x1f;
+			//measurementAge = (aValue >> 12) & 0x1f;
 			overflow = (aValue >> 10) & 0x1;
 			aValue = aValue & 0x3FF;
 			

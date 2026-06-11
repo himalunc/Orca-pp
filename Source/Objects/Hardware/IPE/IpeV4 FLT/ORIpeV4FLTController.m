@@ -1106,16 +1106,7 @@
 
 - (IBAction) testAction: (id) sender
 {
-	NSLog(@"HW tests are currently not available!\n");//TODO: test mode does not exist any more ... -tb- 7/2010
-	return;
-	@try {
-		[model runTests];
-	}
-	@catch(NSException* localException) {
-		NSLog(@"Exception reading FLT HW Model Test\n");
-        ORRunAlertPanel([localException name], @"%@\nFLT%d Access failed", @"OK", nil, nil,
-                        localException,[model stationNumber]);
-	}
+	NSLog(@"HW tests are currently not available!\n");
 }
 
 

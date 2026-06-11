@@ -415,7 +415,7 @@ static NSString* fltTestName[kNumKatrinFLTTests]= {
     [self linkToController:@"ORKatrinFLTController"];
 }
 
-#pragma mark ¥¥¥Notifications
+#pragma mark ï¿½ï¿½ï¿½Notifications
 - (void) registerNotificationObservers
 {
     NSNotificationCenter* notifyCenter = [NSNotificationCenter defaultCenter];
@@ -495,7 +495,7 @@ static NSString* fltTestName[kNumKatrinFLTTests]= {
 }
 
 
-#pragma mark ¥¥¥Accessors
+#pragma mark ï¿½ï¿½ï¿½Accessors
 
 - (BOOL) checkWaveFormEnabled
 {
@@ -1108,7 +1108,7 @@ static NSString* fltTestName[kNumKatrinFLTTests]= {
 
 
 
-#pragma mark ¥¥¥HW Access
+#pragma mark ï¿½ï¿½ï¿½HW Access
 
 
 - (void) writePostTriggerTime:(unsigned int)aValue
@@ -1568,7 +1568,7 @@ static NSString* fltTestName[kNumKatrinFLTTests]= {
 {
 	@try {
 		uint32_t aValue;
-		float measurementAge;
+		//float measurementAge;
 		
 		BOOL oneChanged = NO;
 		float newTotal = 0;
@@ -1576,7 +1576,7 @@ static NSString* fltTestName[kNumKatrinFLTTests]= {
 		for(chan=0;chan<kNumFLTChannels;chan++){
 			
 			aValue = [self read:([self slot] << 24) | (kFLTHitRateCode << kKatrinFlt_AddressSpace) | (chan<<kKatrinFlt_ChannelAddress)];
-			measurementAge = (aValue >> 28) & 0xf;
+			//measurementAge = (aValue >> 28) & 0xf;
 			aValue = aValue & 0x3fffff;
 			hitRateOverFlow[chan] = (aValue >> 23) & 0x1;
 			
@@ -1718,7 +1718,7 @@ static NSString* fltTestName[kNumKatrinFLTTests]= {
 	//NSLog(@"Reset  %x  - Pages: %d %d\n", aValue, page0, page1 ); 	
 }
 
-#pragma mark ¥¥¥¥hw histogram access
+#pragma mark ï¿½ï¿½ï¿½ï¿½hw histogram access
 
 // this is for testing and debugging the hardware histogramming (espec. timing) -tb- 2008-04-11
 #ifdef __ORCA_DEVELOPMENT__CONFIGURATION__
@@ -3046,7 +3046,7 @@ static NSString* fltTestName[kNumKatrinFLTTests]= {
  * This is done in the following steps:
  * - set E_Min =0
  * - Bin Size = fit according to the shaping time (so that the full range fits into hw histogram)
- * - calibration run starten (TRun Ÿbernehmen, wenn TRun != 0, sonst TRun = 10)
+ * - calibration run starten (TRun ï¿½bernehmen, wenn TRun != 0, sonst TRun = 10)
  * - cut given percentage of hits (from left and right) and  adjust EMin and BinSize, so that remaining counts fit into hw histogram
  */  //-tb-
 - (void) histoRunSelfCalibration
@@ -3527,7 +3527,7 @@ clean_up_mark:
 
 
 
-#pragma mark ¥¥¥Archival
+#pragma mark ï¿½ï¿½ï¿½Archival
 /** Define here what to read from the .Orca file. These are e.g. state of check boxes, content of text fields (gains,
  * thresholds,...), internal state values (daqRunMode, ...),  etc. 
  *
@@ -4684,9 +4684,9 @@ clean_up_mark:
     struct timezone tz;
     uint32_t data;
 	uint32_t hitrate[22];
-    uint32_t threshold;
+    //uint32_t threshold;
 	
-    threshold = 50;
+    //threshold = 50;
 	
 	
 	// Wait for the second strobe
@@ -5366,11 +5366,11 @@ clean_up_mark:
                 unsigned int *dataPtr=0;
                 dataPtr=(unsigned int *)[[histogramData objectAtIndex:chan] bytes];
                 int32_t i,currVal;
-                int sum=0;
+                int sum __attribute__((unused)) = 0;
                 for(i=theEventData.firstBin; i<=theEventData.lastBin; i++){
                     currVal =  dataPtr[i];
                     sum += currVal;
-                    //if(currVal) NSLog(@"    bin %4u: %4u \n",i , currVal); 	
+                    //if(currVal) NSLog(@"    bin %4u: %4u \n",i , currVal);
                     //[[histogramData objectAtIndex:i] setIntValue:currVal];
                     //histogramDataUI[i]= currVal;
                     //TODO: store it in histogramData -tb-
@@ -5601,7 +5601,7 @@ clean_up_mark:
     NSLogFont(aFont,@"Maximal rate   : %d\n", 0);
 }
 
-#pragma mark ¥¥¥HW Wizard
+#pragma mark ï¿½ï¿½ï¿½HW Wizard
 -(BOOL) hasParmetersToRamp
 {
 	return YES;
@@ -5762,7 +5762,7 @@ clean_up_mark:
 @end
 
 @implementation ORKatrinFLTModel (tests)
-#pragma mark ¥¥¥Accessors
+#pragma mark ï¿½ï¿½ï¿½Accessors
 - (BOOL) testsRunning
 {
     return testsRunning;
@@ -5859,7 +5859,7 @@ clean_up_mark:
 }
 
 
-#pragma mark ¥¥¥Tests
+#pragma mark ï¿½ï¿½ï¿½Tests
 - (void) modeTest
 {
 	int testNumber = 0;
