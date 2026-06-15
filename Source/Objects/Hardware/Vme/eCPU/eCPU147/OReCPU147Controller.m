@@ -45,7 +45,7 @@
 }
 
 
-#pragma mark ¥¥¥Accessors
+#pragma mark ï¿½ï¿½ï¿½Accessors
 - (NSTextField*) fileNameField
 {
     return fileNameField;
@@ -113,7 +113,7 @@
 }
 
 
-#pragma mark ¥¥¥Notifications
+#pragma mark ï¿½ï¿½ï¿½Notifications
 - (void) registerNotificationObservers
 {
     NSNotificationCenter* notifyCenter = [NSNotificationCenter defaultCenter];
@@ -142,7 +142,7 @@
 	
 }
 
-#pragma mark ¥¥¥Interface Management
+#pragma mark ï¿½ï¿½ï¿½Interface Management
 - (void) updateWindow
 {
     [self fileNameChanged:nil];
@@ -171,8 +171,8 @@
 		eCPUDualPortControl   dualPortControl 	 = [model dualPortControl];
 		
 		NSMutableString* s1 =  [NSMutableString stringWithFormat:@"Heart beat     : %-12u   Status  : %-u\n",communicationBlock.heartbeat,communicationBlock.ecpu_status];
-		[s1 appendFormat:@"CB Head        : %-10u     Debug   : %-u\n", (uint32_t)cbHeader.qHead,dualPortControl.ecpu_dbg_level];
-		[s1 appendFormat:@"CB Tail        : %-10u     Errors  : %-u\n", (uint32_t)cbHeader.qTail,communicationBlock.tot_err_cnt];
+		[s1 appendFormat:@"CB Head        : %-10lu    Debug   : %-u\n", (unsigned long)(uintptr_t)cbHeader.qHead,dualPortControl.ecpu_dbg_level];
+		[s1 appendFormat:@"CB Tail        : %-10lu    Errors  : %-u\n", (unsigned long)(uintptr_t)cbHeader.qTail,communicationBlock.tot_err_cnt];
 		[s1 appendFormat:@"Bytes Written  : %-10d     DPM Full: %-u\n",cbHeader.bytesWritten,communicationBlock.CB_err_dpm_buf_full_cnt];
 		[s1 appendFormat:@"Bytes Read     : %d\n",cbHeader.bytesRead];
 		[s1 appendFormat:@"Blocks Written : %-10d     Rqt Flag: %-u\n",cbHeader.blocksWritten,dualPortControl.ro_control_rqst];
@@ -219,7 +219,7 @@
 }
 
 
-#pragma mark ¥¥¥Actions
+#pragma mark ï¿½ï¿½ï¿½Actions
 
 - (IBAction) download:(id)sender
 {
@@ -340,7 +340,7 @@
     }];
 }
 
-#pragma mark ¥¥¥Queue DataSource
+#pragma mark ï¿½ï¿½ï¿½Queue DataSource
 
 - (void) getQueMinValue:(uint32_t*)aMinValue maxValue:(uint32_t*)aMaxValue head:(uint32_t*)aHeadValue tail:(uint32_t*)aTailValue
 {

@@ -1893,7 +1893,7 @@ static void AddSBCPacketWrapperToCache(SBCPacketWrapper *sbc)
 				[eCpuCBFillingAlarm postAlarm];
 			}
 			
-			if (throttle > 0 && percentBufferFilled > kAmountInBufferThreshold) {
+			if (throttle > 0 && percentBufferFilled > (float)kAmountInBufferThreshold) {
 				/* Let's try diminishing the throttle */
 				throttle -= kShrinkThrottleBy;
                 if(throttle<0) throttle=0;

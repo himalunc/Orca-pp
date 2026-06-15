@@ -32,7 +32,7 @@
  */
 
 
-#pragma mark ¥¥¥Imported Files
+#pragma mark ï¿½ï¿½ï¿½Imported Files
 #import "ORPciBit3Controller.h"
 #import "ORDualPortLAMModel.h"
 
@@ -45,7 +45,7 @@
 #import "ORPciBit3Commands.h"
 #import "ORCompositePlotView.h"
 
-#pragma mark ¥¥¥Macros
+#pragma mark ï¿½ï¿½ï¿½Macros
 // swap 16 bit quantities in 32 bit value ( |2| |1| -> |1| |2| )
 #define Swap16Bits(x)    ((((x) & 0xffff0000) >> 16) | (((x) & 0x0000ffff) << 16))
 
@@ -57,7 +57,7 @@
 // methods
 @implementation ORPciBit3Controller
 
-#pragma mark ¥¥¥Initialization
+#pragma mark ï¿½ï¿½ï¿½Initialization
 -(id)init
 {
     self = [super initWithWindowNibName:@"PciBit3"];
@@ -89,7 +89,7 @@
 	[[self window] setTitle:[NSString stringWithFormat:@"%@ Access",[model objectName]]];
 }
 
-#pragma mark ¥¥¥Notifications
+#pragma mark ï¿½ï¿½ï¿½Notifications
 - (void) registerNotificationObservers
 {
     NSNotificationCenter* notifyCenter = [NSNotificationCenter defaultCenter];
@@ -201,7 +201,7 @@
 }
 
 
-#pragma mark ¥¥¥Interface Management
+#pragma mark ï¿½ï¿½ï¿½Interface Management
 - (void) rangeChanged:(NSNotification*)aNote
 {
 	[rangeTextField setIntValue: [model rangeToDo]];
@@ -363,7 +363,7 @@
     
 }
 
-#pragma mark ¥¥¥Actions
+#pragma mark ï¿½ï¿½ï¿½Actions
 
 - (void) rangeTextFieldAction:(id)sender
 {
@@ -688,7 +688,7 @@
 
 -(IBAction)read:(id)sender
 {
-    uint32_t ldata;
+    uint32_t ldata = 0;
     unsigned short sdata;
     unsigned char cdata;
     

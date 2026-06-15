@@ -2883,12 +2883,12 @@ const short kVoltageADCMaximumAttempts = 10;
 	int32_t		   	maxRate = kCMOSRateUnmeasured;
 	uint32_t  	theCount;
 	unsigned short 	channel;
-	unsigned short	maxRateChannel = 0;
+	//unsigned short	maxRateChannel = 0;
 	
 	NSDate* lastTime = cmosCountTimeStamp;
 	NSDate* thisTime = [[NSDate alloc] init];
 	NSTimeInterval timeDiff = [thisTime timeIntervalSinceDate:lastTime];
-	float sampleFreq;
+	float sampleFreq=0;
     
 	if ((calcRates && (timeDiff<0 || timeDiff>kMaxTimeDiff)) || timeDiff==0) {
 		calcRates = 0;	// don't calculate rates if time diff is silly
@@ -2904,10 +2904,10 @@ const short kVoltageADCMaximumAttempts = 10;
 	
 	//uint32_t theOnlineMask = [self onlineMask];
 	
-	BOOL selected = NO;
-	@try {	
+	//BOOL selected = NO;
+	@try {
 		[[self xl2] select:self];
-		selected = YES;
+		//selected = YES;
 		
 		ORCommandList* aList = [ORCommandList commandList];
 		uint32_t resultIndex[32];
@@ -2941,7 +2941,7 @@ const short kVoltageADCMaximumAttempts = 10;
 					// keep track of maximum count rate
 					if (maxRate < theRate) {
 						maxRate = theRate;
-						maxRateChannel = channel;
+						//maxRateChannel = channel;
 					}
 					if (theRate > 1e9) theRate = kCMOSRateCorruptRead;			//MAH 3/19/98
 				} 

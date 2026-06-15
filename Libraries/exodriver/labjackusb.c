@@ -64,8 +64,7 @@ static void LJUSB_U3_FirmwareHardwareVersion(HANDLE hDevice, struct LJUSB_Firmwa
 {
     uint32_t i = 0, r = 0;
     uint32_t epOut = U3_PIPE_EP1_OUT, epIn = U3_PIPE_EP2_IN;
-    const uint32_t COMMAND_LENGTH = 26;
-    const uint32_t RESPONSE_LENGTH = 38;
+    enum { COMMAND_LENGTH = 26, RESPONSE_LENGTH = 38 };
     BYTE command[COMMAND_LENGTH];
     BYTE response[RESPONSE_LENGTH];
 
@@ -113,8 +112,7 @@ static void LJUSB_U6_FirmwareHardwareVersion(HANDLE hDevice, struct LJUSB_Firmwa
 {
     uint32_t i = 0, r = 0;
     uint32_t epOut = U6_PIPE_EP1_OUT, epIn = U6_PIPE_EP2_IN;
-    const uint32_t COMMAND_LENGTH = 26;
-    const uint32_t RESPONSE_LENGTH = 38;
+    enum { COMMAND_LENGTH = 26, RESPONSE_LENGTH = 38 };
     BYTE command[COMMAND_LENGTH];
     BYTE response[RESPONSE_LENGTH];
 
@@ -161,8 +159,7 @@ static void LJUSB_UE9_FirmwareHardwareVersion(HANDLE hDevice, struct LJUSB_Firmw
 {
     uint32_t i = 0, r = 0;
     uint32_t epOut = UE9_PIPE_EP1_OUT, epIn = UE9_PIPE_EP1_IN;
-    const uint32_t COMMAND_LENGTH = 38;
-    const uint32_t RESPONSE_LENGTH = 38;
+    enum { COMMAND_LENGTH = 38, RESPONSE_LENGTH = 38 };
     BYTE command[COMMAND_LENGTH];
     BYTE response[RESPONSE_LENGTH];
 

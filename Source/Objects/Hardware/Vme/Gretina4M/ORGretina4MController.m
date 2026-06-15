@@ -1110,7 +1110,7 @@
     [diagnosticsClearButton  setEnabled:[model diagnosticsEnabled]];
     
     
-    [viewPreampButton setEnabled:(int)[model spiConnector]];
+    [viewPreampButton setEnabled:[model spiConnector] != nil];
     
     if(lockedOrRunningMaintenance || downloading){
         [ledThresholdMatrix setEnabled:NO];

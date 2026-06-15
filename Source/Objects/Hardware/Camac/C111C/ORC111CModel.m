@@ -257,7 +257,7 @@ void IRQHandler(short crate_id, short irq_type, unsigned int irq_data,NSUInteger
 				cr_info.tout_ticks = 1000; 
 				CRSET(crate_id, &cr_info);
 				[ORTimer delay:.3];
-				CRIRQ(crate_id,(IRQ_CALLBACK)IRQHandler,(uint32_t)(self));
+				CRIRQ(crate_id,(IRQ_CALLBACK)IRQHandler,(uintptr_t)(self));
 			}
 		}
 	}

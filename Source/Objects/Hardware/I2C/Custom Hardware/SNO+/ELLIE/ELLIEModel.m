@@ -939,12 +939,13 @@ err:
     }
     //////////////
     //Get a Tubii object
+    TUBiiModel* theTubiiModel = nil;
     NSArray*  tubiiModels = [[(ORAppDelegate*)[NSApp delegate] document] collectObjectsOfClass:NSClassFromString(@"TUBiiModel")];
     if(![tubiiModels count]){
         NSLogColor([NSColor redColor], @"%@: Couldn't find Tubii model.\n",prefix);
         goto err;
     }
-    TUBiiModel* theTubiiModel = [tubiiModels objectAtIndex:0];
+    theTubiiModel = [tubiiModels objectAtIndex:0];
 
     ///////////////
     //Add run control object
@@ -989,9 +990,8 @@ err:
 
     ///////////////////////
     // Check trigger is being sent to asyncronus port of the MTC/D (EXT_A)
-    NSUInteger asyncTrigMask;
     @try{
-        asyncTrigMask = [theTubiiModel asyncTrigMask];
+        (void)[theTubiiModel asyncTrigMask];
     } @catch(NSException* e) {
         NSLogColor([NSColor redColor], @"%@: Error requesting asyncTrigMask from Tubii.\n",prefix);
         goto err;
@@ -1969,11 +1969,13 @@ err:{
     //////////////
     //Get a Tubii object
     NSArray*  tubiiModels = [[(ORAppDelegate*)[NSApp delegate] document] collectObjectsOfClass:NSClassFromString(@"TUBiiModel")];
+    TUBiiModel* theTubiiModel = nil;
+    ORRunModel* runControl = nil;
     if(![tubiiModels count]){
         NSLogColor([NSColor redColor], @"[SMELLIE]: Couldn't find Tubii model.\n");
         goto err;
     }
-    TUBiiModel* theTubiiModel = [tubiiModels objectAtIndex:0];
+    theTubiiModel = [tubiiModels objectAtIndex:0];
 
     //////////////
     //Get the run controller
@@ -1982,7 +1984,7 @@ err:{
         NSLogColor([NSColor redColor], @"[SMELLIE]: Couldn't find ORRunModel. Please add it to the experiment and restart the run.\n");
         goto err;
     }
-    ORRunModel* runControl = [runModels objectAtIndex:0];
+    runControl = [runModels objectAtIndex:0];
 
     ///////////////
     // RUN CONTROL

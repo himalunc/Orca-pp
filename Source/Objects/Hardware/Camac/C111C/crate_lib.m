@@ -850,7 +850,7 @@ short CRTOUT(short crate_id, unsigned int tout)
 ////////////////////////////////////////////
 //	CRIRQ
 ////////////////////////////////////////////
-short CRIRQ(short crate_id, IRQ_CALLBACK irq_callback, uint32_t userInfo)
+short CRIRQ(short crate_id, IRQ_CALLBACK irq_callback, uintptr_t userInfo)
 {
 	short retcode = CRATE_OK;
 #ifdef WIN32

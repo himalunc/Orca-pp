@@ -245,7 +245,7 @@
 
 -(IBAction)read:(id)sender
 {
-    uint32_t ldata;
+    uint32_t ldata=0;
     unsigned short sdata;
     unsigned char cdata;
     

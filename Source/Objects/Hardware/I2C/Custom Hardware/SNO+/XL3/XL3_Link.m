@@ -744,7 +744,7 @@ static void SwapLongBlock(void* p, int32_t n)
 
 	XL3Packet xl3Packet;	
 
-	time_t t0 = time(0);
+	//time_t t0 = time(0);
     BOOL go = [self isConnected];
     
 	while(go) { //yes, this is correct
@@ -777,7 +777,7 @@ static void SwapLongBlock(void* p, int32_t n)
 			}
 			
             //reset the timer
-            t0 = time(0);
+            //t0 = time(0);
             
             switch (xl3Packet.header.packetType) {
                 case MEGA_BUNDLE_ID: 
