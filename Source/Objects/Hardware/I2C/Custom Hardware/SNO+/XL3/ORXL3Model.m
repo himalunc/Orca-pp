@@ -4090,7 +4090,7 @@ err:
     }
     
     //data packet
-    const unsigned short packet_length = 20+16*8+16*8+6;
+    enum { packet_length = 20+16*8+16*8+6 };
     if (isPollingXl3 && [[ORGlobal sharedGlobal] runInProgress]) {
         uint32_t data[packet_length];
         data[0] = [self pmtBaseCurrentDataId] | packet_length;
@@ -4841,7 +4841,7 @@ err:
     }
 
     //data packet
-    const unsigned char packet_length = 3+21+6;
+    enum { packet_length = 3+21+6};
     if (isPollingXl3 && [[ORGlobal sharedGlobal] runInProgress]) {
         uint32_t data[packet_length];
         data[0] = [self fecVltDataId] | packet_length;
@@ -4904,7 +4904,7 @@ err:
             }
             
             //data packet
-            const unsigned char packet_length = 3+21+6;
+            enum {packet_length = 3+21+6};
             if (isPollingXl3 && [[ORGlobal sharedGlobal] runInProgress]) {
                 uint32_t data[packet_length];
                 data[0] = [self fecVltDataId] | packet_length;
@@ -5042,7 +5042,7 @@ err:
     }    
     
     //data packet
-    const unsigned char packet_length = 16;
+    enum {packet_length = 16};
     if (isPollingXl3 && [[ORGlobal sharedGlobal] runInProgress]) {
         uint32_t data[packet_length];
         data[0] = [self xl3VltDataId] | packet_length;
