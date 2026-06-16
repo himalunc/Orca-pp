@@ -52,7 +52,7 @@
 	theControlBlockHeader.bytesRead = 0L;
 	[self writeControlBlockHeader:theControlBlockHeader];
 				// Tail is only written at initialization by the writer - so use a special case
-	[self writeLong:[self baseAddress]+0x18 value:(uint32_t)theControlBlockHeader.qTail];
+	[self writeLong:[self baseAddress]+0x18 value:(uint32_t)(uintptr_t)theControlBlockHeader.qTail];
 	[self writeLong:[self baseAddress]+0x1C value:theControlBlockHeader.blocksRead];
 	[self writeLong:[self baseAddress]+0x20 value:theControlBlockHeader.bytesRead];
 				// the sentinel is only restored after all loads are complete - so use a special case
@@ -67,7 +67,7 @@
 {
 		[self writeLong:[self baseAddress]+0x00 value:aControlBlockHeader.tCBWordSize];
 		[self writeLong:[self baseAddress]+0x04 value:aControlBlockHeader.cbNumWords];
-		[self writeLong:[self baseAddress]+0x08 value:(uint32_t)aControlBlockHeader.qHead];
+		[self writeLong:[self baseAddress]+0x08 value:(uint32_t)(uintptr_t)aControlBlockHeader.qHead];
 		[self writeLong:[self baseAddress]+0x0C value:aControlBlockHeader.blocksLostToFullBuffer];
 		[self writeLong:[self baseAddress]+0x10 value:aControlBlockHeader.blocksWritten];
 		[self writeLong:[self baseAddress]+0x14 value:aControlBlockHeader.bytesWritten];
@@ -81,8 +81,8 @@
 		// Do nothing if sentinel does not exist
 		if( (theControlBlockHeader.writeSentinel & 0x00ffffff) != CB_SENTINEL) return CB_SENTINEL_INVALID;
 		// Calculate the space remaining in the queue
-		uint32_t theQHeadAddress = (uint32_t)theControlBlockHeader.qHead;
-		uint32_t theQTailAddress = (uint32_t)theControlBlockHeader.qTail;
+		uint32_t theQHeadAddress = (uint32_t)(uintptr_t)theControlBlockHeader.qHead;
+		uint32_t theQTailAddress = (uint32_t)(uintptr_t)theControlBlockHeader.qTail;
 		if(theControlBlockHeader.writeSentinel != theControlBlockHeader.readSentinel)
 			theQTailAddress = [self baseAddress] + sizeof( SCBHeader ) - sizeof( tCBWord );
 		uint32_t theSpaceRemainingInWords;

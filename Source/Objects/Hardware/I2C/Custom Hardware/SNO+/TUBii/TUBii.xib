@@ -2145,7 +2145,7 @@
                                                 </subviews>
                                             </view>
                                         </box>
-                                        <box autoresizesSubviews="NO" fixedFrame="YES" boxType="secondary" borderType="line" title="Counter" translatesAutoresizingMaskIntoConstraints="NO" id="TaC-5q-YG9">
+                                        <box autoresizesSubviews="NO" fixedFrame="YES" boxType="primary" borderType="line" title="Counter" translatesAutoresizingMaskIntoConstraints="NO" id="TaC-5q-YG9">
                                             <rect key="frame" x="14" y="53" width="547" height="328"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <view key="contentView" id="h8p-gI-sOD">

@@ -1356,7 +1356,7 @@ typedef struct a3818_comm {
 	// reserve 4 bytes (1 int32_t) at beginning of dma buffer for flags
 	uint32_t *dmaFlags = dmaBuffer;
 	dmaBuffer += 4L;
-	uint32_t physicalAddress = (uint32_t)dmaBuffer;
+	uint32_t physicalAddress = (uint32_t)(uintptr_t)dmaBuffer;
 	
 	// start dma
 	*dmaFlags = (uint32_t)0x00000000L;
@@ -1432,7 +1432,7 @@ physicalBufferAddress: physicalAddress
 	// reserve 4 bytes (1 int32_t) at beginning of dma buffer for flags
 	uint32_t *dmaFlags = dmaBuffer;
 	dmaBuffer += 4L;
-	uint32_t physicalAddress = (uint32_t)dmaBuffer;
+	uint32_t physicalAddress = (uint32_t)(uintptr_t)dmaBuffer;
 	
 	// start dma
 	*dmaFlags = (uint32_t)0x00000000L;

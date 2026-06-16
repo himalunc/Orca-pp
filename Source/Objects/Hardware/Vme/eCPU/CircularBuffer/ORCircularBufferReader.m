@@ -44,8 +44,8 @@
 		
 		
 		queueSize = theControlBlockHeader.cbNumWords;
-		headValue = (tCBWord)theControlBlockHeader.qHead;
-		tailValue = (tCBWord)theControlBlockHeader.qTail;
+		headValue = (tCBWord)(uintptr_t)theControlBlockHeader.qHead;
+		tailValue = (tCBWord)(uintptr_t)theControlBlockHeader.qTail;
 		
 	}
 	@catch(NSException* localException) {
@@ -56,14 +56,14 @@
 {
 	[self writeLong: [self baseAddress]+0x1C value:theControlBlockHeader->blocksRead];
 	[self writeLong: [self baseAddress]+0x20 value:theControlBlockHeader->bytesRead];
-	[self writeLong: [self baseAddress]+0x18 value:(tCBWord)theControlBlockHeader->qTail];
+	[self writeLong: [self baseAddress]+0x18 value:(tCBWord)(uintptr_t)theControlBlockHeader->qTail];
 }
 
 
 - (tCBWord) readBlockUsing:(SCBHeader*)theControlBlockHeader into:(tCBWord*)aBlockOfMemory size:(tCBWord) blockSize
 {
 	tCBWord maxAddress		= [self baseAddress] + DATA_CIRC_BUF_SIZE_BYTE;
-	tCBWord readPtr			= (tCBWord)theControlBlockHeader->qTail;
+	tCBWord readPtr			= (tCBWord)(uintptr_t)theControlBlockHeader->qTail;
 	
 	blockSize--;				//take account of the first word (the size)
 	readPtr += sizeof(tCBWord);	//point past the size.
@@ -131,7 +131,7 @@
 	tCBWord numBlocks = theControlBlockHeader.blocksWritten - theControlBlockHeader.blocksRead;
 	BOOL wasData = numBlocks>0;
 	for(;numBlocks--;){
-		tCBWord readPtr = (tCBWord)theControlBlockHeader.qTail;
+		tCBWord readPtr = (tCBWord)(uintptr_t)theControlBlockHeader.qTail;
 		tCBWord s1;
 		[self readLong:readPtr atPtr:&s1];
 		if(s1 && s1 < (DATA_CIRC_BUF_SIZE_BYTE - sizeof( SCBHeader ) + sizeof( tCBWord))){

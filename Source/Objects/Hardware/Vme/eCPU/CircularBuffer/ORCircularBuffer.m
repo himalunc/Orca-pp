@@ -133,8 +133,8 @@
 		
 		
 		queueSize = theControlBlockHeader.cbNumWords;
-		headValue = (tCBWord)theControlBlockHeader.qHead;
-		tailValue = (tCBWord)theControlBlockHeader.qTail;
+		headValue = (tCBWord)(uintptr_t)theControlBlockHeader.qHead;
+		tailValue = (tCBWord)(uintptr_t)theControlBlockHeader.qTail;
 		
 	}
 	@catch(NSException* localException) {

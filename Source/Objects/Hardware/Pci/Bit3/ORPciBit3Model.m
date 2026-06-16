@@ -62,7 +62,7 @@
  */
 
 
-#pragma mark ¥¥¥Imported Files
+#pragma mark ï¿½ï¿½ï¿½Imported Files
 #import "ORPciBit3Model.h"
 #import "ORRateGroup.h"
 #import "ORAxis.h"
@@ -70,7 +70,7 @@
 #import "ORCommandList.h"
 #import "ORVmeReadWriteCommand.h"
 
-#pragma mark ¥¥¥Notification Strings
+#pragma mark ï¿½ï¿½ï¿½Notification Strings
 NSString* ORPciBit3ModelRangeChanged						= @"ORPciBit3ModelRangeChanged";
 NSString* ORPciBit3ModelDoRangeChanged						= @"ORPciBit3ModelDoRangeChanged";
 NSString* ORPciBit3DualPortAddresChangedNotification        = @"ORPciBit3DualPortAddresChangedNotification";
@@ -87,7 +87,7 @@ NSString* ORPciBit3DeviceNameChangedNotification            = @"ORPciBit3DeviceN
 
 NSString* ORPciBit3Lock										= @"ORPciBit3Lock";
 
-#pragma mark ¥¥¥Macros
+#pragma mark ï¿½ï¿½ï¿½Macros
 // swap 16 bit quantities in 32 bit value ( |2| |1| -> |1| |2| )
 #define Swap16Bits(x)    ((((x) & 0xffff0000) >> 16) | (((x) & 0x0000ffff) << 16))
 
@@ -98,7 +98,7 @@ NSString* ORPciBit3Lock										= @"ORPciBit3Lock";
 (((x) & 0xFF000000) >> 24)
 
 
-#pragma mark ¥¥¥Definitions
+#pragma mark ï¿½ï¿½ï¿½Definitions
 #define kNumPciDevices 3
 
 struct {
@@ -110,7 +110,7 @@ struct {
 {@"810",            0x0040}
 };
 
-#pragma mark ¥¥¥Private Methods
+#pragma mark ï¿½ï¿½ï¿½Private Methods
 @interface ORPciBit3Model (ORPciBit3Private)
 
 - (BOOL) _findDevice;
@@ -136,7 +136,7 @@ struct {
 
 @implementation ORPciBit3Model
 
-#pragma mark ¥¥¥Inialization
+#pragma mark ï¿½ï¿½ï¿½Inialization
 
 - (id) init
 {
@@ -346,7 +346,7 @@ struct {
 	remoteBusErrors = 0;
 }
 
-#pragma mark ¥¥¥Accessors
+#pragma mark ï¿½ï¿½ï¿½Accessors
 - (unsigned short) rangeToDo
 {
     return rangeToDo;
@@ -558,7 +558,7 @@ struct {
 }
 
 
-#pragma mark ¥¥¥Hardware Access
+#pragma mark ï¿½ï¿½ï¿½Hardware Access
 // return system assigned PCI bus number
 - (kern_return_t) getPCIBusNumber:(unsigned char *) data
 {
@@ -1537,7 +1537,7 @@ struct {
     };  
 }
 
-#pragma mark ¥¥¥DMA
+#pragma mark ï¿½ï¿½ï¿½DMA
 // ReadVMELongBlockDMA - read a block of int32_t values from VME Bus with DMA
 // NOTE - existence of hardware must be established before using this method
 // NOTE - the buffer (readAddress) used for the dma read must be locked contiguous
@@ -1567,7 +1567,7 @@ struct {
 	// reserve 4 bytes (1 int32_t) at beginning of dma buffer for flags
 	uint32_t *dmaFlags = dmaBuffer;
 	dmaBuffer += 4L;
-	uint32_t physicalAddress = (uint32_t)dmaBuffer;
+	uint32_t physicalAddress = (uint32_t)(uintptr_t)dmaBuffer;
 	
 	// start dma
 	*dmaFlags = (uint32_t)0x00000000L;
@@ -1643,7 +1643,7 @@ physicalBufferAddress: physicalAddress
 	// reserve 4 bytes (1 int32_t) at beginning of dma buffer for flags
 	uint32_t *dmaFlags = dmaBuffer;
 	dmaBuffer += 4L;
-	uint32_t physicalAddress = (uint32_t)dmaBuffer;
+	uint32_t physicalAddress = (uint32_t)(uintptr_t)dmaBuffer;
 	
 	// start dma
 	*dmaFlags = (uint32_t)0x00000000L;
@@ -2072,7 +2072,7 @@ physicalBufferAddress:(uint32_t) physicalBufferAddress
 }
 
 
-#pragma mark ¥¥¥Rates
+#pragma mark ï¿½ï¿½ï¿½Rates
 - (uint32_t) getCounter:(int)counterTag forGroup:(int)groupTag
 {
     if(groupTag == 0){
@@ -2084,7 +2084,7 @@ physicalBufferAddress:(uint32_t) physicalBufferAddress
     else return 0;
 }
 
-#pragma mark ¥¥¥Archival
+#pragma mark ï¿½ï¿½ï¿½Archival
 static NSString *ORPciBit3DualPortAddress		= @"Bit3 Dual Port Address";
 static NSString *ORPciBit3DualPortRamSize		= @"Bit3 Dual Port Ram Size";
 static NSString *ORPciBit3RWAddress				= @"Bit3 Read/Write Address";
@@ -2267,7 +2267,7 @@ static NSString *ORPciBit3ErrorRateYAttributes  = @"Bit3 ErrorRateYAttributes";
     }
 }
 
-#pragma mark ¥¥¥NSOrderedObjHolding Protocol
+#pragma mark ï¿½ï¿½ï¿½NSOrderedObjHolding Protocol
 - (int) maxNumberOfObjects			{ return 10; }
 - (int) objWidth					{ return 16; }
 - (int) groupSeparation				{ return 0; }

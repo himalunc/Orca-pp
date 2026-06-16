@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment version="1060" identifier="macosx"/>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -41,7 +41,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="221" height="457"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <box boxType="secondary" borderType="bezel" title="Clock Speeds" id="72">
+                    <box boxType="primary" borderType="bezel" title="Clock Speeds" id="72">
                         <rect key="frame" x="8" y="56" width="196" height="118"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <view key="contentView" id="9tc-ev-sAH">
