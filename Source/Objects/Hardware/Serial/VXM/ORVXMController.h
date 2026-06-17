@@ -21,7 +21,7 @@
 
 @class ORSerialPortController;
 
-@interface ORVXMController : OrcaObjectController
+@interface ORVXMController : OrcaObjectController <NSMenuItemValidation>
 {
     IBOutlet NSTextField*   lockDocField;
 	IBOutlet NSMatrix*		useCmdQueueMatrix;

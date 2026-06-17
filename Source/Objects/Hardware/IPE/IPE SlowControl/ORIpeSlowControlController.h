@@ -22,7 +22,7 @@
 @class ORPlotView;
 @class WebView;
 
-@interface ORIpeSlowControlController : OrcaObjectController <NSComboBoxDataSource>
+@interface ORIpeSlowControlController : OrcaObjectController <NSComboBoxDataSource, NSMenuItemValidation>
 {
 	IBOutlet ORPlotView*		timingPlotter;   
 	IBOutlet NSButton*          rePostStillPendingRequestsCB;

@@ -1921,18 +1921,18 @@
 }
 
 
-- (BOOL)validateMenuItem:(NSMenuItem*)menuItem
+- (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem
 {
-    if ([menuItem action] == @selector(cut:)) {
+    if ([anItem action] == @selector(cut:)) {
         return [patternTable selectedRow] >= 0 ;
     }
-    else if ([menuItem action] == @selector(delete:)) {
+    else if ([anItem action] == @selector(delete:)) {
         return [patternTable selectedRow] >= 0;
     }
-    else if ([menuItem action] == @selector(copy:)) {
+    else if ([anItem action] == @selector(copy:)) {
         return NO; //enable when cut/paste is finished
     }
-    else if ([menuItem action] == @selector(paste:)) {
+    else if ([anItem action] == @selector(paste:)) {
         return NO; //enable when cut/paste is finished
     }
     return YES;

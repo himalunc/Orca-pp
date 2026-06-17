@@ -19,7 +19,7 @@
 @class ORCompositePlotView;
 @class WebView;
 
-@interface ORIpeSimulationController : OrcaObjectController <NSComboBoxDataSource>
+@interface ORIpeSimulationController : OrcaObjectController <NSComboBoxDataSource, NSMenuItemValidation>
 {
 	IBOutlet ORCompositePlotView*		timingPlotter;   
 	

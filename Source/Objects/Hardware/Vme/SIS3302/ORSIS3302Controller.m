@@ -1055,14 +1055,14 @@
     [settingLockButton setEnabled:secure];
 }
 
-- (BOOL)validateMenuItem:(NSMenuItem *)menuItem 
+- (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem
 {
-	if ([menuItem action] == @selector(runModeAction:)) {
-		if([menuItem tag] == 0  && [model firmwareVersion] >= 15) return NO;
+	if ([anItem action] == @selector(runModeAction:)) {
+		if([anItem tag] == 0  && [model firmwareVersion] >= 15) return NO;
 		else return YES;
     }
-	else if ([menuItem action] == @selector(clockSourceAction:)) {
-		if([menuItem tag] == 0) return NO;
+	else if ([anItem action] == @selector(clockSourceAction:)) {
+		if([anItem tag] == 0) return NO;
 		else return YES;
     }
     return YES;

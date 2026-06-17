@@ -24,7 +24,7 @@
 @class ORSegmentGroup;
 @class ORRunModel;
 
-@interface ORL200Controller : ORExperimentController {
+@interface ORL200Controller : ORExperimentController <NSControlTextEditingDelegate> {
     ORRunModel* rc;
     IBOutlet NSPopUpButton* viewTypePopup;
     
