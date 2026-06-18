@@ -18,6 +18,7 @@
 //for the use of this software.
 //-------------------------------------------------------------
 %{
+#pragma clang diagnostic ignored "-Wunreachable-code"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
