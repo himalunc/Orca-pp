@@ -272,7 +272,6 @@
 		3AFC9E231D2AAD4600190989 /* NodePanelMap.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AFC9E221D2AAD4600190989 /* NodePanelMap.png */; };
 		43135802195C5D89007B1F15 /* ORGretinaTriggerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 43135801195C5D89007B1F15 /* ORGretinaTriggerModel.m */; };
 		43135804195C5DA3007B1F15 /* ORGretinaTriggerModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 43135803195C5DA3007B1F15 /* ORGretinaTriggerModel.h */; };
-		4322E9B217830004008E78A4 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4322E9B117830004008E78A4 /* GLUT.framework */; };
 		4325BA38109F6378009E15B9 /* GermaniumHighE in Resources */ = {isa = PBXBuildFile; fileRef = 4325BA37109F6378009E15B9 /* GermaniumHighE */; };
 		4325BA3A109F6381009E15B9 /* GermaniumLowE in Resources */ = {isa = PBXBuildFile; fileRef = 4325BA39109F6381009E15B9 /* GermaniumLowE */; };
 		432D17EC17820CD500557918 /* AngularComponent.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 432D17EB17820CD500557918 /* AngularComponent.mtl */; };
@@ -7910,7 +7909,6 @@
 				864518FF2FD880B5003CB42F /* libz.1.dylib in Frameworks */,
 				8481E67917653766001AB905 /* SystemConfiguration.framework in Frameworks */,
 				864518EF2FD79E7F003CB42F /* libusb-1.0.0.dylib in Frameworks */,
-				4322E9B217830004008E78A4 /* GLUT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
