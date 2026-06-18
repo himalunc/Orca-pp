@@ -1372,7 +1372,7 @@ snopGreenColor;
     }
     else if([tabView indexOfTabViewItem:tabViewItem] == 2){
         //State
-        [[detectorState mainFrame] loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://snopl.us/monitoring/state"] ] ];
+        [detectorState loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://snopl.us/monitoring/state"] ] ];
         [[self window] setContentView:blankView];
         [self resizeWindowToSize:detectorSize];
         [[self window] setContentView:snopView];

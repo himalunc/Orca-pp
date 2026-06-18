@@ -220,7 +220,7 @@
     NSAlert*       waitingForBuffersAlert;
 
     // Detector State
-    IBOutlet WebView* detectorState;
+    IBOutlet WKWebView* detectorState;
 }
 @property (nonatomic) BOOL tellieStandardSequenceFlag;
 @property (nonatomic) BOOL amellieStandardSequenceFlag;
@@ -239,14 +239,14 @@
 @property (nonatomic,retain) NSColor *snopBlackColor;
 @property (nonatomic,retain) NSColor *snopGrayColor;
 
-#pragma mark ¥¥¥Initialization
+#pragma mark ï¿½ï¿½ï¿½Initialization
 - (void) registerNotificationObservers;
 - (void) updateWindow;
 
 - (void) nhitMonitorSettingsChanged: (NSNotification*) aNote;
 - (void) nhitMonitorUpdate: (NSNotification*) aNote;
 
-#pragma mark ¥¥¥Interface
+#pragma mark ï¿½ï¿½ï¿½Interface
 - (void) XL3ModeChanged:(NSNotification*)aNote;
 - (void) hvStatusChanged:(NSNotification*)aNote;
 - (void) triggerStatusChanged:(NSNotification*)aNote;
@@ -263,7 +263,7 @@
 - (void) updateSettings: (NSNotification *) aNote;
 - (void) initializeUnits;
 
-#pragma mark ¥¥¥Actions
+#pragma mark ï¿½ï¿½ï¿½Actions
 
 /* Nhit Monitor */
 - (IBAction) runNhitMonitorAction: (id) sender;
@@ -326,7 +326,7 @@
 - (IBAction)emergencyAmellieStopAction:(id)sender;
 
 
-#pragma mark ¥¥¥Details Interface Management
+#pragma mark ï¿½ï¿½ï¿½Details Interface Management
 - (void) tabView:(NSTabView*)aTabView didSelectTabViewItem:(NSTabViewItem*)tabViewItem;
 - (void) windowDidLoad;
 

@@ -37,15 +37,14 @@
  	[super awakeFromNib];
 }
 
-- (BOOL) validateMenuItem:(NSMenuItem*)menuItem
+- (BOOL) validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem
 {
-    if ([menuItem action] == @selector(cut:)) {
+    if ([anItem action] == @selector(cut:)) {
         return [orcaListView selectedRow] >= 0 ;
     }
-    else if ([menuItem action] == @selector(delete:)) {
+    else if ([anItem action] == @selector(delete:)) {
         return [orcaListView selectedRow] >= 0;
     }
-    [super validateMenuItem:menuItem];
     return YES;
 }
 

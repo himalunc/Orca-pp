@@ -777,7 +777,6 @@
 		840E72F0103DA7BC0070AD70 /* ORAmrelHVModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 840E72E9103DA7BC0070AD70 /* ORAmrelHVModel.m */; };
 		840E72F3103DB4980070AD70 /* AmrelHV.tif in Resources */ = {isa = PBXBuildFile; fileRef = 840E72F2103DB4980070AD70 /* AmrelHV.tif */; };
 		840F377B08F322F800FC4408 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F539C97C03A7C80D015F64B1 /* IOKit.framework */; };
-		840F5B191222C90000D49A75 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840F5B181222C90000D49A75 /* QTKit.framework */; };
 		8411A1DB10F6848100CD9544 /* NSWindow+Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 8411A1D910F6848100CD9544 /* NSWindow+Extensions.h */; };
 		8411A1DC10F6848100CD9544 /* NSWindow+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8411A1DA10F6848100CD9544 /* NSWindow+Extensions.m */; };
 		8411A93211063ACC00CD9544 /* ORUsbDeviceModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 8411A93011063ACC00CD9544 /* ORUsbDeviceModel.h */; };
@@ -3258,8 +3257,6 @@
 		84EA917D20FE5D5800110B85 /* mysql_version.h in Headers */ = {isa = PBXBuildFile; fileRef = 84EA917C20FE5D5700110B85 /* mysql_version.h */; };
 		84EA917F20FE5D8700110B85 /* mysql_time.h in Headers */ = {isa = PBXBuildFile; fileRef = 84EA917E20FE5D8700110B85 /* mysql_time.h */; };
 		84EA918120FE5DB000110B85 /* errmsg.h in Headers */ = {isa = PBXBuildFile; fileRef = 84EA918020FE5DB000110B85 /* errmsg.h */; };
-		84EA918520FE5DF800110B85 /* libcrypto.1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 84EA918420FE5DF800110B85 /* libcrypto.1.0.0.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
-		84EA919620FF840F00110B85 /* libcrypto.1.0.0.dylib in Frameworks_Copy */ = {isa = PBXBuildFile; fileRef = 84EA918420FE5DF800110B85 /* libcrypto.1.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		84EB2DDE1E32990D00C273AA /* LabJackU6.nib in Resources */ = {isa = PBXBuildFile; fileRef = 84EB2DD51E32990D00C273AA /* LabJackU6.nib */; };
 		84EB2DE11E32990D00C273AA /* ORLabJackU6Controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 84EB2DD81E32990D00C273AA /* ORLabJackU6Controller.h */; };
 		84EB2DE21E32990D00C273AA /* ORLabJackU6Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EB2DD91E32990D00C273AA /* ORLabJackU6Controller.m */; };
@@ -3469,7 +3466,6 @@
 		864518F32FD8584E003CB42F /* libmysqlclient.24.dylib in Frameworks_Copy */ = {isa = PBXBuildFile; fileRef = 864518F12FD8583D003CB42F /* libmysqlclient.24.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		864518F52FD87CEA003CB42F /* libssl.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 864518F42FD87CEA003CB42F /* libssl.3.dylib */; };
 		864518F62FD87D07003CB42F /* libssl.3.dylib in Frameworks_Copy */ = {isa = PBXBuildFile; fileRef = 864518F42FD87CEA003CB42F /* libssl.3.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		864518F82FD87EC3003CB42F /* libssl.1.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 864518F72FD87EC3003CB42F /* libssl.1.0.0.dylib */; };
 		864518FA2FD87FA3003CB42F /* libcrypto.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 864518F92FD87FA3003CB42F /* libcrypto.3.dylib */; };
 		864518FB2FD87FCB003CB42F /* libcrypto.3.dylib in Frameworks_Copy */ = {isa = PBXBuildFile; fileRef = 864518F92FD87FA3003CB42F /* libcrypto.3.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		864518FE2FD880B5003CB42F /* libzstd.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 864518FD2FD880B5003CB42F /* libzstd.1.dylib */; };
@@ -4136,7 +4132,6 @@
 				864518F32FD8584E003CB42F /* libmysqlclient.24.dylib in Frameworks_Copy */,
 				864518F02FD79EA9003CB42F /* libusb-1.0.0.dylib in Frameworks_Copy */,
 				864518EC2FD79BEE003CB42F /* libLabJackM-1.20.0.dylib in Frameworks_Copy */,
-				84EA919620FF840F00110B85 /* libcrypto.1.0.0.dylib in Frameworks_Copy */,
 			);
 			name = Frameworks_Copy;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7268,7 +7263,6 @@
 		84EA917C20FE5D5700110B85 /* mysql_version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mysql_version.h; sourceTree = "<group>"; };
 		84EA917E20FE5D8700110B85 /* mysql_time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mysql_time.h; sourceTree = "<group>"; };
 		84EA918020FE5DB000110B85 /* errmsg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = errmsg.h; sourceTree = "<group>"; };
-		84EA918420FE5DF800110B85 /* libcrypto.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libcrypto.1.0.0.dylib; sourceTree = "<group>"; };
 		84EB2DD51E32990D00C273AA /* LabJackU6.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = LabJackU6.nib; sourceTree = "<group>"; };
 		84EB2DD81E32990D00C273AA /* ORLabJackU6Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORLabJackU6Controller.h; sourceTree = "<group>"; };
 		84EB2DD91E32990D00C273AA /* ORLabJackU6Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORLabJackU6Controller.m; sourceTree = "<group>"; };
@@ -7479,7 +7473,6 @@
 		864518EE2FD79E7F003CB42F /* libusb-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libusb-1.0.0.dylib"; sourceTree = "<group>"; };
 		864518F12FD8583D003CB42F /* libmysqlclient.24.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libmysqlclient.24.dylib; sourceTree = "<group>"; };
 		864518F42FD87CEA003CB42F /* libssl.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libssl.3.dylib; sourceTree = "<group>"; };
-		864518F72FD87EC3003CB42F /* libssl.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libssl.1.0.0.dylib; sourceTree = "<group>"; };
 		864518F92FD87FA3003CB42F /* libcrypto.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libcrypto.3.dylib; sourceTree = "<group>"; };
 		864518FC2FD880B5003CB42F /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libz.1.dylib; sourceTree = "<group>"; };
 		864518FD2FD880B5003CB42F /* libzstd.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libzstd.1.dylib; sourceTree = "<group>"; };
@@ -7894,9 +7887,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				864518F82FD87EC3003CB42F /* libssl.1.0.0.dylib in Frameworks */,
 				84E14BCB2AC1C72000614110 /* libiconv.tbd in Frameworks */,
-				84EA918520FE5DF800110B85 /* libcrypto.1.0.0.dylib in Frameworks */,
 				8434A359055B3287002D3102 /* Cocoa.framework in Frameworks */,
 				8470D01518241FEE0054F7D4 /* Accelerate.framework in Frameworks */,
 				8439D5EF05BEFF3A0077EFF2 /* Carbon.framework in Frameworks */,
@@ -7906,7 +7897,6 @@
 				84F5E11B0A151E0B00707A0F /* OpenGL.framework in Frameworks */,
 				847599860B5FF26500123411 /* QuartzCore.framework in Frameworks */,
 				2DC1EE800F33724E00E93C75 /* WebKit.framework in Frameworks */,
-				840F5B191222C90000D49A75 /* QTKit.framework in Frameworks */,
 				864518FA2FD87FA3003CB42F /* libcrypto.3.dylib in Frameworks */,
 				8645190F2FD99311003CB42F /* libcom_err.3.0.dylib in Frameworks */,
 				864518F22FD8583D003CB42F /* libmysqlclient.24.dylib in Frameworks */,
@@ -8239,10 +8229,8 @@
 				864518FC2FD880B5003CB42F /* libz.1.dylib */,
 				864518FD2FD880B5003CB42F /* libzstd.1.dylib */,
 				864518F92FD87FA3003CB42F /* libcrypto.3.dylib */,
-				864518F72FD87EC3003CB42F /* libssl.1.0.0.dylib */,
 				864518F42FD87CEA003CB42F /* libssl.3.dylib */,
 				864518F12FD8583D003CB42F /* libmysqlclient.24.dylib */,
-				84EA918420FE5DF800110B85 /* libcrypto.1.0.0.dylib */,
 				E67BCDF925998CF8007A7473 /* libpq.5.dylib */,
 			);
 			path = libUniversal;
@@ -18800,6 +18788,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		8491DD760EB616630084BAD6 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);

@@ -86,15 +86,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(GoToLine);
     [panel makeKeyAndOrderFront:nil];
 }
 
-- (BOOL) validateMenuItem:(NSMenuItem *)anItem
+- (BOOL) validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem
 {
 
     if ([anItem action] == @selector(orderFrontGoToPanel:)) {
         return ([self textObjectToSearchIn] != NULL);
     }
-    // if it isn't one of our menu items, we'll let the
-    // superclass take care of it
-    return [super validateMenuItem:anItem];
+    return YES;
 }
 
 - (IBAction) jumpButtonClicked:(id)sender

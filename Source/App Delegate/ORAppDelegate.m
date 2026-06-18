@@ -631,7 +631,7 @@ NSString* OROrcaFinalQuitNotice      = @"OROrcaFinalQuitNotice";
 }
 
 #pragma mark ���Menu Management
-- (BOOL) validateMenuItem:(NSMenuItem*)menuItem
+- (BOOL) validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)menuItem
 {
     BOOL documentIsOpen = [[NSApp orderedDocuments] count]>0;
     SEL theAction = [menuItem action];

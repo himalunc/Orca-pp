@@ -317,7 +317,7 @@ Turns out this approach of building the new string and inserting it at the appro
 }
 
 
-- (BOOL)validateMenuItem:(NSMenuItem *)anItem
+- (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem
 {
 
     if ([anItem action] == @selector(orderFrontFindPanel:)) {
@@ -335,9 +335,7 @@ Turns out this approach of building the new string and inserting it at the appro
     if ([anItem action] == @selector(jumpToSelection:)) {
         return ([self textObjectToSearchIn] != NULL);
     }
-    // if it isn't one of our menu items, we'll let the
-    // superclass take care of it
-    return [super validateMenuItem:anItem];
+    return NO;
 }
 @end
 

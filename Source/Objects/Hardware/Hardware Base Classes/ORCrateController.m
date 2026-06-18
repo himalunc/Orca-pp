@@ -168,9 +168,9 @@
     [groupView setDragLocked:[model lockMovement]];
 }
 
-- (BOOL)validateMenuItem:(NSMenuItem*)menuItem
+- (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem
 {
-	return [groupView validateMenuItem:menuItem];
+	return [groupView validateMenuItem:(NSMenuItem*)anItem];
 }
 
 #pragma mark •••Interface Management

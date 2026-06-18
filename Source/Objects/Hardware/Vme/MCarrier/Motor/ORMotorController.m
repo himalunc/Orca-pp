@@ -3,7 +3,7 @@
 //  Orca
 //
 //  Created by Mark Howe on Mon Feb 10 2003.
-//  Copyright © 2002 CENPA, University of Washington. All rights reserved.
+//  Copyright ï¿½ 2002 CENPA, University of Washington. All rights reserved.
 //-----------------------------------------------------------
 //This program was prepared for the Regents of the University of 
 //Washington at the Center for Experimental Nuclear Physics and 
@@ -19,14 +19,14 @@
 //-------------------------------------------------------------
 
 
-#pragma mark ¥¥¥Imported Files
+#pragma mark ï¿½ï¿½ï¿½Imported Files
 #import "ORMotorController.h"
 #import "ORMotorModel.h"
 #import "ORMotorSweeper.h"
 #import "ORAxis.h"
 #import "ORQueueView.h"
 
-#pragma mark ¥¥¥Definitions
+#pragma mark ï¿½ï¿½ï¿½Definitions
 
 enum {
     kPatternStartTag    = 0,
@@ -43,7 +43,7 @@ enum {
 
 @implementation ORMotorController
 
-#pragma mark ¥¥¥Initialization
+#pragma mark ï¿½ï¿½ï¿½Initialization
 -(id)init
 {
     self = [super initWithWindowNibName:@"Motor"];
@@ -65,7 +65,7 @@ enum {
     [super awakeFromNib];
 }
 
-#pragma mark ¥¥¥Notifications
+#pragma mark ï¿½ï¿½ï¿½Notifications
 -(void)registerNotificationObservers
 {
     [super registerNotificationObservers];
@@ -196,19 +196,19 @@ enum {
 }
 
 
-#pragma mark ¥¥¥Accessors
+#pragma mark ï¿½ï¿½ï¿½Accessors
 
 
-#pragma mark ¥¥¥Interface Management
+#pragma mark ï¿½ï¿½ï¿½Interface Management
 - (void) connectionChanged:(NSNotification*)aNote
 {
     if([aNote object] == model){
 		[[self window] setTitle:[NSString stringWithFormat:@"Stepper Motor (%d)",(int32_t)[model tag]]];
 	}
 }
-- (BOOL) validateMenuItem:(NSMenuItem*)menuItem
+- (BOOL) validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem
 {
-    if([menuItem tag] >=32 && [model fourPhase]){
+    if([anItem tag] >=32 && [model fourPhase]){
         return NO;
     }
     return YES;
@@ -448,7 +448,7 @@ enum {
 	[stepTargetField setStringValue:[model absoluteMotion]?@"Move To":@"Move"];
 }
 
-#pragma mark ¥¥¥Actions
+#pragma mark ï¿½ï¿½ï¿½Actions
 - (IBAction) setProfileAction:(id)sender
 {
     [model setRiseFreq:     [[motorProfileFields cellWithTag:0] intValue]];

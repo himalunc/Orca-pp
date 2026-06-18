@@ -171,7 +171,7 @@ SYNTHESIZE_SINGLETON_FOR_ORCLASS(VXI11HardwareFinderController);
     [self _setCreatedObjects:@[num]];
     
     NSPasteboardItem* pbItem = [[NSPasteboardItem alloc] init];
-    [pbItem setData:[NSData data] forType:ORGroupDragBoardItem];
+    [pbItem setDataProvider:self forTypes:@[ORGroupDragBoardItem]];
     return [pbItem autorelease];
 }
 
@@ -207,18 +207,16 @@ SYNTHESIZE_SINGLETON_FOR_ORCLASS(VXI11HardwareFinderController);
 //}
 
 
-- (void)pasteboard:(NSPasteboard *)sender provideDataForType:(NSString *)type
+- (void)pasteboard:(NSPasteboard *)pasteboard item:(NSPasteboardItem *)item provideDataForType:(NSPasteboardType)type
 {
-	//load the saved objects pointers into the paste board.
-
     NSMutableData *itemData = [NSMutableData data];
     NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:itemData];
     [archiver setOutputFormat:NSPropertyListXMLFormat_v1_0];
     [archiver encodeObject:createdObjects forKey:ORObjArrayPtrPBType];
     [archiver finishEncoding];
     [archiver release];
-    
-    [sender setData:itemData forType:@"ORGroupDragBoardItem"];
+
+    [item setData:itemData forType:type];
 }
 
 - (void) tableView:(NSTableView*)tableView draggingSession:(NSDraggingSession *)session

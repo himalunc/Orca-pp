@@ -3,7 +3,7 @@
 //  Orca
 //
 //  Created by Mark Howe on Mon Feb 10 2003.
-//  Copyright © 2002 CENPA, University of Washington. All rights reserved.
+//  Copyright ï¿½ 2002 CENPA, University of Washington. All rights reserved.
 //-----------------------------------------------------------
 //This program was prepared for the Regents of the University of 
 //Washington at the Center for Experimental Nuclear Physics and 
@@ -19,7 +19,7 @@
 //-------------------------------------------------------------
 
 
-#pragma mark ¥¥¥Imported Files
+#pragma mark ï¿½ï¿½ï¿½Imported Files
 #import "ORIP320Controller.h"
 #import "ORIP320Model.h"
 #import "ORIP320Channel.h"
@@ -28,7 +28,7 @@
 
 @implementation ORIP320Controller
 
-#pragma mark ¥¥¥Initialization
+#pragma mark ï¿½ï¿½ï¿½Initialization
 -(id)init
 {
     self = [super initWithWindowNibName:@"IP320"];
@@ -90,7 +90,7 @@
     [super awakeFromNib];
 }
 
-#pragma mark ¥¥¥Notifications
+#pragma mark ï¿½ï¿½ï¿½Notifications
 - (void) registerNotificationObservers
 {
     NSNotificationCenter* notifyCenter = [NSNotificationCenter defaultCenter];
@@ -173,7 +173,7 @@
 }
 
 
-#pragma mark ¥¥¥Accessors
+#pragma mark ï¿½ï¿½ï¿½Accessors
 - (void) setModel:(id)aModel
 {    
     [super setModel:aModel];
@@ -184,7 +184,7 @@
 }
 
 
-#pragma mark ¥¥¥Interface Management
+#pragma mark ï¿½ï¿½ï¿½Interface Management
 
 - (void) calibrationDateChanged:(NSNotification*)aNote
 {
@@ -330,21 +330,21 @@
 }
 
 
-- (BOOL) validateMenuItem:(NSMenuItem*)menuItem
+- (BOOL) validateMenuItem:(NSMenuItem*)anItem
 {
-    if ([menuItem action] == @selector(cut:)) {
+    if ([anItem action] == @selector(cut:)) {
         return [outlineView selectedRow] >= 0 || [multiPlotView selectedRow]>=0;
     }
-    else if ([menuItem action] == @selector(delete:)) {
+    else if ([anItem action] == @selector(delete:)) {
         return [outlineView selectedRow] >= 0 || [multiPlotView selectedRow]>=0;
-    }    
-    else if ([menuItem action] == @selector(copy:)) {
+    }
+    else if ([anItem action] == @selector(copy:)) {
         return NO;
     }
-    else  return [super validateMenuItem:menuItem];
+    else  return [super validateMenuItem:anItem];
 }
 
-#pragma mark ¥¥¥Actions
+#pragma mark ï¿½ï¿½ï¿½Actions
 - (IBAction)delete:(id)sender
 {
     [self removeItemAction:nil];
@@ -564,7 +564,7 @@
 }
 
 
-#pragma mark ¥¥¥Data Source
+#pragma mark ï¿½ï¿½ï¿½Data Source
 - (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(int)row
 {
 	if([model opMode] == 1)return YES;
@@ -613,13 +613,13 @@
 	}
 }
 
-#pragma  mark ¥¥¥Delegate Responsiblities
+#pragma  mark ï¿½ï¿½ï¿½Delegate Responsiblities
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
     return NO;
 }
 
-#pragma mark ¥¥¥Data Source Methods
+#pragma mark ï¿½ï¿½ï¿½Data Source Methods
 - (NSUInteger)outlineView:(NSOutlineView *)ov numberOfChildrenOfItem:(id)item
 {
     if(ov == outlineView){

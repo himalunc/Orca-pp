@@ -3,7 +3,7 @@
 //  Orca
 //
 //  Created by Mark Howe on Sun Dec 08 2002.
-//  Copyright © 2002 CENPA, Univsersity of Washington. All rights reserved.
+//  Copyright ï¿½ 2002 CENPA, Univsersity of Washington. All rights reserved.
 //-----------------------------------------------------------
 //This program was prepared for the Regents of the University of 
 //Washington at the Center for Experimental Nuclear Physics and 
@@ -19,14 +19,14 @@
 //-------------------------------------------------------------
 
 
-#pragma mark ¥¥¥Imported Files
+#pragma mark ï¿½ï¿½ï¿½Imported Files
 #import "ORTimedTextField.h"
 
 NSString* ORModelChangedNotification = @"ORModelChangedNotification";
 
 @implementation OrcaObjectController
 
-#pragma mark ¥¥¥Initialization
+#pragma mark ï¿½ï¿½ï¿½Initialization
 - (id) initWithWindowNibName:(NSString*)aNibName
 {
     if(self = [super initWithWindowNibName:aNibName]){
@@ -57,13 +57,13 @@ NSString* ORModelChangedNotification = @"ORModelChangedNotification";
 	[[self window] close];
 }
 
-#pragma mark ¥¥¥Undo Management
+#pragma mark ï¿½ï¿½ï¿½Undo Management
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow*)window
 {
     return [model undoManager];
 }
 
-#pragma mark ¥¥¥Accessors
+#pragma mark ï¿½ï¿½ï¿½Accessors
 - (id)model
 {
 	return model;
@@ -89,20 +89,20 @@ NSString* ORModelChangedNotification = @"ORModelChangedNotification";
     }
 }
 
-#pragma mark ¥¥¥Notifications
+#pragma mark ï¿½ï¿½ï¿½Notifications
 - (void) documentClosing:(NSNotification*)aNotification
 {
     [NSObject cancelPreviousPerformRequestsWithTarget:self];	
 	[[self window] close];
 }
 
-#pragma mark ¥¥¥Messages From Delegate
+#pragma mark ï¿½ï¿½ï¿½Messages From Delegate
 - (BOOL)windowShouldClose:(id)sender
 {
     return YES;
 }
 
-#pragma mark ¥¥¥Interface Management
+#pragma mark ï¿½ï¿½ï¿½Interface Management
 
 - (void) isNowKeyWindow:(NSNotification*)aNotification
 {
@@ -378,7 +378,7 @@ NSString* ORModelChangedNotification = @"ORModelChangedNotification";
 }
 
 
-#pragma mark ¥¥¥Archival
+#pragma mark ï¿½ï¿½ï¿½Archival
 
 static NSString *OROrcaObjectControllerFrame 	= @"OROrcaObjectControllerFrame";
 static NSString *OROrcaObjectControllerModel	= @"OROrcaObjectControllerModel";
@@ -413,7 +413,7 @@ static NSString *OROrcaObjectControllerNibName	= @"OROrcaObjectControllerNibName
     [encoder encodeObject:[[self window] stringWithSavedFrame] forKey:OROrcaObjectControllerFrame];
 }
 
-#pragma mark ¥¥¥Actions
+#pragma mark ï¿½ï¿½ï¿½Actions
 - (IBAction) copy:(id)sender
 {
 	[[(ORAppDelegate*)[NSApp delegate] document] duplicateDialog:self];
@@ -464,13 +464,13 @@ static NSString *OROrcaObjectControllerNibName	= @"OROrcaObjectControllerNibName
     [[model document] saveDocumentAs:sender];
 }
 
-- (BOOL)validateMenuItem:(NSMenuItem*)menuItem
+- (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)item
 {
 	NSArray* models = [self collectObjectsOfClass:[model class]];
-    if ([menuItem action] == @selector(decDialog:)) {
+    if ([item action] == @selector(decDialog:)) {
 		return [models count] > 1;
 	}
-    else if ([menuItem action] == @selector(incDialog:)) {
+    else if ([item action] == @selector(incDialog:)) {
 		return [models count] > 1;
     }
 	else return YES;

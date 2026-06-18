@@ -3,7 +3,7 @@
 //  Orca
 //
 //  Created by Mark Howe on Mon Feb 10 2003.
-//  Copyright © 2002 CENPA, University of Washington. All rights reserved.
+//  Copyright ï¿½ 2002 CENPA, University of Washington. All rights reserved.
 //-----------------------------------------------------------
 //This program was prepared for the Regents of the University of 
 //Washington at the Center for Experimental Nuclear Physics and 
@@ -19,10 +19,10 @@
 //-------------------------------------------------------------
 
 
-#pragma mark ¥¥¥Imported Files
+#pragma mark ï¿½ï¿½ï¿½Imported Files
 #import "ORIP320Model.h"
 
-@interface ORIP320Controller : OrcaObjectController  {
+@interface ORIP320Controller : OrcaObjectController  <NSMenuItemValidation> {
     @private
         IBOutlet NSTabView*		tabView;
 		IBOutlet NSTextField*   calibrationDateField;
@@ -57,9 +57,9 @@
 
 }
 
-#pragma mark ¥¥¥Accessors
+#pragma mark ï¿½ï¿½ï¿½Accessors
 
-#pragma mark ¥¥¥Notifications
+#pragma mark ï¿½ï¿½ï¿½Notifications
 - (void) registerNotificationObservers;
 
 #pragma mark ***Interface Management
@@ -78,7 +78,7 @@
 - (void) dataChanged:(NSNotification*)aNote;
 - (void) multiPlotsChanged:(NSNotification*)aNote;
 
-#pragma mark ¥¥¥Actions
+#pragma mark ï¿½ï¿½ï¿½Actions
 - (IBAction) delete:(id)sender;
 - (IBAction) cut:(id)sender;
 - (IBAction) removeItemAction:(id)sender;

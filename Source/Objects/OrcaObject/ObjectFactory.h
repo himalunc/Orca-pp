@@ -3,7 +3,7 @@
 //  Orca
 //
 //  Created by Mark Howe on Sat Nov 30 2002.
-//  Copyright © 2002 CENPA, University of Washington. All rights reserved.
+//  Copyright ï¿½ 2002 CENPA, University of Washington. All rights reserved.
 //-----------------------------------------------------------
 //This program was prepared for the Regents of the University of 
 //Washington at the Center for Experimental Nuclear Physics and 
@@ -19,10 +19,10 @@
 //-------------------------------------------------------------
 
 
-@interface ObjectFactory : NSButton {
+@interface ObjectFactory : NSButton <NSPasteboardItemDataProvider> {
     OrcaObject* object;
 }
-#pragma mark ¥¥¥Factory methods
+#pragma mark ï¿½ï¿½ï¿½Factory methods
 + (id) makeObject:(NSString*)aClassName;
 - (void) makeObject;
 @end

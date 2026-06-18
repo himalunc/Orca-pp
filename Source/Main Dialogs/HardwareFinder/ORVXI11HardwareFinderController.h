@@ -35,7 +35,7 @@
 }
 @end
 
-@interface ORVXI11HardwareFinderController : NSWindowController <NSTableViewDataSource>
+@interface ORVXI11HardwareFinderController : NSWindowController <NSTableViewDataSource, NSPasteboardItemDataProvider>
 {
 	IBOutlet NSTableView* availableHardware;
 	IBOutlet NSButton* refreshButton;

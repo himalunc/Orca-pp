@@ -19,33 +19,33 @@
 //-------------------------------------------------------------
 
 
-#pragma mark ¥¥¥Imported Files
+#pragma mark ï¿½ï¿½ï¿½Imported Files
 #import "ORRangeTimerController.h"
 #import "ORRangeTimerModel.h"
 
 
 @implementation ORRangeTimerController
 
-#pragma mark ¥¥¥Initialization
+#pragma mark ï¿½ï¿½ï¿½Initialization
 -(id)init
 {
     self = [super initWithWindowNibName:@"RangeTimer"];
     return self;
 }
 
-#pragma mark ¥¥¥Interface Management
-- (BOOL)validateMenuItem:(NSMenuItem*)menuItem
+#pragma mark ï¿½ï¿½ï¿½Interface Management
+- (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem
 {
-    if ([menuItem action] == @selector(cut:)) {
+    if ([anItem action] == @selector(cut:)) {
         return [addressList selectedRow] >= 0 ;
     }
-    else if ([menuItem action] == @selector(delete:)) {
+    else if ([anItem action] == @selector(delete:)) {
         return [addressList selectedRow] >= 0;
     }
-    else if ([menuItem action] == @selector(copy:)) {
+    else if ([anItem action] == @selector(copy:)) {
         return NO; //enable when cut/paste is finished
     }
-    else if ([menuItem action] == @selector(paste:)) {
+    else if ([anItem action] == @selector(paste:)) {
         return NO; //enable when cut/paste is finished
     }
     return YES;
@@ -144,7 +144,7 @@
 	[directionPU selectItemAtIndex:[model direction]];
 }
 
-#pragma mark ¥¥¥Actions
+#pragma mark ï¿½ï¿½ï¿½Actions
 - (IBAction) addAddressAction:(id)sender
 {
 	[model addAddress];
@@ -189,7 +189,7 @@
 	}
 }
 
-#pragma mark ¥¥¥DataSource
+#pragma mark ï¿½ï¿½ï¿½DataSource
 - (id) tableView:(NSTableView *) aTableView objectValueForTableColumn:(NSTableColumn *) aTableColumn row:(int) rowIndex
 {
     NSParameterAssert(rowIndex >= 0 && rowIndex < [model addressCount]);
