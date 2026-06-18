@@ -45,6 +45,7 @@
 #include <sys/types.h>
 #endif
 
+//-------
 // Small extra definitions to avoid pulling in my_inttypes.h in client code.
 // IWYU pragma: no_include "my_inttypes.h"
 #if defined(_WIN32)
