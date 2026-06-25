@@ -3,7 +3,7 @@
 //  Orca
 //
 //  Created by Mark Howe on Wed Nov 27, 2002.
-//  Copyright  © 2002 CENPA, University of Washington. All rights reserved.
+//  Copyright  ï¿½ 2002 CENPA, University of Washington. All rights reserved.
 //-----------------------------------------------------------
 //This program was prepared for the Regents of the University of 
 //Washington at the Center for Experimental Nuclear Physics and 
@@ -19,7 +19,7 @@
 //-------------------------------------------------------------
 
 
-#pragma mark ¥¥¥Imported Files
+#pragma mark ï¿½ï¿½ï¿½Imported Files
 #import "ORSelectionTask.h"
 #import "ORConnectionTask.h"
 #import "ORScaleTask.h"
@@ -39,7 +39,7 @@
 
 @implementation ORGroupView
 
-#pragma mark ¥¥¥Initialization
+#pragma mark ï¿½ï¿½ï¿½Initialization
 - (id)initWithFrame:(NSRect)frame {
     NSArray *typeArray;
     self = [super initWithFrame:frame];
@@ -107,7 +107,7 @@
     [self setNeedsDisplay:YES];
 }
 
-#pragma mark ¥¥¥Accessors
+#pragma mark ï¿½ï¿½ï¿½Accessors
 - (void) setDragLocked:(BOOL)aState
 {
     dragLocked = aState;
@@ -141,7 +141,7 @@
     return [group objectEnumerator];
 }
 
-#pragma mark ¥¥¥Graphics
+#pragma mark ï¿½ï¿½ï¿½Graphics
 
 - (void)drawRect:(NSRect)rect
 {
@@ -306,7 +306,7 @@
 	return windowFrame;
 }
 
-#pragma mark ¥¥¥Mouse Events
+#pragma mark ï¿½ï¿½ï¿½Mouse Events
 - (void)mouseDown:(NSEvent*)event
 {
     [[self window] makeFirstResponder:self];
@@ -601,7 +601,7 @@
 }
 
 
-#pragma mark ¥¥¥Actions
+#pragma mark ï¿½ï¿½ï¿½Actions
 - (IBAction) getInfo:(id)sender
 {
 	NSArray* objects = [group selectedObjects];
@@ -807,7 +807,7 @@
     [self setNeedsDisplay:YES];
 }
 
-#pragma mark ¥¥¥Drap and Drop
+#pragma mark ï¿½ï¿½ï¿½Drap and Drop
 
 - (NSPoint) suggestPasteLocationFor:(id)anObject
 {
@@ -954,7 +954,7 @@
     [obj moveTo:aPoint];
 }
 
-#pragma mark ¥¥¥Connection Management
+#pragma mark ï¿½ï¿½ï¿½Connection Management
 -(void)doConnectionFrom:(NSPoint)pt1 to:(NSPoint)pt2
 {
     ORConnector* c1 = nil;

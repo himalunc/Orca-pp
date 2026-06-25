@@ -105,7 +105,7 @@ SYNTHESIZE_SINGLETON_FOR_ORCLASS(SerialPortList);
 - (id)init
 {
  	self = [super init];
-    [self updatePortList];
+    //[self updatePortList];
     return self;
 }
 
